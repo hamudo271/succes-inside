@@ -1,0 +1,100 @@
+/* /about — 서비스 소개. Winnings 레퍼런스 테마(wn.css 토큰) 기반 */
+
+/* 히어로: 블랙 배경 + 오렌지 포인트 */
+.abHero{background:#121212;color:#fff;position:relative;overflow:hidden}
+.abHero:before{content:'';position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(closest-side,#ff6b2c22,transparent);right:-140px;top:-200px}
+.abHeroInner{position:relative;min-height:520px;display:grid;grid-template-columns:1.2fr .8fr;gap:70px;align-items:center;padding-top:84px;padding-bottom:96px}
+.abEyebrow{display:inline-flex;align-items:center;gap:8px;font:700 12px 'DM Sans','Noto Sans KR';letter-spacing:2px;color:var(--wnOrange)}
+.abHero h1{font-size:54px;line-height:1.2;letter-spacing:-3.6px;margin:20px 0 22px;font-weight:800}
+.abHero h1 em{font-style:normal;color:var(--wnOrange)}
+.abHero>div>div>p,.abHeroInner>div>p{color:#a3a3a3;font-size:16px;line-height:1.8;margin:0}
+.abHeroBtns{display:flex;align-items:center;gap:12px;margin-top:34px;flex-wrap:wrap}
+.abHeroBtns a{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;text-decoration:none;border-radius:999px;padding:14px 22px;transition:background .15s}
+.abHeroBtns a:first-child{background:var(--wnOrange);color:#fff}
+.abHeroBtns a:first-child:hover{background:var(--wnOrangeDeep)}
+.abHeroBtns a:last-child{border:1px solid #ffffff2a;color:#fff}
+.abHeroBtns a:last-child:hover{border-color:#ffffff55}
+
+.abPlay{background:#1c1c1c;border:1px solid #ffffff14;border-radius:20px;padding:30px}
+.abPlayBtn{width:52px;height:52px;border-radius:50%;background:var(--wnOrange);color:#fff;display:grid;place-items:center;margin-bottom:26px}
+.abPlay small{display:block;font:700 10px 'DM Sans';letter-spacing:1.8px;color:#7c7c7c}
+.abPlay p{font-size:17px;line-height:1.6;letter-spacing:-.8px;margin:10px 0 0;color:#fff}
+.abScroll{position:absolute;left:24px;bottom:30px;font:700 9px 'DM Sans';letter-spacing:2.4px;color:#5c5c5c}
+.abScroll:after{content:'';display:inline-block;width:54px;height:1px;background:#3a3a3a;vertical-align:middle;margin-left:12px}
+
+/* 섹션 공통 */
+.abSection{padding-top:88px}
+.abHead small{font:700 11px 'DM Sans';letter-spacing:2.4px;color:#b9b5ad}
+.abHead h2{font-size:31px;letter-spacing:-1.7px;margin:10px 0 0}
+.abHead p{color:var(--wnMuted);font-size:14px;line-height:1.75;margin:11px 0 0}
+.abHead.dark small{color:var(--wnOrange)}
+.abHead.dark h2{color:#fff}
+.abHead.dark p{color:#9a9a9a}
+
+/* Why us — 얇은 보더 화이트 카드 + 피치 아이콘 */
+.abWhy{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.abWhy>div{border:1px solid var(--wnLine);border-radius:16px;padding:30px;background:#fff;transition:transform .18s,box-shadow .18s}
+.abWhy>div:hover{transform:translateY(-3px);box-shadow:0 14px 34px #97701d0f}
+.abWhy i{display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--wnPeach);color:#e05512;margin-bottom:20px}
+.abWhy b{display:block;font-size:16px;line-height:1.5;letter-spacing:-.7px}
+.abWhy p{font-size:13px;line-height:1.8;color:var(--wnMuted);margin:11px 0 0}
+
+/* Success OS — 블랙 라운드 컨테이너 */
+.abOs{background:var(--wnDark);border-radius:32px;max-width:1240px;margin:92px auto 0;padding:72px 0 78px}
+.abSteps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+.abSteps>div{border:1px solid #ffffff12;border-radius:16px;padding:26px;background:#ffffff08}
+.abSteps strong{font:700 13px 'DM Sans';color:var(--wnOrange);letter-spacing:1px}
+.abSteps b{display:block;color:#fff;font-size:16px;letter-spacing:-.6px;margin:14px 0 9px}
+.abSteps p{color:#9a9a9a;font-size:12.5px;line-height:1.75;margin:0}
+
+/* What you get — 오렌지 체크 리스트 + 블랙 카드 */
+.abGet{display:grid;grid-template-columns:1fr .85fr;gap:54px;align-items:start}
+.abGet ul{list-style:none;margin:26px 0 0;padding:0}
+.abGet li{position:relative;font-size:14px;color:#4a4a46;padding:15px 0 15px 28px;border-bottom:1px solid #efece5}
+.abGet li:before{content:'';position:absolute;left:2px;top:21px;width:11px;height:6px;border-left:2px solid var(--wnOrange);border-bottom:2px solid var(--wnOrange);transform:rotate(-45deg)}
+.abGetCard{background:var(--wnDark);border-radius:24px;padding:36px;color:#fff}
+.abGetCard>span{font:700 10px 'DM Sans';letter-spacing:1.8px;color:var(--wnOrange)}
+.abGetCard b{display:block;font-size:21px;line-height:1.55;letter-spacing:-1.2px;margin:14px 0 12px}
+.abGetCard p{color:#9a9a9a;font-size:13px;line-height:1.8;margin:0 0 24px}
+.abGetCard a{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#d4550f;text-decoration:none;background:var(--wnPeach);border-radius:9px;padding:12px 17px}
+
+/* FAQ — 센터 타이틀 + 화이트 카드 행 */
+#faq .abHead{text-align:center}
+#faq .abHead h2{font-size:34px}
+.abFaq{margin:34px auto 0;max-width:880px;padding-bottom:110px}
+.abFaq>div{background:#fff;border:1px solid var(--wnLine);border-radius:14px;margin-bottom:10px}
+.abFaq button{width:100%;display:flex;align-items:center;gap:18px;text-align:left;border:0;background:none;padding:22px 24px;color:var(--wnInk)}
+.abFaq button span{flex:1;font-size:15.5px;font-weight:700;letter-spacing:-.5px}
+.abFaq svg{flex:0 0 auto;color:#b9b9b9;order:-1}
+.abFaq>div.open svg{color:var(--wnOrange)}
+.abFaq p{display:none;font-size:13.5px;line-height:1.85;color:var(--wnMuted);margin:0;padding:0 24px 24px 59px}
+.abFaq>div.open p{display:block}
+
+@media(max-width:1272px){
+  .abOs{margin-left:16px;margin-right:16px}
+}
+@media(max-width:900px){
+  .abHeroInner{grid-template-columns:1fr;gap:40px;min-height:0;padding-top:60px;padding-bottom:76px}
+  .abHero h1{font-size:41px;letter-spacing:-2.6px}
+  .abWhy{grid-template-columns:1fr}
+  .abSteps{grid-template-columns:1fr 1fr}
+  .abGet{grid-template-columns:1fr;gap:34px}
+}
+@media(max-width:620px){
+  .abHero h1{font-size:32px;letter-spacing:-1.9px}
+  .abHero h1 br{display:none}
+  .abHeroBtns a{width:100%;justify-content:center}
+  .abScroll{display:none}
+  .abSection{padding-top:56px}
+  .abHead h2{font-size:24px}
+  #faq .abHead h2{font-size:26px}
+  .abOs{margin:56px 10px 0;border-radius:24px;padding:52px 0 56px}
+  .abSteps{grid-template-columns:1fr}
+  .abGetCard{padding:26px;border-radius:20px}
+  .abGetCard b{font-size:18px}
+  .abGetCard b br{display:none}
+  .abFaq{padding-bottom:70px}
+  .abFaq button{padding:18px 18px}
+  .abFaq button span{font-size:14px}
+  .abFaq p{padding:0 18px 20px 53px}
+}

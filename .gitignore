@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next
+/out
+next-env.d.ts
+
+# build artifacts
+*.tsbuildinfo
+
+# env
+.env*
+
+# misc
+.DS_Store
+
+# local tooling
+/.claude
+/.impeccable
+
+# 내부 자료 (제안서·리서치 원본) — 공개 저장소에 올리지 않는다
+/소스
