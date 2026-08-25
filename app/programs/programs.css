@@ -4,25 +4,25 @@
 .pgHero{background:var(--wnBg);overflow:hidden;position:relative}
 .pgHeroInner{position:relative;display:grid;grid-template-columns:1fr;gap:56px;padding-top:84px;padding-bottom:72px}
 .pgHero .eyebrow{color:var(--wnOrange)}
-.pgHero h1{font-size:50px;line-height:1.22;letter-spacing:-3.2px;margin:18px 0 20px;font-weight:800}
+.pgHero h1{font-size:34px;line-height:1.45;letter-spacing:-1px;margin:14px 0 16px;font-weight:700}
 .pgHero h1 em{font-style:normal;color:var(--wnOrange)}
 .pgHero>div>div>p,.pgHeroInner p{color:var(--wnMuted);font-size:16px;line-height:1.85;margin:0}
 .pgHeroBtns{display:flex;align-items:center;gap:22px;margin-top:32px;flex-wrap:wrap}
-.pgHeroBtns a:first-child{display:flex;align-items:center;gap:9px;background:var(--wnOrange);color:#fff;border-radius:999px;padding:14px 22px;font-weight:700;font-size:14px;text-decoration:none;transition:background .15s}
+.pgHeroBtns a:first-child{display:flex;align-items:center;gap:9px;background:var(--wnOrange);color:#fff;border-radius:8px;padding:13px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .15s}
 .pgHeroBtns a:first-child:hover{background:var(--wnOrangeDeep)}
 .pgHeroBtns a:last-child{display:flex;align-items:center;gap:4px;color:var(--wnInk);font-size:14px;font-weight:700;text-decoration:none}
 
 /* 스탯 밴드: 상하 헤어라인 + 큰 숫자 */
 .pgStats{list-style:none;margin:0;padding:34px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine)}
 .pgStats li{display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center}
-.pgStats b{font:700 40px 'DM Sans';color:var(--wnInk);letter-spacing:-1.5px}
+.pgStats b{font-size:28px;font-weight:700;color:var(--wnInk);letter-spacing:-.5px}
 .pgStats span{font-size:12px;color:var(--wnMuted)}
 
 /* 섹션 공통 */
 .pgSection{padding-top:82px}
 .pgHead{margin-bottom:32px}
-.pgHead small{font:700 11px 'DM Sans';letter-spacing:2.4px;color:#b9b5ad}
-.pgHead h2{font-size:30px;letter-spacing:-1.5px;margin:9px 0 0}
+.pgHead small{font-size:12px;font-weight:700;color:#a9a49b}
+.pgHead h2{font-size:22px;letter-spacing:-.5px;margin:8px 0 0}
 .pgHead p{color:var(--wnMuted);font-size:14px;line-height:1.75;margin:10px 0 0}
 
 /* 강사진 — 얇은 보더 화이트 카드 */
@@ -78,19 +78,18 @@
 .pgVodBody svg{color:var(--wnOrange);flex:0 0 auto;margin-top:3px}
 
 /* 하단 CTA — 블랙 라운드 컨테이너 */
-.pgCta{background:var(--wnDark);border-radius:32px;color:#fff;padding:60px 52px;margin:88px 0 40px;text-align:center;position:relative;overflow:hidden}
-.pgCta:before{content:'';position:absolute;width:360px;height:360px;border-radius:50%;background:radial-gradient(closest-side,#ff6b2c1f,transparent);left:-100px;bottom:-170px}
-.pgCta>span{position:relative;font:700 10px 'DM Sans';letter-spacing:1.8px;color:var(--wnOrange)}
-.pgCta h2{position:relative;font-size:28px;line-height:1.5;letter-spacing:-1.5px;margin:14px 0 12px}
+.pgCta{background:var(--wnDark);border-radius:16px;color:#fff;padding:60px 52px;margin:88px 0 40px;text-align:center;position:relative;overflow:hidden}
+.pgCta>span{position:relative;font-size:12px;font-weight:700;color:var(--wnOrange)}
+.pgCta h2{position:relative;font-size:22px;line-height:1.5;letter-spacing:-.5px;margin:12px 0 10px}
 .pgCta>p{position:relative;color:#9a9a9a;font-size:13px;margin:0}
 .pgCtaForm{position:relative;display:flex;gap:8px;max-width:440px;margin:28px auto 0}
-.pgCtaForm input{width:100%;min-width:0;border:0;outline:0;padding:14px 18px;border-radius:999px;font-size:13px;background:#fff}
-.pgCtaForm button{border:0;background:var(--wnOrange);color:#fff;font-weight:700;font-size:13px;border-radius:999px;padding:0 22px;white-space:nowrap;transition:background .15s}
+.pgCtaForm input{width:100%;min-width:0;border:0;outline:0;padding:13px 16px;border-radius:8px;font-size:13px;background:#fff}
+.pgCtaForm button{border:0;background:var(--wnOrange);color:#fff;font-weight:600;font-size:13px;border-radius:8px;padding:0 20px;white-space:nowrap;transition:background .15s}
 .pgCtaForm button:hover{background:var(--wnOrangeDeep)}
 
 @media(max-width:900px){
   .pgHeroInner{gap:44px;padding-top:56px;padding-bottom:56px}
-  .pgHero h1{font-size:38px;letter-spacing:-2.4px}
+  .pgHero h1{font-size:29px;letter-spacing:-.8px}
   .pgStats{grid-template-columns:1fr 1fr;gap:26px 12px;padding:26px 0}
   .pgStats b{font-size:30px}
   .pgMentors{grid-template-columns:1fr 1fr}
@@ -99,17 +98,17 @@
   .pgCta{padding:44px 28px}
 }
 @media(max-width:620px){
-  .pgHero h1{font-size:31px;letter-spacing:-1.8px}
+  .pgHero h1{font-size:25px;letter-spacing:-.6px}
   .pgHero h1 br,.pgHeroInner p br{display:none}
   .pgSection{padding-top:52px}
-  .pgHead h2{font-size:24px}
+  .pgHead h2{font-size:20px}
   .pgMentors{grid-template-columns:1fr}
   .pgTabs{margin-top:44px;overflow:auto;padding-bottom:6px}
   .pgLive article,.pgVodHead{padding:22px}
   .pgVodHead{padding-right:52px}
   .pgVodBody{margin:0 22px}
-  .pgCta{padding:36px 22px;margin:56px 0 24px;border-radius:24px}
-  .pgCta h2{font-size:21px}
+  .pgCta{padding:36px 22px;margin:56px 0 24px;border-radius:14px}
+  .pgCta h2{font-size:19px}
   .pgCta h2 br{display:none}
   .pgCtaForm{flex-direction:column}
   .pgCtaForm button{padding:14px}

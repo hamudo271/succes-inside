@@ -35,7 +35,7 @@ export default function About() {
     <main>
       <section className="abHero"><div className="wrap abHeroInner">
         <div>
-          <span className="abEyebrow">BUSINESS MEDIA PLATFORM</span>
+          <span className="abEyebrow">비즈니스 미디어 플랫폼</span>
           <h1>당신의 성공은<br /><em>기록되고 있습니까?</em></h1>
           <p>사업가의 성장 스토리를 검색되는 디지털 자산으로 남기는 인터뷰 미디어.</p>
           <div className="abHeroBtns">
@@ -45,30 +45,30 @@ export default function About() {
         </div>
         <div className="abPlay">
           <span className="abPlayBtn"><Play size={22} fill="currentColor" /></span>
-          <small>PLAY THE STORY</small>
+          <small>대표 인터뷰</small>
           <p>한 사람의 경험이<br />다음 사람의 길이 됩니다.</p>
         </div>
-        <span className="abScroll">SCROLL TO DISCOVER</span>
+        <span className="abScroll">아래로 스크롤</span>
       </div></section>
 
       <section className="wrap abSection" id="why">
-        <div className="abHead"><small>WHY US</small><h2>왜 성공인사이드인가</h2></div>
+        <div className="abHead"><small>왜 필요한가</small><h2>왜 성공인사이드인가</h2></div>
         <div className="abWhy">{why.map(w => <div key={w.title}><i>{w.icon}</i><b>{w.title}</b><p>{w.body}</p></div>)}</div>
       </section>
 
       <section className="abOs" id="os"><div className="wrap">
-        <div className="abHead dark"><small>SUCCESS OS</small><h2>한 번의 인터뷰가 브랜드 자산이 되기까지</h2><p>즉흥적인 인터뷰가 아니라, 촬영부터 기사·SEO·배포·리포트까지 하나의 자동화 파이프라인으로 운영합니다.</p></div>
+        <div className="abHead dark"><small>진행 과정</small><h2>한 번의 인터뷰가 브랜드 자산이 되기까지</h2><p>즉흥적인 인터뷰가 아니라, 촬영부터 기사·SEO·배포·리포트까지 하나의 자동화 파이프라인으로 운영합니다.</p></div>
         <div className="abSteps">{steps.map(s => <div key={s.n}><strong>{s.n}</strong><b>{s.title}</b><p>{s.body}</p></div>)}</div>
       </div></section>
 
       <section className="wrap abSection" id="get">
         <div className="abGet">
           <div>
-            <div className="abHead"><small>WHAT YOU GET</small><h2>고객이 얻는 6가지 가치</h2></div>
+            <div className="abHead"><small>제공 가치</small><h2>고객이 얻는 6가지 가치</h2></div>
             <ul>{gets.map(g => <li key={g}>{g}</li>)}</ul>
           </div>
           <div className="abGetCard">
-            <span>ONE INTERVIEW</span>
+            <span>인터뷰 자산</span>
             <b>한 번의 인터뷰가<br />계속 일하는 자산이 됩니다.</b>
             <p>광고와 달리 멈추지 않습니다. 발행 이후에도 검색과 AI 인용을 통해 24시간 새로운 고객에게 도달합니다.</p>
             <Link href="/programs">교육 과정도 함께 보기 <ChevronRight size={15} /></Link>
@@ -77,7 +77,7 @@ export default function About() {
       </section>
 
       <section className="wrap abSection" id="faq">
-        <div className="abHead"><small>FAQ</small><h2>자주 묻는 질문</h2></div>
+        <div className="abHead"><small>궁금한 점</small><h2>자주 묻는 질문</h2></div>
         <div className="abFaq">{faq.map((f, i) => <div key={f.q} className={open === i ? 'open' : ''}>
           <button onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}>
             <span>{f.q}</span>{open === i ? <Minus size={17} /> : <Plus size={17} />}

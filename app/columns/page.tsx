@@ -24,7 +24,7 @@ export default function Columns() {
     <SiteHeader active="columns" />
     <main>
       <section className="clHero"><div className="wrap">
-        <span className="eyebrow">SUCCESS INSIDE COLUMN</span>
+        <span className="eyebrow">성공인사이드 칼럼</span>
         <h1>일하는 사람의 생각을,<br /><em>매주 한 편의 칼럼으로.</em></h1>
         <p>경험 기록이 인사이트라면, 칼럼은 관점입니다.<br />먼저 가본 사람들이 지금 시장을 어떻게 읽는지 매주 전합니다.</p>
       </div></section>
@@ -44,12 +44,12 @@ export default function Columns() {
         <div className="clFeatureQuote">
           <i>“</i>
           <p>{featured.quote}</p>
-          <small>COLUMN OF THE WEEK</small>
+          <small>이번 주의 문장</small>
         </div>
       </div></section>
 
       <section className="wrap clSection">
-        <div className="clHead"><small>ALL COLUMNS</small><h2>전체 칼럼</h2></div>
+        <div className="clHead"><small>매주 발행</small><h2>전체 칼럼</h2></div>
         <div className="clCats">{cats.map(c => <button key={c} className={c === cat ? 'active' : ''} onClick={() => setCat(c)}>{c}</button>)}</div>
         <div className="clGrid">{filtered.map(c => <Link className="clCard" key={c.id} href={`/columns/${c.id}`}>
           <span className="clTag">{c.cat}</span>
@@ -68,7 +68,7 @@ export default function Columns() {
       </section>
 
       <section className="wrap clSection">
-        <div className="clHead"><small>COLUMNISTS</small><h2>고정 필진</h2><p>각자의 현장에서 일하며, 매주 돌아가며 씁니다.</p></div>
+        <div className="clHead"><small>함께 쓰는 사람들</small><h2>고정 필진</h2><p>각자의 현장에서 일하며, 매주 돌아가며 씁니다.</p></div>
         <div className="clWriters">{writers.map(w => <div key={w.name}>
           <span className="clAvatar big" style={{ background: w.color }}>{w.init}</span>
           <b>{w.name}</b><small>{w.role}</small><i>{w.topic}</i>
@@ -76,7 +76,7 @@ export default function Columns() {
       </section>
 
       <section className="wrap"><div className="clCta">
-        <span>WEEKLY COLUMN</span>
+        <span>주간 칼럼 구독</span>
         <h2>새 칼럼이 나오면<br />가장 먼저 받아보세요.</h2>
         <p>매주 월요일 아침, 한 편씩 메일로 보내드립니다.</p>
         <div className="clCtaForm"><input placeholder="이메일 주소" /><button>구독하기</button></div>

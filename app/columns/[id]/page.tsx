@@ -65,7 +65,7 @@ export default function ColumnDetail() {
       </article>
 
       <section className="wrap clSection">
-        <div className="clHead"><small>READ NEXT</small><h2>이어서 읽기</h2></div>
+        <div className="clHead"><small>다음 글</small><h2>이어서 읽기</h2></div>
         <div className="clGrid">{related.map(c => <Link className="clCard" key={c.id} href={`/columns/${c.id}`}>
           <span className="clTag">{c.cat}</span>
           <h3>{c.title}</h3>
@@ -81,7 +81,7 @@ export default function ColumnDetail() {
       </section>
 
       <section className="wrap"><div className="clCta">
-        <span>WEEKLY COLUMN</span>
+        <span>주간 칼럼 구독</span>
         <h2>새 칼럼이 나오면<br />가장 먼저 받아보세요.</h2>
         <p>매주 월요일 아침, 한 편씩 메일로 보내드립니다.</p>
         <div className="clCtaForm"><input placeholder="이메일 주소" /><button>구독하기</button></div>
