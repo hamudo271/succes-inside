@@ -7,64 +7,64 @@
 .clHero p{color:var(--wnMuted);font-size:15px;line-height:1.85;margin:0}
 
 /* 이번 주 칼럼 — 블랙 라운드 피처 카드 */
-.clFeature{background:var(--wnDark);border-radius:16px;color:#fff;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;padding:40px 44px;position:relative;overflow:hidden}
+.clFeature{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;color:var(--wnInk);display:grid;grid-template-columns:1.15fr .85fr;gap:48px;padding:40px 44px;position:relative;overflow:hidden}
 .clFeatureBody{position:relative}
-.clBadge{display:inline-block;font-size:11px;font-weight:700;color:#d4550f;background:var(--wnPeach);border-radius:20px;padding:5px 12px;margin-right:10px}
-.clTag{font-size:11px;font-weight:800;color:#d4550f}
+.clBadge{display:inline-block;font-size:11px;font-weight:700;color:var(--wnPeachInk);background:var(--wnPeach);border-radius:20px;padding:5px 12px;margin-right:10px}
+.clTag{font-size:11px;font-weight:800;color:var(--wnOrangeText)}
 .clTag.light{color:var(--wnOrange)}
 .clFeatureBody h2{font-size:22px;line-height:1.5;letter-spacing:-.5px;margin:14px 0 10px}
-.clFeatureBody>p{color:#9a9a9a;font-size:13.5px;line-height:1.8;margin:0 0 24px}
+.clFeatureBody>p{color:var(--wnMuted);font-size:13.5px;line-height:1.8;margin:0 0 24px}
 .clAuthor{display:flex;align-items:center;gap:10px}
 .clAvatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;flex:0 0 auto}
 .clAuthor div{display:flex;flex-direction:column}
 .clAuthor b{font-size:12.5px}
-.clAuthor small{display:flex;align-items:center;gap:3px;font-size:10.5px;color:#8f8f8f;margin-top:3px}
+.clAuthor small{display:flex;align-items:center;gap:3px;font-size:10.5px;color:#8f8a84;margin-top:3px}
 .clRead{display:inline-flex;align-items:center;gap:7px;margin-top:24px;border:0;border-radius:8px;background:var(--wnOrange);color:#fff;padding:12px 18px;font-size:13.5px;font-weight:600;transition:background .15s}
 .clRead:hover{background:var(--wnOrangeDeep)}
-.clFeatureQuote{position:relative;border-left:1px solid #2c2c2c;padding-left:48px;display:flex;flex-direction:column;justify-content:center}
+.clFeatureQuote{position:relative;border-left:1px solid var(--wnLine);padding-left:48px;display:flex;flex-direction:column;justify-content:center}
 .clFeatureQuote i{display:none}
 .clFeatureQuote p{font-size:18px;line-height:1.7;letter-spacing:-.4px;margin:0 0 18px}
-.clFeatureQuote small{font-size:11px;font-weight:600;color:#8a8a8a}
+.clFeatureQuote small{font-size:11px;font-weight:600;color:var(--wnFaint)}
 
 /* 섹션 공통 */
 .clSection{padding-top:88px}
-.clHead small{font-size:12px;font-weight:700;color:#a9a49b}
+.clHead small{font-size:12px;font-weight:700;color:#8f8a84}
 .clHead h2{font-size:22px;letter-spacing:-.5px;margin:8px 0 0}
 .clHead p{color:var(--wnMuted);font-size:14px;line-height:1.75;margin:10px 0 0}
 
 /* 카테고리 필터 */
 .clCats{display:flex;gap:8px;margin:28px 0 20px;overflow:auto;padding-bottom:6px}
-.clCats button{border:1px solid var(--wnLine);background:#fff;color:#8b8b86;padding:9px 16px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
-.clCats button.active{background:var(--wnInk);border-color:var(--wnInk);color:#fff;font-weight:700}
+.clCats button{border:1px solid var(--wnLine);background:var(--wnSurface);color:#8f8a84;padding:9px 16px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.clCats button.active{background:var(--wnInk);border-color:var(--wnInk);color:var(--wnBg);font-weight:700}
 
 /* 칼럼 목록 — 얇은 보더 화이트 카드(상세로 이동하는 링크) */
 .clGrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.clCard{border:1px solid var(--wnLine);border-radius:16px;background:#fff;padding:28px;display:flex;flex-direction:column;transition:border-color .18s,transform .18s,box-shadow .18s}
-.clCard:hover{border-color:#ffcdb0;transform:translateY(-3px);box-shadow:0 14px 30px #d4550f0d}
+.clCard{border:1px solid var(--wnLine);border-radius:16px;background:var(--wnSurface);padding:28px;display:flex;flex-direction:column;transition:border-color .18s,transform .18s,box-shadow .18s}
+.clCard:hover{border-color:#4a3324;transform:translateY(-3px);box-shadow:0 14px 30px #00000059}
 .clCard h3{font-size:18px;line-height:1.5;letter-spacing:-.8px;margin:10px 0 8px;color:var(--wnInk)}
 .clCard>p{font-size:13px;line-height:1.75;color:var(--wnMuted);margin:0 0 22px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.clCardFoot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto;padding-top:18px;border-top:1px solid #f2efe8}
-.clCardFoot .clAuthor small{color:#a3a09a}
-.clMeta{font-size:10.5px;color:#a3a09a;white-space:nowrap}
+.clCardFoot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto;padding-top:18px;border-top:1px solid var(--wnLine2)}
+.clCardFoot .clAuthor small{color:#8f8a84}
+.clMeta{font-size:10.5px;color:#8f8a84;white-space:nowrap}
 .clEmpty{text-align:center;color:var(--wnMuted);padding:64px 0;font-size:13.5px}
 .clMore{margin:32px auto 0;display:flex;align-items:center;gap:5px;border:0;background:var(--wnGray);color:#fff;border-radius:9px;padding:13px 22px;font-size:13px;font-weight:600;transition:background .15s}
 .clMore:hover{background:var(--wnInk)}
 
 /* 고정 필진 */
 .clWriters{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.clWriters>div{border:1px solid var(--wnLine);border-radius:16px;background:#fff;padding:24px;display:flex;flex-direction:column}
+.clWriters>div{border:1px solid var(--wnLine);border-radius:16px;background:var(--wnSurface);padding:24px;display:flex;flex-direction:column}
 .clAvatar.big{width:44px;height:44px;font-size:14px;margin-bottom:14px}
 .clWriters b{font-size:15px;letter-spacing:-.4px}
-.clWriters small{font-size:11px;color:#a3a09a;margin-top:4px}
-.clWriters i{font-style:normal;font-size:11px;color:#d4550f;font-weight:700;margin-top:13px;padding-top:12px;border-top:1px solid #f2efe8;line-height:1.5}
+.clWriters small{font-size:11px;color:#8f8a84;margin-top:4px}
+.clWriters i{font-style:normal;font-size:11px;color:var(--wnOrangeText);font-weight:700;margin-top:13px;padding-top:12px;border-top:1px solid var(--wnLine2);line-height:1.5}
 
 /* 하단 구독 CTA — 블랙 라운드 컨테이너 */
-.clCta{background:var(--wnDark);border-radius:16px;color:#fff;padding:60px 52px;margin:88px 0 40px;text-align:center;position:relative;overflow:hidden}
+.clCta{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;color:var(--wnInk);padding:60px 52px;margin:88px 0 40px;text-align:center;position:relative;overflow:hidden}
 .clCta>span{position:relative;font-size:12px;font-weight:700;color:var(--wnOrange)}
 .clCta h2{position:relative;font-size:22px;line-height:1.5;letter-spacing:-.5px;margin:12px 0 10px}
-.clCta>p{position:relative;color:#9a9a9a;font-size:13px;margin:0}
+.clCta>p{position:relative;color:var(--wnMuted);font-size:13px;margin:0}
 .clCtaForm{position:relative;display:flex;gap:8px;max-width:440px;margin:28px auto 0}
-.clCtaForm input{width:100%;min-width:0;border:0;outline:0;padding:13px 16px;border-radius:8px;font-size:13px;background:#fff}
+.clCtaForm input{width:100%;min-width:0;border:0;outline:0;padding:13px 16px;border-radius:8px;font-size:13px;background:var(--wnSurface2);color:var(--wnInk)}
 .clCtaForm button{border:0;background:var(--wnOrange);color:#fff;font-weight:600;font-size:13px;border-radius:8px;padding:0 20px;white-space:nowrap;transition:background .15s}
 .clCtaForm button:hover{background:var(--wnOrangeDeep)}
 
@@ -78,20 +78,20 @@
 .clArtMeta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:30px;padding:18px 0;border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine)}
 
 .clArt{max-width:720px;margin:0 auto;padding-top:44px}
-.clArt p{font-size:15px;line-height:1.95;color:#3e3e3a;margin:0 0 22px}
+.clArt p{font-size:15px;line-height:1.95;color:var(--wnInk2);margin:0 0 22px}
 .clArt h2{font-size:21px;letter-spacing:-1px;line-height:1.5;margin:44px 0 16px}
-.clPull{background:var(--wnDark);border-radius:12px;color:#fff;padding:26px 30px;margin:34px 0}
+.clPull{background:var(--wnSurface2);border:1px solid var(--wnLine);border-radius:12px;color:var(--wnInk);padding:26px 30px;margin:34px 0}
 .clPull i{display:none}
-.clPull p{font-size:17px;line-height:1.7;letter-spacing:-.3px;color:#fff;margin:0}
+.clPull p{font-size:17px;line-height:1.7;letter-spacing:-.3px;color:var(--wnInk);margin:0}
 .clOutro{border-top:1px solid var(--wnLine);padding-top:26px;margin-top:36px}
 
-.clWriterCard{display:flex;align-items:flex-start;gap:16px;border:1px solid var(--wnLine);border-radius:16px;background:#fff;padding:26px;margin-top:48px}
+.clWriterCard{display:flex;align-items:flex-start;gap:16px;border:1px solid var(--wnLine);border-radius:16px;background:var(--wnSurface);padding:26px;margin-top:48px}
 .clWriterCard .clAvatar.big{margin-bottom:0}
 .clWriterCard>div{flex:1;display:flex;flex-direction:column}
 .clWriterCard b{font-size:14.5px}
-.clWriterCard small{font-size:11px;color:#a3a09a;margin-top:3px}
+.clWriterCard small{font-size:11px;color:#8f8a84;margin-top:3px}
 .clWriterCard>div>p{font-size:12.5px;color:var(--wnMuted);margin:10px 0 0;line-height:1.7}
-.clWriterCard>a{display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;font-size:12px;font-weight:700;color:#d4550f;background:var(--wnPeach);border-radius:9px;padding:11px 15px;white-space:nowrap}
+.clWriterCard>a{display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;font-size:12px;font-weight:700;color:var(--wnPeachInk);background:var(--wnPeach);border-radius:9px;padding:11px 15px;white-space:nowrap}
 
 .clNotFound{padding:110px 24px 130px;text-align:center}
 .clNotFound h1{font-size:28px;letter-spacing:-1.5px;margin:0 0 10px}

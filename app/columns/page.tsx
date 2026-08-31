@@ -12,7 +12,7 @@ const cats = ['전체', '창업', '마케팅', '브랜딩', '커리어', 'AI·�
 const writers = [
   { name: '정지우', role: 'SaaS 창업가', topic: '창업과 성장 전략', init: '정', color: '#d4550f' },
   { name: '이하은', role: '그로스 마케터', topic: '검색과 콘텐츠 마케팅', init: '이', color: '#ff6b2c' },
-  { name: '오민재', role: '1인 기업 운영자', topic: '독립과 생존의 기술', init: '오', color: '#2b2b2b' },
+  { name: '오민재', role: '1인 기업 운영자', topic: '독립과 생존의 기술', init: '오', color: '#4a4540' },
   { name: '윤태호', role: 'VC 심사역', topic: '투자자의 시선', init: '윤', color: '#c2865a' },
 ];
 

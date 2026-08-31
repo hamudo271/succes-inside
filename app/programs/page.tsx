@@ -7,11 +7,11 @@ import SiteFooter from '../components/SiteFooter';
 import './programs.css';
 
 const mentors = [
-  { name: '김서준', role: '커머스 브랜드 대표', course: '첫 고객 100명 만들기', init: '김', color: '#1a1a1a' },
+  { name: '김서준', role: '커머스 브랜드 대표', course: '첫 고객 100명 만들기', init: '김', color: '#4a4540' },
   { name: '이하은', role: '그로스 마케터', course: '그로스 마케팅', init: '이', color: '#ff6b2c' },
-  { name: '박도윤', role: 'AI 프로덕트 빌더', course: 'AI 업무 자동화 설계', init: '박', color: '#3f3f3f' },
+  { name: '박도윤', role: 'AI 프로덕트 빌더', course: 'AI 업무 자동화 설계', init: '박', color: '#57524b' },
   { name: '최유진', role: '브랜드 디렉터', course: '가격 경쟁에서 벗어나는 브랜딩', init: '최', color: '#e0824a' },
-  { name: '오민재', role: '1인 기업 운영자', course: '1인 기업 생존 부트캠프', init: '오', color: '#2b2b2b' },
+  { name: '오민재', role: '1인 기업 운영자', course: '1인 기업 생존 부트캠프', init: '오', color: '#4a4540' },
   { name: '정지우', role: 'SaaS 창업가', course: '사업계획서 완성 워크숍', init: '정', color: '#d4550f' },
   { name: '한소연', role: '콘텐츠 전략가', course: '읽히는 글을 쓰는 법', init: '한', color: '#8a5a3b' },
   { name: '윤태호', role: 'VC 심사역', course: '창업가의 재무 기준 세우기', init: '윤', color: '#c2865a' },
