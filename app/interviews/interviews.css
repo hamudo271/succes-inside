@@ -1,0 +1,96 @@
+/* /interviews — 인터뷰 아카이브. globals.css의 --wn* 토큰 사용 */
+
+.ivHero{padding-top:60px;padding-bottom:44px}
+.ivHero h1{font-size:34px;line-height:1.45;letter-spacing:-1px;margin:14px 0 16px;font-weight:700}
+.ivHero h1 em{font-style:normal;color:var(--wnOrange)}
+.ivHero p{color:var(--wnMuted);font-size:15px;line-height:1.85;margin:0}
+
+.ivStats{list-style:none;margin:34px 0 0;padding:26px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;border-top:1px solid var(--wnLine)}
+.ivStats li{display:flex;flex-direction:column;gap:6px}
+.ivStats b{font-size:26px;font-weight:700;letter-spacing:-.5px;color:var(--wnInk)}
+.ivStats span{font-size:12px;color:var(--wnMuted)}
+
+/* 대표 인터뷰 */
+.ivFeature{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;
+  background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;padding:24px;transition:border-color .18s}
+.ivFeature:hover{border-color:#4a3324}
+.ivFeatureThumb{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:var(--wnSurface2)}
+.ivFeatureThumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ivBadge{display:inline-block;font-size:11px;font-weight:700;color:var(--wnPeachInk);background:var(--wnPeach);border-radius:20px;padding:5px 12px}
+.ivFeatureBody h2{font-size:22px;line-height:1.5;letter-spacing:-.5px;margin:14px 0 10px}
+.ivFeatureBody>p{font-size:13.5px;line-height:1.8;color:var(--wnMuted);margin:0 0 18px}
+.ivMeta{display:flex;flex-wrap:wrap;gap:14px;padding-top:16px;border-top:1px solid var(--wnLine2)}
+.ivMeta span{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#8f8a84}
+.ivMeta span:first-child{color:var(--wnOrangeText);font-weight:700}
+.ivWatch{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:13px;font-weight:600;color:var(--wnInk)}
+.ivFeature:hover .ivWatch{color:var(--wnOrange)}
+
+/* 재생 버튼 */
+.ivPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:54px;height:54px;border-radius:50%;background:var(--wnOrange);color:#fff;
+  display:grid;place-items:center;transition:transform .18s}
+.ivPlay.sm{width:38px;height:38px;opacity:0;transition:opacity .18s}
+.ivCard:hover .ivPlay.sm{opacity:1}
+.ivFeature:hover .ivPlay{transform:translate(-50%,-50%) scale(1.08)}
+
+/* 섹션 */
+.ivSection{padding-top:80px}
+.ivHead small{font-size:12px;font-weight:700;color:#8f8a84}
+.ivHead h2{font-size:22px;letter-spacing:-.5px;margin:8px 0 0}
+.ivCats{display:flex;gap:8px;margin:26px 0 20px;overflow:auto;padding-bottom:6px}
+.ivCats button{border:1px solid var(--wnLine);background:var(--wnSurface);color:#8f8a84;
+  padding:9px 16px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.ivCats button.active{background:var(--wnInk);border-color:var(--wnInk);color:var(--wnBg);font-weight:700}
+
+/* 카드 그리드 */
+.ivGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.ivCard{border:1px solid var(--wnLine);border-radius:14px;background:var(--wnSurface);overflow:hidden;
+  display:flex;flex-direction:column;transition:border-color .18s,transform .18s}
+.ivCard:hover{border-color:#4a3324;transform:translateY(-3px)}
+.ivThumb{position:relative;aspect-ratio:16/9;background:var(--wnSurface2);overflow:hidden}
+.ivThumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.ivCard:hover .ivThumb img{transform:scale(1.04)}
+.ivDur{position:absolute;right:8px;bottom:8px;background:#000000c4;color:#fff;
+  font-size:11px;font-weight:600;padding:2px 6px;border-radius:4px}
+.ivCardBody{padding:18px;display:flex;flex-direction:column;flex:1}
+.ivTag{font-size:11px;font-weight:800;color:var(--wnOrangeText)}
+.ivCard h3{font-size:15px;line-height:1.55;letter-spacing:-.3px;margin:8px 0 0;color:var(--wnInk);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ivCardBody>p{font-size:12.5px;line-height:1.7;color:var(--wnMuted);margin:8px 0 0;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ivTags{color:#7d786f !important;font-size:11.5px !important}
+.ivCardFoot{display:flex;justify-content:space-between;gap:10px;margin-top:auto;padding-top:14px}
+.ivCardFoot span{display:flex;align-items:center;gap:4px;font-size:11px;color:#8f8a84}
+
+/* 출연 신청 CTA */
+.ivCta{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;
+  padding:56px 44px;margin:80px 0 40px;text-align:center}
+.ivCta>span{font-size:12px;font-weight:700;color:var(--wnOrange)}
+.ivCta h2{font-size:22px;line-height:1.5;letter-spacing:-.5px;margin:12px 0 10px}
+.ivCta>p{color:var(--wnMuted);font-size:13px;margin:0}
+.ivCtaBtns{display:flex;justify-content:center;gap:10px;margin-top:26px;flex-wrap:wrap}
+.ivCtaBtns a{display:inline-flex;align-items:center;gap:7px;background:var(--wnOrange);color:#fff;
+  border-radius:8px;padding:13px 20px;font-size:13.5px;font-weight:600;transition:background .15s}
+.ivCtaBtns a:hover{background:var(--wnOrangeDeep)}
+.ivCtaBtns a.ghost{background:none;border:1px solid var(--wnLine);color:var(--wnInk)}
+.ivCtaBtns a.ghost:hover{border-color:#4a453f;background:var(--wnSurface2)}
+
+@media(max-width:900px){
+  .ivStats{grid-template-columns:1fr 1fr;gap:22px}
+  .ivStats b{font-size:22px}
+  .ivFeature{grid-template-columns:1fr;gap:22px}
+  .ivGrid{grid-template-columns:1fr 1fr}
+  .ivCta{padding:44px 26px}
+}
+@media(max-width:620px){
+  .ivHero{padding-top:44px}
+  .ivHero h1{font-size:27px;letter-spacing:-.6px}
+  .ivHero h1 br,.ivHero p br{display:none}
+  .ivSection{padding-top:56px}
+  .ivGrid{grid-template-columns:1fr}
+  .ivFeatureBody h2{font-size:19px}
+  .ivCta{padding:36px 22px;margin:56px 0 24px}
+  .ivCta h2{font-size:19px}
+  .ivCta h2 br{display:none}
+  .ivCtaBtns a{width:100%;justify-content:center}
+}
