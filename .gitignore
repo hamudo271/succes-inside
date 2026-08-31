@@ -9,8 +9,9 @@ next-env.d.ts
 # build artifacts
 *.tsbuildinfo
 
-# env
+# env (예시 파일은 비밀정보가 없으므로 추적한다)
 .env*
+!.env.example
 
 # misc
 .DS_Store

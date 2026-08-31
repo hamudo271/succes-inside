@@ -1,26 +1,19 @@
-'use client';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowUpRight, ChevronRight, Clock } from 'lucide-react';
 import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
-import { columns } from '../data';
+import { getColumns, getColumn } from '../../../lib/columns';
 import '../columns.css';
 
-export default function ColumnDetail() {
-  const { id } = useParams<{ id: string }>();
-  const post = columns.find(c => c.id === id);
+export const dynamic = 'force-dynamic';
 
-  if (!post) return <>
-    <SiteHeader active="columns" />
-    <main><div className="wrap clNotFound">
-      <h1>칼럼을 찾을 수 없습니다.</h1>
-      <p>주소가 바뀌었거나 삭제된 칼럼일 수 있습니다.</p>
-      <Link href="/columns">칼럼 목록으로 <ChevronRight size={15} /></Link>
-    </div></main>
-    <SiteFooter />
-  </>;
+export default async function ColumnDetail({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const post = await getColumn(id);
+  if (!post) notFound();
 
+  const columns = await getColumns();
   const related = [
     ...columns.filter(c => c.id !== post.id && c.cat === post.cat),
     ...columns.filter(c => c.id !== post.id && c.cat !== post.cat),
