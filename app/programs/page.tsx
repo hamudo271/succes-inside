@@ -90,6 +90,7 @@ export default function Programs() {
     <main>
       <section className="pgHero"><div className="wrap pgHeroInner">
         <div>
+          <span className="eyebrow">성공인사이드 교육 과정</span>
           <h1>다음 단계로 가는 길을,{' '}<br /><em>먼저 가본 사람과 함께.</em></h1>
           <p>성공인사이드 교육 과정은 이론이 아니라 실제로 해본 사람의 순서를 배웁니다.{' '}<br />내 사업과 커리어에 바로 적용할 결과물을 들고 나가는 것을 목표로 합니다.</p>
           <div className="pgHeroBtns">
@@ -100,7 +101,7 @@ export default function Programs() {
       </div></section>
 
       <section className="wrap pgSection">
-        <div className="pgHead"><h2>먼저 가본 실무자와 함께합니다</h2><p>성공인사이드에서 경험을 나누는 멤버가 직접 과정을 이끕니다.</p></div>
+        <div className="pgHead"><small>함께하는 사람들</small><h2>먼저 가본 실무자와 함께합니다</h2><p>성공인사이드에서 경험을 나누는 멤버가 직접 과정을 이끕니다.</p></div>
         <div className="pgMentors">{mentors.map(m => <div className="pgMentor" key={m.name}>
           <span className="pgAvatar" style={{ background: m.color }}>{m.init}</span>
           <b>{m.name}</b><small>{m.role}</small><i>{m.course}</i>
@@ -110,7 +111,7 @@ export default function Programs() {
       <div className="wrap pgTabs">{tabs.map(t => <button key={t.k} className={tab === t.k ? 'active' : ''} onClick={() => setTab(t.k)}>{t.l}</button>)}</div>
 
       {showLive && <section className="wrap pgSection" id="live">
-        <div className="pgHead"><h2>정기 과정</h2><p>기수제로 함께 진행합니다. 매주 과제와 피드백으로 결과물을 완성합니다.</p></div>
+        <div className="pgHead"><small>기수제 운영</small><h2>정기 과정</h2><p>기수제로 함께 진행합니다. 매주 과제와 피드백으로 결과물을 완성합니다.</p></div>
         <div className="pgLive">{live.map(c => <article key={c.id}>
           <div className="pgLiveTop">
             <span className={'pgBadge' + (c.badge === '모집중' ? ' on' : '')}>{c.badge}</span>
@@ -127,7 +128,7 @@ export default function Programs() {
       </section>}
 
       {showVod && <section className="wrap pgSection" id="vod">
-        <div className="pgHead"><h2>VOD 과정</h2><p>원하는 시점에 바로 시작합니다. 강사 이력과 학습 내용을 확인하고 선택하세요.</p></div>
+        <div className="pgHead"><small>언제든 시작</small><h2>VOD 과정</h2><p>원하는 시점에 바로 시작합니다. 강사 이력과 학습 내용을 확인하고 선택하세요.</p></div>
         <div className="pgVod">{vod.map(c => <article key={c.id} className={open === c.id ? 'open' : ''}>
           <button className="pgVodHead" onClick={() => setOpen(open === c.id ? null : c.id)} aria-expanded={open === c.id}>
             <span className="pgTag">{c.tag}</span>

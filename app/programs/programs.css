@@ -4,7 +4,7 @@
 .pgHero{background:var(--wnBg);overflow:hidden;position:relative}
 .pgHeroInner{position:relative;display:grid;grid-template-columns:1fr;gap:56px;padding-top:84px;padding-bottom:72px}
 .pgHero .eyebrow{color:var(--wnOrange)}
-.pgHero h1{font-family:var(--fDisplay);font-weight:900;font-size:clamp(27px,3.4vw,40px);line-height:1.34;letter-spacing:-.02em;margin:0 0 16px;word-break:keep-all;text-wrap:balance}
+.pgHero h1{font-size:34px;line-height:1.45;letter-spacing:-1px;margin:14px 0 16px;font-weight:700}
 .pgHero h1 em{font-style:normal;color:var(--wnOrange)}
 .pgHero>div>div>p,.pgHeroInner p{color:var(--wnMuted);font-size:16px;line-height:1.85;margin:0}
 .pgHeroBtns{display:flex;align-items:center;gap:22px;margin-top:32px;flex-wrap:wrap}
@@ -22,7 +22,7 @@
 .pgSection{padding-top:82px}
 .pgHead{margin-bottom:32px}
 .pgHead small{font-size:12px;font-weight:700;color:#8f8a84}
-.pgHead h2{font-family:var(--fDisplay);font-weight:900;font-size:26px;letter-spacing:-.02em;margin:0;word-break:keep-all}
+.pgHead h2{font-size:22px;letter-spacing:-.5px;margin:8px 0 0}
 .pgHead p{color:var(--wnMuted);font-size:14px;line-height:1.75;margin:10px 0 0}
 
 /* 강사진 — 얇은 보더 화이트 카드 */
@@ -92,7 +92,7 @@
 
 @media(max-width:900px){
   .pgHeroInner{gap:44px;padding-top:56px;padding-bottom:56px}
-  
+  .pgHero h1{font-size:29px;letter-spacing:-.8px}
   .pgStats{grid-template-columns:1fr 1fr;gap:26px 12px;padding:26px 0}
   .pgStats b{font-size:30px}
   .pgMentors{grid-template-columns:1fr 1fr}
@@ -101,7 +101,7 @@
   .pgCta{padding:44px 28px}
 }
 @media(max-width:620px){
-  
+  .pgHero h1{font-size:25px;letter-spacing:-.6px}
   .pgHero h1 br,.pgHeroInner p br{display:none}
   .pgSection{padding-top:52px}
   .pgHead h2{font-size:20px}

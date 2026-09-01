@@ -21,6 +21,7 @@ export default function Interviews() {
     <SiteHeader active="interviews" />
     <main>
       <section className="ivHero"><div className="wrap">
+        <span className="eyebrow">인터뷰 아카이브</span>
         <h1>기록된 사장님들의{' '}<br /><em>{CHANNEL.interviews}가지 성장 서사.</em></h1>
         <p>{CHANNEL.since}년부터 전국의 사업가를 찾아가 하루를 따라붙고 물었습니다.{' '}<br />결과가 아니라 결정의 이유를 남기는 것이 성공인사이드의 일입니다.</p>
         <ul className="ivStats">
@@ -51,7 +52,7 @@ export default function Interviews() {
       </a></section>
 
       <section className="wrap ivSection">
-        <div className="ivHead"><h2>전체 기록</h2></div>
+        <div className="ivHead"><small>전체 기록</small><h2>인터뷰 아카이브</h2></div>
         <div className="ivCats">{cats.map(c => (
           <button key={c} className={c === cat ? 'active' : ''} onClick={() => setCat(c)}>{c}</button>
         ))}</div>

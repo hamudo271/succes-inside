@@ -1,14 +1,14 @@
 /* /interviews — 인터뷰 아카이브. globals.css의 --wn* 토큰 사용 */
 
 .ivHero{padding-top:60px;padding-bottom:44px}
-.ivHero h1{font-family:var(--fDisplay);font-weight:900;font-size:clamp(27px,3.4vw,40px);line-height:1.34;letter-spacing:-.02em;margin:0 0 16px;word-break:keep-all;text-wrap:balance}
+.ivHero h1{font-size:34px;line-height:1.45;letter-spacing:-1px;margin:14px 0 16px;font-weight:700}
 .ivHero h1 em{font-style:normal;color:var(--wnOrange)}
 .ivHero p{color:var(--wnMuted);font-size:15px;line-height:1.85;margin:0}
 
-.ivStats{list-style:none;margin:30px 0 0;padding:26px 0 0;display:flex;gap:48px;flex-wrap:wrap;border-top:1px solid var(--wnRule)}
-.ivStats li{display:flex;flex-direction:column-reverse;gap:5px}
-.ivStats b{font-family:var(--fDisplay);font-weight:900;font-size:30px;line-height:1;letter-spacing:-.02em;color:var(--wnInk)}
-.ivStats span{font-size:11.5px;color:var(--wnMuted)}
+.ivStats{list-style:none;margin:34px 0 0;padding:26px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;border-top:1px solid var(--wnLine)}
+.ivStats li{display:flex;flex-direction:column;gap:6px}
+.ivStats b{font-size:26px;font-weight:700;letter-spacing:-.5px;color:var(--wnInk)}
+.ivStats span{font-size:12px;color:var(--wnMuted)}
 
 /* 대표 인터뷰 */
 .ivFeature{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;
@@ -36,7 +36,7 @@
 /* 섹션 */
 .ivSection{padding-top:80px}
 .ivHead small{font-size:12px;font-weight:700;color:#8f8a84}
-.ivHead h2{font-family:var(--fDisplay);font-weight:900;font-size:26px;letter-spacing:-.02em;margin:0;word-break:keep-all}
+.ivHead h2{font-size:22px;letter-spacing:-.5px;margin:8px 0 0}
 .ivCats{display:flex;gap:8px;margin:26px 0 20px;overflow:auto;padding-bottom:6px}
 .ivCats button{border:1px solid var(--wnLine);background:var(--wnSurface);color:#8f8a84;
   padding:9px 16px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
@@ -76,15 +76,15 @@
 .ivCtaBtns a.ghost:hover{border-color:#4a453f;background:var(--wnSurface2)}
 
 @media(max-width:900px){
-  .ivStats{list-style:none;margin:30px 0 0;padding:26px 0 0;display:flex;gap:48px;flex-wrap:wrap;border-top:1px solid var(--wnRule)}
-  .ivStats b{font-family:var(--fDisplay);font-weight:900;font-size:30px;line-height:1;letter-spacing:-.02em;color:var(--wnInk)}
+  .ivStats{grid-template-columns:1fr 1fr;gap:22px}
+  .ivStats b{font-size:22px}
   .ivFeature{grid-template-columns:1fr;gap:22px}
   .ivGrid{grid-template-columns:1fr 1fr}
   .ivCta{padding:44px 26px}
 }
 @media(max-width:620px){
   .ivHero{padding-top:44px}
-  
+  .ivHero h1{font-size:27px;letter-spacing:-.6px}
   .ivHero h1 br,.ivHero p br{display:none}
   .ivSection{padding-top:56px}
   .ivGrid{grid-template-columns:1fr}

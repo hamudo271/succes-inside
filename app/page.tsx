@@ -20,31 +20,29 @@ export default function Home() {
     [category, query],
   );
   const popular = useMemo(() => [...interviews].sort((a, b) => b.views - a.views).slice(0, 4), []);
-  // 히어로 배경: 조회수 상위 12편의 실제 썸네일
-  const wall = useMemo(() => [...interviews].sort((a, b) => b.views - a.views).slice(0, 12), []);
+  const latest = interviews[0];
 
   return <>
     <SiteHeader active="home" />
     <main>
-      <section className="hero">
-        {/* 아카이브 자체가 배경 증거 — 실제 인터뷰 썸네일 */}
-        <div className="heroWall" aria-hidden="true">
-          {wall.map(v => <i key={v.id} style={{ backgroundImage: `url(${thumb(v.id)})` }} />)}
-        </div>
-        <div className="wrap heroInner">
-          <h1 className="dsp rise">전국의 사장님을 찾아가{' '}<br />하루를 <em>따라붙고 기록합니다.</em></h1>
-          <p className="rise2">성공한 결과가 아니라 결정의 이유를 남깁니다.{' '}<br />{CHANNEL.since}년부터 {CHANNEL.interviews}명의 하루가 여기 있습니다.</p>
-          <div className="heroBtns rise3">
+      <section className="hero"><div className="wrap heroInner">
+        <div>
+          <span className="eyebrow">먼저 가본 사람들의 진짜 이야기</span>
+          <h1>성공은 혼자보다{' '}<br /><em>함께일 때 빨라집니다.</em></h1>
+          <p>전국의 사업가를 찾아가 하루를 따라붙고 기록합니다.{' '}<br />결과가 아니라 결정의 이유를 남기는 인터뷰 미디어.</p>
+          <div className="heroBtns">
             <Link href="/apply">출연 신청하기 <ArrowUpRight size={18} /></Link>
             <a href="#feed">인터뷰 둘러보기 <ChevronRight size={18} /></a>
           </div>
-          <dl className="heroFacts rise3">
-            <div><dt>기록된 인터뷰</dt><dd className="dsp">{CHANNEL.interviews}</dd></div>
-            <div><dt>누적 조회수</dt><dd className="dsp">{CHANNEL.totalViewsText}</dd></div>
-            <div><dt>채널 구독자</dt><dd className="dsp">{CHANNEL.subscribers}</dd></div>
-          </dl>
         </div>
-      </section>
+        <div className="heroCard">
+          <p>“{latest.title.length > 34 ? latest.title.slice(0, 34) + '…' : latest.title}”</p>
+          <div className="miniStats">
+            <span><b>{CHANNEL.interviews}</b> 기록된 인터뷰</span>
+            <span><b>{CHANNEL.totalViewsText}</b> 누적 조회수</span>
+          </div>
+        </div>
+      </div></section>
 
       <section className="trend wrap">
         <span><TrendingUp size={17} /> 많이 찾는 주제</span>
@@ -55,7 +53,7 @@ export default function Home() {
       <div className="content wrap" id="feed">
         <section className="feed">
           <div className="sectionHead">
-            <div><h2>최근 인터뷰</h2><p className="secSub">{CHANNEL.since}년부터 {CHANNEL.interviews}편을 기록했습니다.</p></div>
+            <div><small>{CHANNEL.since}년부터 기록</small><h2>최근 인터뷰</h2></div>
             <div className="search">
               <Search size={18} />
               <input placeholder="업종이나 키워드를 검색하세요" value={query} onChange={e => setQuery(e.target.value)} />
