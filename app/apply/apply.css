@@ -46,8 +46,7 @@
 .apDone p{color:var(--wnMuted);font-size:13.5px;line-height:1.8;margin:0}
 
 /* 허니팟 — 화면·스크린리더 모두에서 감춘다 */
-.hp{position:absolute !important;width:1px;height:1px;overflow:hidden;
-  clip:rect(0 0 0 0);white-space:nowrap;border:0;padding:0;margin:-1px}
+input.hp{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;border:0!important;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;left:0;top:0}
 
 @media(max-width:900px){
   .apWrap{grid-template-columns:1fr;gap:36px;padding-top:44px;padding-bottom:64px}
