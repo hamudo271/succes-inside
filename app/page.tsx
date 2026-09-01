@@ -1,13 +1,35 @@
 'use client';
 import { useMemo, useState } from 'react';
-import { Search, Play, Eye, Clock, ArrowUpRight, ChevronRight, TrendingUp, Youtube } from 'lucide-react';
+import Link from 'next/link';
+import { Search, Play, Eye, Clock, ArrowUpRight, ChevronRight, Youtube, Video, FileText, Search as SearchIcon } from 'lucide-react';
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
-import Link from 'next/link';
 import SubscribeForm from './components/SubscribeForm';
 import { interviews, cats, thumb, watchUrl, CHANNEL } from './interviews/data';
 
 const ymd = (d: string) => `${d.slice(0, 4)}.${d.slice(5, 7)}`;
+
+/**
+ * 히어로 배경 — 지금은 조회수 1위 인터뷰의 썸네일을 임시로 쓴다.
+ * 촬영 현장 스틸(가로 2000px 이상)을 받으면 이 한 줄만 교체하면 된다.
+ *   예) const HERO_BG = '/hero.jpg';
+ */
+const TOP = [...interviews].sort((a, b) => b.views - a.views)[0]!;
+const HERO_BG = thumb(TOP.id);
+
+// 인터뷰가 남기는 것 — 제안서의 6가지 가치를 세 갈래로 묶었다.
+const DELIVERS = [
+  { icon: <Video size={19} />, t: '영상', d: '유튜브 정식 인터뷰와 릴스·쇼츠·틱톡용 숏폼' },
+  { icon: <FileText size={19} />, t: '기사', d: '검색에 최적화된 홈페이지 인터뷰 아카이브' },
+  { icon: <SearchIcon size={19} />, t: '노출', d: '네이버·구글·AI 검색과 SNS 멀티채널 확산' },
+];
+
+const STEPS = [
+  { n: '01', t: '상담과 리서치', d: '목표 메시지를 먼저 정합니다.' },
+  { n: '02', t: '인터뷰 촬영', d: '하루를 따라붙어 결정의 이유를 묻습니다.' },
+  { n: '03', t: '콘텐츠 제작', d: '영상·숏폼·기사를 한 번에 만듭니다.' },
+  { n: '04', t: '발행과 리포트', d: '배포 후 노출 성과를 보고합니다.' },
+];
 
 export default function Home() {
   const [category, setCategory] = useState('전체');
@@ -16,109 +38,130 @@ export default function Home() {
   const filtered = useMemo(
     () => interviews.filter(
       p => (category === '전체' || p.cat === category) && (p.title + p.cat).includes(query),
-    ).slice(0, 8),
+    ).slice(0, 6),
     [category, query],
   );
-  const popular = useMemo(() => [...interviews].sort((a, b) => b.views - a.views).slice(0, 4), []);
-  const latest = interviews[0];
+  const faces = useMemo(() => [...interviews].sort((a, b) => b.views - a.views).slice(0, 10), []);
 
   return <>
     <SiteHeader active="home" />
     <main>
-      <section className="hero"><div className="wrap heroInner">
-        <div>
-          <span className="eyebrow">먼저 가본 사람들의 진짜 이야기</span>
-          <h1>성공은 혼자보다{' '}<br /><em>함께일 때 빨라집니다.</em></h1>
-          <p>전국의 사업가를 찾아가 하루를 따라붙고 기록합니다.{' '}<br />결과가 아니라 결정의 이유를 남기는 인터뷰 미디어.</p>
-          <div className="heroBtns">
-            <Link href="/apply">출연 신청하기 <ArrowUpRight size={18} /></Link>
-            <a href="#feed">인터뷰 둘러보기 <ChevronRight size={18} /></a>
-          </div>
-        </div>
-        <div className="heroCard">
-          <p>“{latest.title.length > 34 ? latest.title.slice(0, 34) + '…' : latest.title}”</p>
-          <div className="miniStats">
-            <span><b>{CHANNEL.interviews}</b> 기록된 인터뷰</span>
-            <span><b>{CHANNEL.totalViewsText}</b> 누적 조회수</span>
-          </div>
-        </div>
-      </div></section>
 
-      <section className="trend wrap">
-        <span><TrendingUp size={17} /> 많이 찾는 주제</span>
-        <div>{cats.slice(1, 4).map(c => <a key={c} onClick={() => setCategory(c)}># {c}</a>)}</div>
-        <span className="today">구독자 {CHANNEL.subscribers}명</span>
+      {/* ── 히어로: 현장 스틸 한 장 위에 선언 ── */}
+      <section className="hero">
+        <div className="heroBg" style={{ backgroundImage: `url(${HERO_BG})` }} aria-hidden="true" />
+        <div className="wrap heroInner">
+          <h1>전국의 사장님을 찾아가{' '}<br />하루를 <em>따라붙고 기록합니다.</em></h1>
+          <p>성공한 결과가 아니라 결정의 이유를 남깁니다.{' '}<br />{CHANNEL.since}년부터 {CHANNEL.interviews}명의 하루가 여기 있습니다.</p>
+          <div className="heroBtns">
+            <Link className="btnPrimary" href="/apply">출연 신청하기 <ArrowUpRight size={18} /></Link>
+            <Link className="btnGhost" href="/interviews">인터뷰 둘러보기 <ChevronRight size={17} /></Link>
+          </div>
+        </div>
       </section>
 
-      <div className="content wrap" id="feed">
-        <section className="feed">
-          <div className="sectionHead">
-            <div><small>{CHANNEL.since}년부터 기록</small><h2>최근 인터뷰</h2></div>
-            <div className="search">
-              <Search size={18} />
-              <input placeholder="업종이나 키워드를 검색하세요" value={query} onChange={e => setQuery(e.target.value)} />
+      {/* ── 실적 밴드 ── */}
+      <section className="wrap statBand">
+        <div><b>{CHANNEL.interviews}</b><span>기록된 인터뷰</span></div>
+        <div><b>{CHANNEL.totalViewsText}</b><span>누적 조회수</span></div>
+        <div><b>{CHANNEL.subscribers}</b><span>채널 구독자</span></div>
+        <div><b>{CHANNEL.totalVideos}</b><span>발행 콘텐츠</span></div>
+      </section>
+
+      {/* ── 만나온 사장님들: 얼굴이 곧 신뢰 ── */}
+      <section className="band">
+        <div className="wrap secHead">
+          <h2>지금까지 만난 사장님들</h2>
+          <Link className="secMore" href="/interviews">전체 보기 <ChevronRight size={15} /></Link>
+        </div>
+        <div className="faceRow">
+          {faces.map(v => (
+            <a className="face" key={v.id} href={watchUrl(v.id)} target="_blank" rel="noreferrer">
+              <span className="faceShot"><img src={thumb(v.id)} alt="" loading="lazy" /></span>
+              <b>{v.cat}</b>
+              <small>조회 {v.viewsText}회</small>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* ── 최근 인터뷰 ── */}
+      <section className="wrap sec" id="feed">
+        <div className="secHead">
+          <div>
+            <h2>최근 인터뷰</h2>
+            <p className="secSub">{CHANNEL.since}년부터 {CHANNEL.interviews}편을 기록했습니다.</p>
+          </div>
+          <div className="search">
+            <Search size={17} />
+            <input placeholder="업종이나 키워드를 검색하세요" value={query} onChange={e => setQuery(e.target.value)} />
+          </div>
+        </div>
+
+        <div className="cats">{cats.map(c => (
+          <button key={c} className={c === category ? 'active' : ''} onClick={() => setCategory(c)}>{c}</button>
+        ))}</div>
+
+        <div className="ivGridHome">{filtered.map(p => (
+          <a className="ivCard" key={p.id} href={watchUrl(p.id)} target="_blank" rel="noreferrer">
+            <div className="ivThumb">
+              <img src={thumb(p.id)} alt="" loading="lazy" />
+              <span className="ivDur">{p.dur}</span>
+              <span className="ivPlay"><Play size={15} fill="currentColor" /></span>
+            </div>
+            <div className="ivBody">
+              <span className="ivTag">{p.cat}</span>
+              <h3>{p.title}</h3>
+              <div className="ivFoot">
+                <span><Eye size={12} /> {p.viewsText}회</span>
+                <span><Clock size={12} /> {p.dur}</span>
+                <span>{ymd(p.date)}</span>
+              </div>
+            </div>
+          </a>
+        ))}{!filtered.length && <div className="empty">검색 결과가 없습니다.</div>}</div>
+
+        <Link className="btnMore" href="/interviews">인터뷰 아카이브 전체 보기 <ChevronRight size={16} /></Link>
+      </section>
+
+      {/* ── 서비스: 한 번의 촬영이 무엇으로 남는가 ── */}
+      <section className="band">
+        <div className="wrap sec">
+          <div className="secHead">
+            <div>
+              <h2>한 번의 촬영이 남기는 것</h2>
+              <p className="secSub">촬영으로 끝나지 않습니다. 검색과 AI에 인용되는 자산으로 전환합니다.</p>
             </div>
           </div>
-
-          <div className="cats">{cats.map(c => (
-            <button key={c} className={c === category ? 'active' : ''} onClick={() => setCategory(c)}>{c}</button>
+          <div className="delivers">{DELIVERS.map(d => (
+            <div key={d.t}><i>{d.icon}</i><b>{d.t}</b><p>{d.d}</p></div>
           ))}</div>
 
-          <div className="postList">{filtered.map(p => (
-            <a className="ivRow" key={p.id} href={watchUrl(p.id)} target="_blank" rel="noreferrer">
-              <div className="postBody">
-                <span className="tag">{p.cat}</span>
-                <h3>{p.title}</h3>
-                {p.notes.length
-                  ? <p>{p.notes[0]}</p>
-                  : !!p.tags.length && <p className="feedTags">{p.tags.map(t => `#${t}`).join('  ')}</p>}
-                <div className="metrics">
-                  <span><Eye size={15} /> {p.viewsText}회</span>
-                  <span><Clock size={15} /> {p.dur}</span>
-                  <span>{ymd(p.date)}</span>
-                  <span className="watch">유튜브에서 보기 <ArrowUpRight size={14} /></span>
-                </div>
-              </div>
-              <div className="thumb">
-                <img src={thumb(p.id)} alt="" loading="lazy" />
-                <span className="playDot"><Play size={14} fill="currentColor" /></span>
-              </div>
-            </a>
-          ))}{!filtered.length && <div className="empty">검색 결과가 없습니다.</div>}</div>
+          <ol className="steps">{STEPS.map(s => (
+            <li key={s.n}><span>{s.n}</span><b>{s.t}</b><p>{s.d}</p></li>
+          ))}</ol>
+        </div>
+      </section>
 
-          <a className="more" href="/interviews">인터뷰 아카이브 전체 보기 <ChevronRight size={17} /></a>
-        </section>
-
-        <aside>
-          <div className="sideCard ranking">
-            <div className="sideTitle"><h3>가장 많이 본 인터뷰</h3><span>누적</span></div>
-            {popular.map((p, i) => (
-              <a key={p.id} href={watchUrl(p.id)} target="_blank" rel="noreferrer">
-                <strong>0{i + 1}</strong>
-                <div><b>{p.title}</b><small>{p.cat} · 조회 {p.viewsText}회</small></div>
-              </a>
-            ))}
+      {/* ── 전환 ── */}
+      <section className="wrap sec">
+        <div className="closer">
+          <div className="closerMain">
+            <h2>다음 기록의 주인공이{' '}<br />되어 보시겠어요?</h2>
+            <p>모든 인터뷰는 내부 검토 후 진행합니다. 사업 이야기를 남겨주시면 검토 후 회신드립니다.</p>
+            <div className="heroBtns">
+              <Link className="btnPrimary" href="/apply">출연 신청하기 <ArrowUpRight size={17} /></Link>
+              <a className="btnGhost" href={CHANNEL.url} target="_blank" rel="noreferrer"><Youtube size={17} /> 채널 구독하기</a>
+            </div>
           </div>
-
-          <div className="sideCard channelCard">
-            <div className="sideTitle"><h3>성공인사이드 채널</h3></div>
-            <p>사업가 인터뷰와 숏폼을 매주 발행합니다. 지금까지 {CHANNEL.totalVideos}개의 콘텐츠를 쌓았습니다.</p>
-            <a href={CHANNEL.url} target="_blank" rel="noreferrer"><Youtube size={16} /> 채널 구독하기</a>
-          </div>
-
-          <div className="newsletter">
-            <span>뉴스레터</span>
-            <h3>새 인터뷰와 칼럼을{' '}<br />메일로 받아보세요.</h3>
-            <p>새 기록이 발행될 때마다 보내드립니다.</p>
+          <div className="closerSub">
+            <b>새 기록이 발행되면 알려드립니다</b>
+            <p>인터뷰와 칼럼을 메일로 받아보세요.</p>
             <SubscribeForm source="home" label="구독" />
           </div>
-          <div className="sideCard applyCard">
-            <div className="sideTitle"><h3>출연 신청</h3></div>
-            <p>다음 기록의 주인공이 되어 보시겠어요? 모든 인터뷰는 내부 검토 후 진행합니다.</p>
-            <Link className="applyBtn" href="/apply">신청서 작성하기 <ArrowUpRight size={15} /></Link>
-          </div>
-        </aside>
-      </div>
+        </div>
+      </section>
+
     </main>
     <SiteFooter />
   </>;
