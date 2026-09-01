@@ -19,9 +19,21 @@ const HERO_BG = thumb(TOP.id);
 
 // 인터뷰가 남기는 것 — 제안서의 6가지 가치를 세 갈래로 묶었다.
 const DELIVERS = [
-  { icon: <Video size={19} />, t: '영상', d: '유튜브 정식 인터뷰와 릴스·쇼츠·틱톡용 숏폼' },
-  { icon: <FileText size={19} />, t: '기사', d: '검색에 최적화된 홈페이지 인터뷰 아카이브' },
-  { icon: <SearchIcon size={19} />, t: '노출', d: '네이버·구글·AI 검색과 SNS 멀티채널 확산' },
+  {
+    icon: <Video size={20} />, t: '영상',
+    d: '한 번의 촬영을 정식 인터뷰 한 편과 숏폼 여러 편으로 나눠 만듭니다.',
+    items: ['유튜브 정식 인터뷰', '릴스·쇼츠·틱톡 숏폼'],
+  },
+  {
+    icon: <FileText size={20} />, t: '기사',
+    d: '영상을 전사해 검색이 읽을 수 있는 글로 옮깁니다.',
+    items: ['인터뷰 아카이브 기사', '검색 최적화 편집'],
+  },
+  {
+    icon: <SearchIcon size={20} />, t: '노출',
+    d: '만든 자산을 사람이 찾는 자리마다 올려둡니다.',
+    items: ['네이버·구글·AI 검색', 'SNS 멀티채널 확산'],
+  },
 ];
 
 const STEPS = [
@@ -134,12 +146,20 @@ export default function Home() {
             </div>
           </div>
           <div className="delivers">{DELIVERS.map(d => (
-            <div key={d.t}><i>{d.icon}</i><b>{d.t}</b><p>{d.d}</p></div>
+            <article key={d.t}>
+              <i>{d.icon}</i>
+              <b>{d.t}</b>
+              <p>{d.d}</p>
+              <ul>{d.items.map(x => <li key={x}>{x}</li>)}</ul>
+            </article>
           ))}</div>
 
-          <ol className="steps">{STEPS.map(s => (
-            <li key={s.n}><span>{s.n}</span><b>{s.t}</b><p>{s.d}</p></li>
-          ))}</ol>
+          <div className="stepsWrap">
+            <h3>진행은 이렇게 됩니다</h3>
+            <ol className="steps">{STEPS.map(s => (
+              <li key={s.n}><span>{s.n}</span><b>{s.t}</b><p>{s.d}</p></li>
+            ))}</ol>
+          </div>
         </div>
       </section>
 
@@ -158,6 +178,10 @@ export default function Home() {
             <b>새 기록이 발행되면 알려드립니다</b>
             <p>인터뷰와 칼럼을 메일로 받아보세요.</p>
             <SubscribeForm source="home" label="구독" />
+            <dl className="closerFacts">
+              <div><dt>검토 회신</dt><dd>보통 일주일</dd></div>
+              <div><dt>촬영</dt><dd>하루 동행</dd></div>
+            </dl>
           </div>
         </div>
       </section>
