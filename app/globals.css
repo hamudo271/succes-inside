@@ -93,6 +93,10 @@ header{height:72px;position:sticky;top:0;z-index:30;
 .secMore{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--wnMuted)}
 .secMore:hover{color:var(--wnOrange)}
 
+/* 페이지 히어로 위의 소제목 라벨 — 인터뷰·칼럼·교육과정이 공유한다 */
+.eyebrow{display:inline-flex;align-items:center;gap:7px;
+  color:var(--wnOrangeText);font-size:13px;font-weight:700}
+
 .btnPrimary{display:inline-flex;align-items:center;gap:var(--s1);background:var(--wnOrange);color:#fff;
   border:0;border-radius:8px;padding:14px 22px;font-size:14.5px;font-weight:600;transition:background .15s}
 .btnPrimary:hover{background:var(--wnOrangeDeep)}
