@@ -19,7 +19,6 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
     <SiteHeader active="columns" />
     <main>
       <section className="clHero"><div className="wrap">
-        <span className="eyebrow">성공인사이드 칼럼</span>
         <h1>일하는 사람의 생각을,{' '}<br /><em>매주 한 편의 칼럼으로.</em></h1>
         <p>경험 기록이 인사이트라면, 칼럼은 관점입니다.{' '}<br />먼저 가본 사람들이 지금 시장을 어떻게 읽는지 매주 전합니다.</p>
       </div></section>
@@ -44,7 +43,7 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
       </div></section>
 
       <section className="wrap clSection">
-        <div className="clHead"><small>매주 발행</small><h2>전체 칼럼</h2></div>
+        <div className="clHead"><h2>전체 칼럼</h2></div>
         <div className="clCats">{cats.map(c => <button key={c} className={c === cat ? 'active' : ''} onClick={() => setCat(c)}>{c}</button>)}</div>
         <div className="clGrid">{filtered.map(c => <Link className="clCard" key={c.id} href={`/columns/${c.id}`}>
           <span className="clTag">{c.cat}</span>

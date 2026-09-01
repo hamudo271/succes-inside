@@ -14,8 +14,8 @@ const securityHeaders = [
       "default-src 'self'",
       // Next.js 런타임은 인라인/eval 스크립트를 사용한다.
       "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-      "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
-      "font-src 'self' https://cdn.jsdelivr.net data:",
+      "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com",
+      "font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com data:",
       "img-src 'self' data: https://i.ytimg.com",           // 유튜브 썸네일
       "connect-src 'self'",
       "frame-ancestors 'none'",

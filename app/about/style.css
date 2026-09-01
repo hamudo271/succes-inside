@@ -2,9 +2,9 @@
 
 /* 히어로: 블랙 배경 + 오렌지 포인트 */
 .abHero{background:#171614;color:var(--wnInk);position:relative;overflow:hidden}
-.abHeroInner{position:relative;min-height:520px;display:grid;grid-template-columns:1.2fr .8fr;gap:70px;align-items:center;padding-top:84px;padding-bottom:96px}
+.abHeroInner{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center;padding-top:76px;padding-bottom:84px}
 .abEyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--wnOrange)}
-.abHero h1{font-size:34px;line-height:1.45;letter-spacing:-1px;margin:16px 0 18px;font-weight:700}
+.abHero h1{font-family:var(--fDisplay);font-weight:900;font-size:clamp(27px,3.4vw,40px);line-height:1.34;letter-spacing:-.02em;margin:0 0 16px;word-break:keep-all;text-wrap:balance}
 .abHero h1 em{font-style:normal;color:var(--wnOrange)}
 .abHero>div>div>p,.abHeroInner>div>p{color:var(--wnMuted);font-size:16px;line-height:1.8;margin:0}
 .abHeroBtns{display:flex;align-items:center;gap:12px;margin-top:34px;flex-wrap:wrap}
@@ -14,32 +14,62 @@
 .abHeroBtns a:last-child{border:1px solid var(--wnLine);color:var(--wnInk)}
 .abHeroBtns a:last-child:hover{border-color:#4a453f}
 
-.abPlay{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:20px;padding:30px;display:block;transition:border-color .18s}
+
 .abPlay:hover{border-color:#4a3324}
-.abPlay:hover .abPlayBtn{transform:scale(1.06)}
-.abPlayBtn{transition:transform .18s}
-.abPlayBtn{width:52px;height:52px;border-radius:50%;background:var(--wnOrange);color:#fff;display:grid;place-items:center;margin-bottom:26px}
-.abPlay small{display:block;font-size:12px;font-weight:700;color:var(--wnMuted)}
-.abPlay p{font-size:17px;line-height:1.6;letter-spacing:-.8px;margin:10px 0 0;color:var(--wnInk)}
-.abScroll{position:absolute;left:24px;bottom:30px;font-size:11px;font-weight:600;color:var(--wnFaint)}
-.abScroll:after{content:'';display:inline-block;width:54px;height:1px;background:var(--wnLine);vertical-align:middle;margin-left:12px}
+.abPlay:hover 
+
+
+
+
+
+
 
 /* 섹션 공통 */
 .abSection{padding-top:88px}
 .abHead small{font-size:12px;font-weight:700;color:#8f8a84}
-.abHead h2{font-size:23px;letter-spacing:-.5px;margin:8px 0 0}
+.abHead h2{font-family:var(--fDisplay);font-weight:900;font-size:26px;letter-spacing:-.02em;margin:0;word-break:keep-all}
 .abHead p{color:var(--wnMuted);font-size:14px;line-height:1.75;margin:11px 0 0}
 .abHead.dark small{color:var(--wnOrange)}
 .abHead.dark h2{color:var(--wnInk)}
 .abHead.dark p{color:var(--wnMuted)}
 
 /* Why us — 얇은 보더 화이트 카드 + 피치 아이콘 */
-.abWhy{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
-.abWhy>div{border:1px solid var(--wnLine);border-radius:16px;padding:30px;background:var(--wnSurface);transition:transform .18s,box-shadow .18s}
-.abWhy>div:hover{transform:translateY(-3px);border-color:#4a3324;box-shadow:0 14px 34px #00000059}
-.abWhy i{display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--wnPeach);color:var(--wnPeachInk);margin-bottom:20px}
-.abWhy b{display:block;font-size:16px;line-height:1.5;letter-spacing:-.7px}
-.abWhy p{font-size:13px;line-height:1.8;color:var(--wnMuted);margin:11px 0 0}
+
+
+
+
+
+
+
+
+/* 왜 필요한가 — 카드가 아니라, 근거 수치를 앞세운 세 개의 논증 */
+.abWhy{margin-top:30px;border-top:1px solid var(--wnRule)}
+.abWhy article{display:grid;grid-template-columns:210px 1fr;gap:44px;
+  padding:34px 0;border-bottom:1px solid var(--wnRule);align-items:start}
+.abFig b{display:block;font-size:44px;line-height:1;color:var(--wnOrange)}
+.abFig span{display:block;font-size:11.5px;line-height:1.6;color:var(--wnMuted);margin-top:10px}
+.abArg h3{font-size:19px;line-height:1.55;letter-spacing:-.4px;margin:0 0 10px;color:var(--wnInk)}
+.abArg p{font-size:14px;line-height:1.9;color:var(--wnInk2);margin:0;max-width:62ch}
+
+/* 히어로 재생 카드 — 실제 인터뷰 스틸 */
+.abPlay{display:block;background:var(--wnSurface);border:1px solid var(--wnLine);
+  border-radius:14px;padding:14px;transition:border-color .18s}
+.abPlay:hover{border-color:#4a3324}
+.abPlayShot{position:relative;display:block;aspect-ratio:16/9;border-radius:9px;
+  overflow:hidden;background:var(--wnSurface2)}
+.abPlayShot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.abPlay:hover .abPlayShot img{transform:scale(1.04)}
+.abPlayBtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:46px;height:46px;border-radius:50%;background:var(--wnOrange);color:#fff;
+  display:grid;place-items:center;transition:transform .18s}
+.abPlay:hover .abPlayBtn{transform:translate(-50%,-50%) scale(1.08)}
+.abPlay small{display:block;font-size:11px;color:var(--wnMuted);margin:14px 2px 5px}
+.abPlay p{font-size:14px;line-height:1.55;letter-spacing:-.3px;margin:0 2px 4px;color:var(--wnInk)}
+
+@media(max-width:900px){
+  .abWhy article{grid-template-columns:1fr;gap:14px;padding:26px 0}
+  .abFig b{font-size:36px}
+}
 
 /* Success OS — 블랙 라운드 컨테이너 */
 .abOs{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;max-width:1240px;margin:92px auto 0;padding:72px 0 78px}
@@ -76,17 +106,17 @@
   .abOs{margin-left:16px;margin-right:16px}
 }
 @media(max-width:900px){
-  .abHeroInner{grid-template-columns:1fr;gap:40px;min-height:0;padding-top:60px;padding-bottom:76px}
-  .abHero h1{font-size:30px;letter-spacing:-.8px}
-  .abWhy{grid-template-columns:1fr}
+  .abHeroInner{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center;padding-top:76px;padding-bottom:84px}
+  
+  
   .abSteps{grid-template-columns:1fr 1fr}
   .abGet{grid-template-columns:1fr;gap:34px}
 }
 @media(max-width:620px){
-  .abHero h1{font-size:25px;letter-spacing:-.6px}
+  
   .abHero h1 br{display:none}
   .abHeroBtns a{width:100%;justify-content:center}
-  .abScroll{display:none}
+  
   .abSection{padding-top:56px}
   .abHead h2{font-size:24px}
   #faq .abHead h2{font-size:22px}
