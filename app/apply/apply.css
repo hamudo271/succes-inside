@@ -1,0 +1,60 @@
+/* /apply — 출연·문의 신청. globals.css의 --wn* 토큰 사용 */
+
+.apWrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start;
+  padding-top:64px;padding-bottom:96px}
+
+.apIntro h1{font-size:30px;line-height:1.45;letter-spacing:-.8px;margin:0 0 16px;font-weight:700}
+.apIntro>p{color:var(--wnMuted);font-size:14.5px;line-height:1.85;margin:0}
+
+.apSteps{list-style:none;margin:30px 0 0;padding:0;display:flex;flex-direction:column}
+.apSteps li{display:flex;flex-direction:column;gap:4px;padding:16px 0;border-top:1px solid var(--wnLine)}
+.apSteps li:last-child{border-bottom:1px solid var(--wnLine)}
+.apSteps b{font-size:13.5px;color:var(--wnInk)}
+.apSteps span{font-size:12.5px;color:var(--wnMuted);line-height:1.7}
+
+.apAlt{margin:26px 0 0;font-size:12.5px;line-height:1.8;color:var(--wnMuted)}
+.apAlt a{color:var(--wnOrangeText);font-weight:600}
+.apAlt a:focus-visible{outline:2px solid var(--wnOrange);outline-offset:2px;border-radius:3px}
+
+/* 폼 카드 */
+.apCard{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;
+  padding:32px;display:flex;flex-direction:column;gap:16px}
+.apField{display:flex;flex-direction:column;gap:7px}
+.apField label{font-size:12.5px;font-weight:600;color:var(--wnInk)}
+.apField label span{font-weight:400;color:var(--wnFaint);margin-left:4px}
+.apField input,.apField select,.apField textarea{
+  background:var(--wnSurface2);border:1px solid var(--wnLine);border-radius:8px;
+  padding:12px 14px;font-size:14px;color:var(--wnInk);outline:0;
+  font-family:inherit;line-height:1.7;resize:vertical}
+.apField input:focus-visible,.apField select:focus-visible,.apField textarea:focus-visible{
+  border-color:var(--wnOrange)}
+.apGrid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+.apSubmit{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;
+  border-radius:8px;background:var(--wnOrange);color:#fff;padding:14px 20px;
+  font-size:14px;font-weight:600;transition:background .15s}
+.apSubmit:hover{background:var(--wnOrangeDeep)}
+.apSubmit:disabled{opacity:.55}
+.apSubmit:focus-visible{outline:2px solid var(--wnOrangeDeep);outline-offset:3px}
+
+.apError{background:#3a1c18;color:#ff9d84;border-radius:8px;padding:11px 15px;font-size:13px;margin:0}
+.apPrivacy{font-size:11.5px;color:var(--wnFaint);margin:0;text-align:center}
+
+.apDone{align-items:center;text-align:center;padding:64px 32px;color:var(--wnInk)}
+.apDone svg{color:var(--wnOrange)}
+.apDone h2{font-size:20px;letter-spacing:-.4px;margin:14px 0 8px}
+.apDone p{color:var(--wnMuted);font-size:13.5px;line-height:1.8;margin:0}
+
+/* 허니팟 — 화면·스크린리더 모두에서 감춘다 */
+.hp{position:absolute !important;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0;padding:0;margin:-1px}
+
+@media(max-width:900px){
+  .apWrap{grid-template-columns:1fr;gap:36px;padding-top:44px;padding-bottom:64px}
+  .apIntro h1 br{display:none}
+}
+@media(max-width:620px){
+  .apIntro h1{font-size:25px}
+  .apCard{padding:22px}
+  .apGrid2{grid-template-columns:1fr}
+}

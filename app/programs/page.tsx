@@ -91,19 +91,13 @@ export default function Programs() {
       <section className="pgHero"><div className="wrap pgHeroInner">
         <div>
           <span className="eyebrow">성공인사이드 교육 과정</span>
-          <h1>다음 단계로 가는 길을,<br /><em>먼저 가본 사람과 함께.</em></h1>
-          <p>성공인사이드 교육 과정은 이론이 아니라 실제로 해본 사람의 순서를 배웁니다.<br />내 사업과 커리어에 바로 적용할 결과물을 들고 나가는 것을 목표로 합니다.</p>
+          <h1>다음 단계로 가는 길을,{' '}<br /><em>먼저 가본 사람과 함께.</em></h1>
+          <p>성공인사이드 교육 과정은 이론이 아니라 실제로 해본 사람의 순서를 배웁니다.{' '}<br />내 사업과 커리어에 바로 적용할 결과물을 들고 나가는 것을 목표로 합니다.</p>
           <div className="pgHeroBtns">
             <a href="#live">과정 둘러보기 <ArrowUpRight size={18} /></a>
             <Link href="/about">성공인사이드가 만드는 것 <ChevronRight size={18} /></Link>
           </div>
         </div>
-        <ul className="pgStats">
-          <li><b>9</b><span>운영 중인 과정</span></li>
-          <li><b>8</b><span>함께하는 실무자</span></li>
-          <li><b>2,400+</b><span>누적 수강생</span></li>
-          <li><b>94%</b><span>과정 완주율</span></li>
-        </ul>
       </div></section>
 
       <section className="wrap pgSection">
@@ -152,9 +146,9 @@ export default function Programs() {
 
       <section className="wrap"><div className="pgCta">
         <span>과정 신청</span>
-        <h2>어떤 과정이 맞는지 모르겠다면,<br />지금 고민을 먼저 알려주세요.</h2>
+        <h2>어떤 과정이 맞는지 모르겠다면,{' '}<br />지금 고민을 먼저 알려주세요.</h2>
         <p>사업 단계와 목표를 남기면, 맞는 과정을 정리해 안내드립니다.</p>
-        <div className="pgCtaForm"><input placeholder="이메일 주소" /><button>과정 추천받기</button></div>
+        <div className="pgCtaForm"><Link className="pgCtaLink" href="/apply?type=교육 과정 문의">과정 문의하기 <ArrowUpRight size={16} /></Link></div>
       </div></section>
     </main>
     <SiteFooter />

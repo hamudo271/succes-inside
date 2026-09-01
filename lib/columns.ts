@@ -77,3 +77,24 @@ export async function getColumnForEdit(id: number) {
   );
   return rows?.[0] ?? null;
 }
+
+/* ─────────── 관리자: 출연 신청·구독 현황 ─────────── */
+
+export type ApplicationRow = {
+  id: number; type: string; name: string; business: string;
+  contact: string; message: string; read: boolean; created_at: string;
+};
+
+export async function getApplications(): Promise<ApplicationRow[]> {
+  return (await tryQuery<ApplicationRow>(
+    `select id, type, name, business, contact, message, read, created_at
+       from applications order by read asc, created_at desc limit 50`,
+  )) ?? [];
+}
+
+export async function getSubscriberStats() {
+  const rows = await tryQuery<{ n: string; recent: string | null }>(
+    `select count(*)::text as n, max(created_at)::text as recent from subscribers`,
+  );
+  return rows?.[0] ? { count: Number(rows[0].n), recent: rows[0].recent } : { count: 0, recent: null };
+}

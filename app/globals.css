@@ -49,6 +49,14 @@ header{background:rgba(15,15,14,.9);border-bottom-color:var(--wnLine)}
 .channelCard>a{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--wnInk);border:1px solid var(--wnLine);border-radius:8px;padding:10px 14px}
 .channelCard>a:hover{border-color:#4a3324;color:var(--wnOrange)}
 .applyBtn{display:inline-flex;align-items:center;gap:6px;margin-top:15px;background:var(--wnOrange);color:#fff;border-radius:8px;padding:11px 16px;font-size:12.5px;font-weight:600}
+.applyCard p{font-size:12px;line-height:1.75;color:var(--wnMuted);margin:0}
+.subForm{display:flex;margin-top:15px}
+.newsletter .subForm input{width:100%;min-width:0;border:0;padding:10px;border-radius:7px 0 0 7px;font-size:11px;outline:0;background:var(--wnSurface2);color:var(--ink)}
+.newsletter .subForm button{border:0;background:var(--wnOrange);color:#fff;font-weight:700;border-radius:0 7px 7px 0;padding:0 12px;font-size:11px;white-space:nowrap}
+.subForm input:focus-visible,.subForm button:focus-visible{outline:2px solid var(--wnOrange);outline-offset:1px}
+.subDone{display:flex;align-items:center;gap:6px;margin:15px 0 0;font-size:12px;color:var(--wnOrangeText);font-weight:600}
+.subError{margin:9px 0 0;font-size:11px;color:#ff9d84}
+.hp{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;padding:0;margin:-1px}
 .applyBtn:hover{background:var(--wnOrangeDeep)}
 .newsletter>span{color:var(--wnOrange)}
 .newsletter p{color:#9a9a9a}

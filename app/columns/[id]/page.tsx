@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowUpRight, ChevronRight, Clock } from 'lucide-react';
 import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
 import { getColumns, getColumn } from '../../../lib/columns';
+import SubscribeForm from '../../components/SubscribeForm';
 import '../columns.css';
 
 export const dynamic = 'force-dynamic';
@@ -75,9 +76,9 @@ export default async function ColumnDetail({ params }: { params: Promise<{ id: s
 
       <section className="wrap"><div className="clCta">
         <span>주간 칼럼 구독</span>
-        <h2>새 칼럼이 나오면<br />가장 먼저 받아보세요.</h2>
-        <p>매주 월요일 아침, 한 편씩 메일로 보내드립니다.</p>
-        <div className="clCtaForm"><input placeholder="이메일 주소" /><button>구독하기</button></div>
+        <h2>새 칼럼이 나오면{' '}<br />가장 먼저 받아보세요.</h2>
+        <p>새 칼럼이 발행되면 메일로 보내드립니다.</p>
+        <div className="clCtaForm"><SubscribeForm source="column-detail" label="구독하기" /></div>
       </div></section>
     </main>
     <SiteFooter />

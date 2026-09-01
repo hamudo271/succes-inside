@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { PenLine, LogOut, Eye, EyeOff, Trash2, Star, ExternalLink } from 'lucide-react';
+import { PenLine, LogOut, Eye, EyeOff, Trash2, Star, ExternalLink, MailOpen, Mail, Users } from 'lucide-react';
 import { getSessionUser } from '../../lib/auth';
-import { getAllColumnsForAdmin } from '../../lib/columns';
-import { logoutAction, deleteColumnAction, togglePublishAction } from './actions';
+import { getAllColumnsForAdmin, getApplications, getSubscriberStats } from '../../lib/columns';
+import { logoutAction, deleteColumnAction, togglePublishAction, toggleApplicationReadAction, deleteApplicationAction } from './actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +19,8 @@ export default async function AdminHome({
   if (!user) redirect('/admin/login');
 
   const sp = await searchParams;
-  const rows = await getAllColumnsForAdmin();
+  const [rows, apps, subs] = await Promise.all([getAllColumnsForAdmin(), getApplications(), getSubscriberStats()]);
+  const unread = apps.filter(a => !a.read).length;
 
   return (
     <main className="admWrap">
@@ -91,6 +92,43 @@ export default async function AdminHome({
           ))}
         </div>
       )}
+
+      <section className="admBlock">
+        <div className="admBlockHead">
+          <h2>출연·문의 신청 {unread > 0 && <em className="admBadge">{unread} 새 신청</em>}</h2>
+          <span className="admDim"><Users size={13} /> 뉴스레터 구독자 {subs.count.toLocaleString()}명</span>
+        </div>
+        {apps.length === 0 ? (
+          <p className="admEmptyLine">아직 접수된 신청이 없습니다. 사이트의 ‘출연 신청’ 버튼으로 들어온 신청이 여기에 쌓입니다.</p>
+        ) : (
+          <div className="admApps">{apps.map(a => (
+            <details className={a.read ? 'admApp read' : 'admApp'} key={a.id}>
+              <summary>
+                <em className="admPill">{a.type}</em>
+                <b>{a.name}</b>
+                {a.business && <span className="admDim">{a.business}</span>}
+                <span className="admDim right">{fmt(a.created_at)}</span>
+              </summary>
+              <div className="admAppBody">
+                <p className="admAppContact">연락처 — {a.contact}</p>
+                <p className="admAppMsg">{a.message}</p>
+                <div className="admAppActions">
+                  <form action={toggleApplicationReadAction}>
+                    <input type="hidden" name="id" value={a.id} />
+                    <button type="submit" className="admBtn ghost">
+                      {a.read ? <><Mail size={14} /> 안 읽음으로</> : <><MailOpen size={14} /> 읽음 처리</>}
+                    </button>
+                  </form>
+                  <form action={deleteApplicationAction}>
+                    <input type="hidden" name="id" value={a.id} />
+                    <button type="submit" className="admBtn ghost danger"><Trash2 size={14} /> 삭제</button>
+                  </form>
+                </div>
+              </div>
+            </details>
+          ))}</div>
+        )}
+      </section>
     </main>
   );
 }

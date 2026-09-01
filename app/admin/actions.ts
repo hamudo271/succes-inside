@@ -196,3 +196,23 @@ export async function togglePublishAction(form: FormData): Promise<void> {
   revalidatePath('/columns');
   revalidatePath('/admin');
 }
+
+/* ─────────── 출연 신청 관리 ─────────── */
+
+export async function toggleApplicationReadAction(form: FormData): Promise<void> {
+  await assertSameOrigin();
+  await requireAdmin();
+  const id = Number(String(form.get('id') ?? ''));
+  if (!Number.isInteger(id)) return;
+  await query(`update applications set read = not read where id = $1`, [id]);
+  revalidatePath('/admin');
+}
+
+export async function deleteApplicationAction(form: FormData): Promise<void> {
+  await assertSameOrigin();
+  await requireAdmin();
+  const id = Number(String(form.get('id') ?? ''));
+  if (!Number.isInteger(id)) return;
+  await query(`delete from applications where id = $1`, [id]);
+  revalidatePath('/admin');
+}

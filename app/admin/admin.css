@@ -88,3 +88,27 @@
   .admGrid2{grid-template-columns:1fr}
   .admWrap{padding:24px 16px 60px}
 }
+
+/* ── 출연·문의 신청 ── */
+.admBlock{margin-top:40px}
+.admBlockHead{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding-bottom:14px;border-bottom:1px solid var(--wnLine);margin-bottom:14px;flex-wrap:wrap}
+.admBlockHead h2{font-size:17px;letter-spacing:-.3px;font-weight:700;margin:0;display:flex;align-items:center;gap:10px}
+.admBadge{font-style:normal;font-size:11px;font-weight:700;background:var(--wnOrange);color:#fff;
+  border-radius:20px;padding:3px 10px}
+.admBlockHead .admDim{display:flex;align-items:center;gap:6px}
+.admEmptyLine{color:var(--wnMuted);font-size:13px;padding:26px 0}
+.admApps{display:flex;flex-direction:column;gap:8px}
+.admApp{border:1px solid var(--wnLine);border-radius:10px;background:var(--wnSurface)}
+.admApp.read{opacity:.62}
+.admApp summary{display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer;
+  list-style:none;font-size:13px}
+.admApp summary::-webkit-details-marker{display:none}
+.admApp summary b{font-weight:600}
+.admApp summary .right{margin-left:auto}
+.admApp summary:focus-visible{outline:2px solid var(--wnOrange);outline-offset:2px;border-radius:8px}
+.admAppBody{padding:2px 16px 16px;border-top:1px solid var(--wnLine2)}
+.admAppContact{font-size:12.5px;color:var(--wnOrangeText);font-weight:600;margin:12px 0 8px}
+.admAppMsg{font-size:13px;line-height:1.8;color:var(--wnInk2);margin:0 0 14px;white-space:pre-wrap}
+.admAppActions{display:flex;gap:8px}
+.admBtn.danger:hover{color:#ff8a72;border-color:#5a322a}

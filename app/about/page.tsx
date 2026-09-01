@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Play, ArrowUpRight, ChevronRight, Search, FileText, Share2, Plus, Minus } from 'lucide-react';
+import { interviews, watchUrl } from '../interviews/data';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import './style.css';
@@ -30,24 +31,25 @@ const faq = [
 
 export default function About() {
   const [open, setOpen] = useState<number | null>(0);
+  const top = interviews.reduce((a, b) => (b.views > a.views ? b : a));
   return <>
     <SiteHeader active="about" />
     <main>
       <section className="abHero"><div className="wrap abHeroInner">
         <div>
           <span className="abEyebrow">비즈니스 미디어 플랫폼</span>
-          <h1>당신의 성공은<br /><em>기록되고 있습니까?</em></h1>
+          <h1>당신의 성공은{' '}<br /><em>기록되고 있습니까?</em></h1>
           <p>사업가의 성장 스토리를 검색되는 디지털 자산으로 남기는 인터뷰 미디어.</p>
           <div className="abHeroBtns">
-            <a href="#get">성공 스토리 보기 <ArrowUpRight size={17} /></a>
-            <a href="#faq">출연·파트너십 문의 <ChevronRight size={17} /></a>
+            <Link href="/interviews">성공 스토리 보기 <ArrowUpRight size={17} /></Link>
+            <Link href="/apply">출연·파트너십 문의 <ChevronRight size={17} /></Link>
           </div>
         </div>
-        <div className="abPlay">
+        <a className="abPlay" href={watchUrl(top.id)} target="_blank" rel="noreferrer">
           <span className="abPlayBtn"><Play size={22} fill="currentColor" /></span>
-          <small>대표 인터뷰</small>
-          <p>한 사람의 경험이<br />다음 사람의 길이 됩니다.</p>
-        </div>
+          <small>가장 많이 본 인터뷰 · {top.viewsText}회</small>
+          <p>{top.title.length > 30 ? top.title.slice(0, 30) + '…' : top.title}</p>
+        </a>
         <span className="abScroll">아래로 스크롤</span>
       </div></section>
 
@@ -69,7 +71,7 @@ export default function About() {
           </div>
           <div className="abGetCard">
             <span>인터뷰 자산</span>
-            <b>한 번의 인터뷰가<br />계속 일하는 자산이 됩니다.</b>
+            <b>한 번의 인터뷰가{' '}<br />계속 일하는 자산이 됩니다.</b>
             <p>광고와 달리 멈추지 않습니다. 발행 이후에도 검색과 AI 인용을 통해 24시간 새로운 고객에게 도달합니다.</p>
             <Link href="/programs">교육 과정도 함께 보기 <ChevronRight size={15} /></Link>
           </div>

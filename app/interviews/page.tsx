@@ -1,5 +1,6 @@
 'use client';
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { Play, ArrowUpRight, Clock, Eye } from 'lucide-react';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
@@ -21,8 +22,8 @@ export default function Interviews() {
     <main>
       <section className="ivHero"><div className="wrap">
         <span className="eyebrow">인터뷰 아카이브</span>
-        <h1>기록된 사장님들의<br /><em>{CHANNEL.interviews}가지 성장 서사.</em></h1>
-        <p>{CHANNEL.since}년부터 전국의 사업가를 찾아가 하루를 따라붙고 물었습니다.<br />결과가 아니라 결정의 이유를 남기는 것이 성공인사이드의 일입니다.</p>
+        <h1>기록된 사장님들의{' '}<br /><em>{CHANNEL.interviews}가지 성장 서사.</em></h1>
+        <p>{CHANNEL.since}년부터 전국의 사업가를 찾아가 하루를 따라붙고 물었습니다.{' '}<br />결과가 아니라 결정의 이유를 남기는 것이 성공인사이드의 일입니다.</p>
         <ul className="ivStats">
           <li><b>{CHANNEL.interviews}</b><span>기록된 인터뷰</span></li>
           <li><b>{CHANNEL.totalViewsText}</b><span>누적 조회수</span></li>
@@ -80,10 +81,10 @@ export default function Interviews() {
 
       <section className="wrap"><div className="ivCta">
         <span>출연 신청</span>
-        <h2>다음 기록의 주인공이<br />되어 보시겠어요?</h2>
-        <p>모든 인터뷰는 내부 검토 후 진행합니다. 사업 소개와 함께 메일로 연락 주세요.</p>
+        <h2>다음 기록의 주인공이{' '}<br />되어 보시겠어요?</h2>
+        <p>모든 인터뷰는 내부 검토 후 진행합니다. 사업 이야기를 남겨주시면 검토 후 회신드립니다.</p>
         <div className="ivCtaBtns">
-          <a href="mailto:success.inside.kr@gmail.com">출연 신청하기 <ArrowUpRight size={16} /></a>
+          <Link href="/apply">출연 신청하기 <ArrowUpRight size={16} /></Link>
           <a href={CHANNEL.url} target="_blank" rel="noreferrer" className="ghost">채널 둘러보기</a>
         </div>
       </div></section>

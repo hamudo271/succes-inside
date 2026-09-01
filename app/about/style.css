@@ -14,7 +14,10 @@
 .abHeroBtns a:last-child{border:1px solid var(--wnLine);color:var(--wnInk)}
 .abHeroBtns a:last-child:hover{border-color:#4a453f}
 
-.abPlay{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:20px;padding:30px}
+.abPlay{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:20px;padding:30px;display:block;transition:border-color .18s}
+.abPlay:hover{border-color:#4a3324}
+.abPlay:hover .abPlayBtn{transform:scale(1.06)}
+.abPlayBtn{transition:transform .18s}
 .abPlayBtn{width:52px;height:52px;border-radius:50%;background:var(--wnOrange);color:#fff;display:grid;place-items:center;margin-bottom:26px}
 .abPlay small{display:block;font-size:12px;font-weight:700;color:var(--wnMuted)}
 .abPlay p{font-size:17px;line-height:1.6;letter-spacing:-.8px;margin:10px 0 0;color:var(--wnInk)}

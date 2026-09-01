@@ -63,6 +63,27 @@ create table if not exists columns (
   published_at timestamptz
 );
 create index if not exists columns_published_idx on columns (published, published_at desc);
+
+create table if not exists subscribers (
+  id         serial primary key,
+  email      text not null unique,
+  source     text not null default '',
+  ip         text,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists applications (
+  id         serial primary key,
+  type       text not null default '출연 신청',
+  name       text not null,
+  business   text not null default '',
+  contact    text not null,
+  message    text not null default '',
+  ip         text,
+  read       boolean not null default false,
+  created_at timestamptz not null default now()
+);
+create index if not exists applications_idx on applications (read, created_at desc);
 `;
 
 try {

@@ -3,9 +3,10 @@ import { useMemo, useState } from 'react';
 import { Search, Play, Eye, Clock, ArrowUpRight, ChevronRight, TrendingUp, Youtube } from 'lucide-react';
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
+import Link from 'next/link';
+import SubscribeForm from './components/SubscribeForm';
 import { interviews, cats, thumb, watchUrl, CHANNEL } from './interviews/data';
 
-const APPLY = 'mailto:success.inside.kr@gmail.com';
 const ymd = (d: string) => `${d.slice(0, 4)}.${d.slice(5, 7)}`;
 
 export default function Home() {
@@ -22,15 +23,15 @@ export default function Home() {
   const latest = interviews[0];
 
   return <>
-    <SiteHeader active="insight" />
+    <SiteHeader active="home" />
     <main>
       <section className="hero"><div className="wrap heroInner">
         <div>
           <span className="eyebrow">먼저 가본 사람들의 진짜 이야기</span>
-          <h1>성공은 혼자보다<br /><em>함께일 때 빨라집니다.</em></h1>
-          <p>전국의 사업가를 찾아가 하루를 따라붙고 기록합니다.<br />결과가 아니라 결정의 이유를 남기는 인터뷰 미디어.</p>
+          <h1>성공은 혼자보다{' '}<br /><em>함께일 때 빨라집니다.</em></h1>
+          <p>전국의 사업가를 찾아가 하루를 따라붙고 기록합니다.{' '}<br />결과가 아니라 결정의 이유를 남기는 인터뷰 미디어.</p>
           <div className="heroBtns">
-            <a href={APPLY}>출연 신청하기 <ArrowUpRight size={18} /></a>
+            <Link href="/apply">출연 신청하기 <ArrowUpRight size={18} /></Link>
             <a href="#feed">인터뷰 둘러보기 <ChevronRight size={18} /></a>
           </div>
         </div>
@@ -106,10 +107,15 @@ export default function Home() {
           </div>
 
           <div className="newsletter">
-            <span>출연 신청</span>
-            <h3>다음 기록의 주인공이<br />되어 보시겠어요?</h3>
-            <p>모든 인터뷰는 내부 검토 후 진행합니다.</p>
-            <a className="applyBtn" href={APPLY}>메일로 신청하기 <ArrowUpRight size={15} /></a>
+            <span>뉴스레터</span>
+            <h3>새 인터뷰와 칼럼을{' '}<br />메일로 받아보세요.</h3>
+            <p>새 기록이 발행될 때마다 보내드립니다.</p>
+            <SubscribeForm source="home" label="구독" />
+          </div>
+          <div className="sideCard applyCard">
+            <div className="sideTitle"><h3>출연 신청</h3></div>
+            <p>다음 기록의 주인공이 되어 보시겠어요? 모든 인터뷰는 내부 검토 후 진행합니다.</p>
+            <Link className="applyBtn" href="/apply">신청서 작성하기 <ArrowUpRight size={15} /></Link>
           </div>
         </aside>
       </div>
