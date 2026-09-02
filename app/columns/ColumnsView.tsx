@@ -24,39 +24,29 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
         <p>경험 기록이 인사이트라면, 칼럼은 관점입니다.{' '}<br />먼저 가본 사람들이 지금 시장을 어떻게 읽는지 매주 전합니다.</p>
       </div></section>
 
+      {/* 이번 주 칼럼 — 상자 없이 hairline 사이의 에디토리얼 스프레드 */}
       <section className="wrap"><div className="clFeature">
         <div className="clFeatureBody">
-          <span className="clBadge">이번 주 칼럼</span>
-          <span className="clTag light">{featured.cat}</span>
-          <h2>{featured.title}</h2>
+          <div className="clMetaLine"><b>이번 주 칼럼</b><span>{featured.cat}</span><span>{featured.date}</span><span><Clock size={11} /> {featured.read}</span></div>
+          <h2><Link href={`/columns/${featured.id}`}>{featured.title}</Link></h2>
           <p>{featured.excerpt}</p>
-          <div className="clAuthor">
-            <span className="clAvatar" style={{ background: featured.color }}>{featured.init}</span>
-            <div><b>{featured.author}</b><small>{featured.role} · {featured.date} · <Clock size={11} /> {featured.read}</small></div>
-          </div>
-          <Link className="clRead" href={`/columns/${featured.id}`}>지금 읽어보기 <ArrowUpRight size={16} /></Link>
+          <Link className="clRead" href={`/columns/${featured.id}`}>읽어보기 <ArrowUpRight size={16} /></Link>
         </div>
-        <div className="clFeatureQuote">
-          <i>“</i>
+        <blockquote className="clFeatureQuote">
+          <i aria-hidden="true">“</i>
           <p>{featured.quote}</p>
           <small>이번 주의 문장</small>
-        </div>
+        </blockquote>
       </div></section>
 
       <section className="wrap clSection">
         <div className="clHead"><small>매주 발행</small><h2>전체 칼럼</h2></div>
         <div className="clCats">{cats.map(c => <button key={c} className={c === cat ? 'active' : ''} onClick={() => setCat(c)}>{c}</button>)}</div>
         <div className="clGrid">{filtered.map(c => <Link className="clCard" key={c.id} href={`/columns/${c.id}`}>
-          <span className="clTag">{c.cat}</span>
+          <div className="clMetaLine"><span>{c.cat}</span><span>{c.date}</span><span><Clock size={11} /> {c.read}</span></div>
           <h3>{c.title}</h3>
           <p>{c.excerpt}</p>
-          <div className="clCardFoot">
-            <div className="clAuthor">
-              <span className="clAvatar" style={{ background: c.color }}>{c.init}</span>
-              <div><b>{c.author}</b><small>{c.role}</small></div>
-            </div>
-            <small className="clMeta">{c.date} · {c.read}</small>
-          </div>
+          <span className="clMore">읽어보기 <ArrowUpRight size={13} /></span>
         </Link>)}</div>
         {!filtered.length && <div className="clEmpty">이 카테고리의 칼럼이 아직 없습니다.</div>}
       </section>

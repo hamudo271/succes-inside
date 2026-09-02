@@ -7,26 +7,23 @@
 .clHero p{color:var(--wnMuted);font-size:15px;line-height:1.85;margin:0}
 
 /* 이번 주 칼럼 — 블랙 라운드 피처 카드 */
-.clFeature{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;color:var(--wnInk);display:grid;grid-template-columns:1.15fr .85fr;gap:48px;padding:40px 44px;position:relative;overflow:hidden}
-.clFeatureBody{position:relative}
-.clBadge{display:inline-block;font-size:11px;font-weight:700;color:var(--wnPeachInk);background:var(--wnPeach);border-radius:20px;padding:5px 12px;margin-right:10px}
-.clTag{font-size:11px;font-weight:800;color:var(--wnOrangeText)}
-.clTag.light{color:var(--wnOrange)}
-.clFeatureBody h2{font-size:22px;line-height:1.5;letter-spacing:-.5px;margin:14px 0 10px}
-.clFeatureBody>p{color:var(--wnMuted);font-size:13.5px;line-height:1.8;margin:0 0 24px}
-.clAuthor{display:flex;align-items:center;gap:10px}
-.clAvatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;flex:0 0 auto}
-.clAuthor div{display:flex;flex-direction:column}
-.clAuthor b{font-size:12.5px}
-.clAuthor small{display:flex;align-items:center;gap:3px;font-size:10.5px;color:#8f8a84;margin-top:3px}
-.clRead{display:inline-flex;align-items:center;gap:7px;margin-top:24px;border:0;border-radius:8px;background:var(--wnOrange);color:#fff;padding:12px 18px;font-size:13.5px;font-weight:600;transition:background .15s}
+.clFeature{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s7);padding:var(--s5) 0 var(--s6);
+  border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine);align-items:center}
+.clMetaLine{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:12px;color:var(--wnMuted)}
+.clMetaLine b{color:var(--wnOrangeText);font-weight:700}
+.clMetaLine span{display:inline-flex;align-items:center;gap:4px}
+.clFeatureBody h2{font-size:clamp(22px,2.4vw,30px);line-height:1.4;letter-spacing:-.9px;margin:14px 0 12px;text-wrap:balance}
+.clFeatureBody h2 a{color:inherit;transition:color .15s}
+.clFeatureBody h2 a:hover{color:var(--wnOrangeText)}
+.clFeatureBody>p{color:var(--wnInk2);font-size:14.5px;line-height:1.8;margin:0;max-width:52ch}
+.clRead{display:inline-flex;align-items:center;gap:7px;margin-top:var(--s4);border:0;border-radius:8px;background:var(--wnOrange);color:#fff;padding:12px 18px;font-size:13.5px;font-weight:600;transition:background .15s}
 .clRead:hover{background:var(--wnOrangeDeep)}
-.clFeatureQuote{position:relative;border-left:1px solid var(--wnLine);padding-left:48px;display:flex;flex-direction:column;justify-content:center}
-.clFeatureQuote i{display:none}
-.clFeatureQuote p{font-size:18px;line-height:1.7;letter-spacing:-.4px;margin:0 0 18px}
-.clFeatureQuote small{font-size:11px;font-weight:600;color:var(--wnFaint)}
+/* 이번 주의 문장 — 타이포로 세운다 */
+.clFeatureQuote{margin:0;padding-left:var(--s6);border-left:1px solid var(--wnLine)}
+.clFeatureQuote i{display:block;font-style:normal;font-size:64px;line-height:.6;font-weight:800;color:var(--wnOrange);margin-bottom:18px;font-family:Georgia,'Times New Roman',serif}
+.clFeatureQuote p{font-size:clamp(18px,1.7vw,23px);line-height:1.55;letter-spacing:-.6px;font-weight:700;margin:0 0 16px;text-wrap:balance}
+.clFeatureQuote small{font-size:11.5px;font-weight:600;color:var(--wnFaint)}
 
-/* 섹션 공통 */
 .clSection{padding-top:88px}
 .clHead small{font-size:12px;font-weight:700;color:#8f8a84}
 .clHead h2{font-size:22px;letter-spacing:-.5px;margin:8px 0 0}
@@ -38,17 +35,15 @@
 .clCats button.active{background:var(--wnInk);border-color:var(--wnInk);color:var(--wnBg);font-weight:700}
 
 /* 칼럼 목록 — 얇은 보더 화이트 카드(상세로 이동하는 링크) */
-.clGrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.clCard{border:1px solid var(--wnLine);border-radius:16px;background:var(--wnSurface);padding:28px;display:flex;flex-direction:column;transition:border-color .18s,transform .18s,box-shadow .18s}
-.clCard:hover{border-color:#4a3324;transform:translateY(-3px);box-shadow:0 14px 30px #00000059}
-.clCard h3{font-size:18px;line-height:1.5;letter-spacing:-.8px;margin:10px 0 8px;color:var(--wnInk)}
-.clCard>p{font-size:13px;line-height:1.75;color:var(--wnMuted);margin:0 0 22px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.clCardFoot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto;padding-top:18px;border-top:1px solid var(--wnLine2)}
-.clCardFoot .clAuthor small{color:#8f8a84}
-.clMeta{font-size:10.5px;color:#8f8a84;white-space:nowrap}
+.clGrid{display:grid;grid-template-columns:1fr 1fr;gap:0 var(--s6)}
+.clCard{display:flex;flex-direction:column;padding:var(--s4) 0 var(--s5);border-top:1px solid var(--wnLine)}
+.clCard h3{font-size:19px;line-height:1.45;letter-spacing:-.7px;margin:12px 0 8px;color:var(--wnInk);transition:color .15s;text-wrap:balance}
+.clCard:hover h3{color:var(--wnOrangeText)}
+.clCard>p{font-size:13.5px;line-height:1.75;color:var(--wnMuted);margin:0 0 16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.clMore{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:600;color:var(--wnInk2);margin-top:auto}
+.clCard:hover .clMore{color:var(--wnOrangeText)}
 .clEmpty{text-align:center;color:var(--wnMuted);padding:64px 0;font-size:13.5px}
 
-.clAvatar.big{width:44px;height:44px;font-size:14px;margin-bottom:14px}
 
 /* 하단 구독 CTA — 블랙 라운드 컨테이너 */
 .clCta{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;color:var(--wnInk);padding:60px 52px;margin:88px 0 40px;text-align:center;position:relative;overflow:hidden}
@@ -80,8 +75,10 @@
 .clPull p{font-size:17px;line-height:1.7;letter-spacing:-.3px;color:var(--wnInk);margin:0}
 .clOutro{border-top:1px solid var(--wnLine);padding-top:26px;margin-top:36px}
 
-.clWriterCard{display:flex;align-items:flex-start;gap:16px;border:1px solid var(--wnLine);border-radius:16px;background:var(--wnSurface);padding:26px;margin-top:48px}
-.clWriterCard .clAvatar.big{margin-bottom:0}
+.clWriterCard{display:flex;align-items:center;gap:16px;border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine);padding:22px 0;margin-top:48px}
+.clByline{display:flex;flex-direction:column}
+.clByline b{font-size:13px}
+.clByline small{font-size:11px;color:#8f8a84;margin-top:2px}
 .clWriterCard>div{flex:1;display:flex;flex-direction:column}
 .clWriterCard b{font-size:14.5px}
 .clWriterCard small{font-size:11px;color:#8f8a84;margin-top:3px}
@@ -96,8 +93,8 @@
 @media(max-width:900px){
   .clHero{padding-top:56px;padding-bottom:48px}
   .clHero h1{font-size:29px;letter-spacing:-.8px}
-  .clFeature{grid-template-columns:1fr;gap:36px;padding:36px 32px}
-  .clFeatureQuote{border-left:0;border-top:1px solid #2c2c2c;padding-left:0;padding-top:30px}
+  .clFeature{grid-template-columns:1fr;gap:var(--s5)}
+  .clFeatureQuote{border-left:0;border-top:1px solid var(--wnLine);padding-left:0;padding-top:var(--s4)}
   .clGrid{grid-template-columns:1fr}
   .clCta{padding:44px 28px}
 }
@@ -114,9 +111,7 @@
   .clWriterCard>a{width:100%;justify-content:center}
   .clSection{padding-top:56px}
   .clHead h2{font-size:20px}
-  .clFeature{border-radius:24px;padding:28px 22px}
-  .clFeatureBody h2{font-size:19px}
-  .clFeatureQuote p{font-size:16px}
+  .clFeatureQuote i{font-size:48px}
   .clCta{padding:36px 22px;margin:56px 0 24px;border-radius:14px}
   .clCta h2{font-size:19px}
   .clCta h2 br{display:none}

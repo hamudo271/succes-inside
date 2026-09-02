@@ -30,10 +30,7 @@ export default async function ColumnDetail({ params }: { params: Promise<{ id: s
           <h1>{post.title}</h1>
           <p className="clLead">{post.excerpt}</p>
           <div className="clArtMeta">
-            <div className="clAuthor">
-              <span className="clAvatar" style={{ background: post.color }}>{post.init}</span>
-              <div><b>{post.author}</b><small>{post.role}</small></div>
-            </div>
+            <div className="clByline"><b>{post.author}</b><small>{post.role}</small></div>
             <small className="clMeta">{post.date} · <Clock size={11} /> {post.read}</small>
           </div>
         </div>
@@ -48,10 +45,9 @@ export default async function ColumnDetail({ params }: { params: Promise<{ id: s
           <p className="clOutro">{post.outro}</p>
 
           <div className="clWriterCard">
-            <span className="clAvatar big" style={{ background: post.color }}>{post.init}</span>
             <div>
-              <b>{post.author}</b><small>{post.role} · 성공인사이드 필진</small>
-              <p>매주 자신의 현장에서 검증한 관점을 씁니다.</p>
+              <b>{post.author}</b><small>{post.role}</small>
+              <p>인터뷰 현장에서 본 것을 매주 한 편의 관점으로 씁니다.</p>
             </div>
             <Link href="/columns">다른 칼럼 보기 <ArrowUpRight size={14} /></Link>
           </div>
@@ -61,16 +57,10 @@ export default async function ColumnDetail({ params }: { params: Promise<{ id: s
       <section className="wrap clSection">
         <div className="clHead"><small>다음 글</small><h2>이어서 읽기</h2></div>
         <div className="clGrid">{related.map(c => <Link className="clCard" key={c.id} href={`/columns/${c.id}`}>
-          <span className="clTag">{c.cat}</span>
+          <div className="clMetaLine"><span>{c.cat}</span><span>{c.date}</span><span><Clock size={11} /> {c.read}</span></div>
           <h3>{c.title}</h3>
           <p>{c.excerpt}</p>
-          <div className="clCardFoot">
-            <div className="clAuthor">
-              <span className="clAvatar" style={{ background: c.color }}>{c.init}</span>
-              <div><b>{c.author}</b><small>{c.role}</small></div>
-            </div>
-            <small className="clMeta">{c.date} · {c.read}</small>
-          </div>
+          <span className="clMore">읽어보기 <ArrowUpRight size={13} /></span>
         </Link>)}</div>
       </section>
 
