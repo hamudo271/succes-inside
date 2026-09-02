@@ -49,7 +49,11 @@ export default function Home() {
   const stackRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = stackRef.current; if (!el) return;
-    const io = new IntersectionObserver(([e]) => { if (e?.isIntersecting) { el.classList.add('in'); io.disconnect(); } }, { threshold: .3 });
+    // JS가 살아 있을 때만 숨겼다가 등장시킨다 — 없으면 처음부터 보인다
+    el.classList.add('pre');
+    const io = new IntersectionObserver(([e]) => {
+      if (e?.isIntersecting) { el.classList.remove('pre'); el.classList.add('in'); io.disconnect(); }
+    }, { threshold: .25 });
     io.observe(el); return () => io.disconnect();
   }, []);
   const slide = (dir: 1 | -1) => {
