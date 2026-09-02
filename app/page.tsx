@@ -1,7 +1,7 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Search, Play, Eye, Clock, ArrowUpRight, ChevronRight, Youtube, Video, FileText, Search as SearchIcon } from 'lucide-react';
+import { Search, Play, Eye, Clock, ArrowUpRight, ChevronRight, ChevronLeft, Youtube, Video, FileText, Search as SearchIcon } from 'lucide-react';
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
 import SubscribeForm from './components/SubscribeForm';
@@ -55,6 +55,19 @@ export default function Home() {
   );
   const faces = useMemo(() => [...interviews].sort((a, b) => b.views - a.views).slice(0, 10), []);
 
+  // 순위 열의 스크롤 위치 — 양 끝에서는 페이드와 넘김 버튼을 거둔다
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [edge, setEdge] = useState({ start: true, end: false });
+  const syncEdge = () => {
+    const el = rowRef.current; if (!el) return;
+    setEdge({ start: el.scrollLeft <= 2, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2 });
+  };
+  useEffect(() => { syncEdge(); window.addEventListener('resize', syncEdge); return () => window.removeEventListener('resize', syncEdge); }, []);
+  const slide = (dir: 1 | -1) => {
+    const el = rowRef.current; if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
+  };
+
   return <>
     <SiteHeader active="home" />
     <main>
@@ -70,28 +83,40 @@ export default function Home() {
             <Link className="btnGhost" href="/interviews">인터뷰 둘러보기 <ChevronRight size={17} /></Link>
           </div>
         </div>
+
+        {/* 실적 스트립 — 히어로 발치에 붙여 선언과 근거를 한 화면에 둔다 */}
+        <div className="wrap statBand">
+          <div><b>{CHANNEL.interviews}</b><span>기록된 인터뷰</span></div>
+          <div><b>{CHANNEL.totalViewsText}</b><span>누적 조회수</span></div>
+          <div><b>{CHANNEL.subscribers}</b><span>채널 구독자</span></div>
+          <div><b>{CHANNEL.totalVideos}</b><span>발행 콘텐츠</span></div>
+        </div>
       </section>
 
-      {/* ── 실적 밴드 ── */}
-      <section className="wrap statBand">
-        <div><b>{CHANNEL.interviews}</b><span>기록된 인터뷰</span></div>
-        <div><b>{CHANNEL.totalViewsText}</b><span>누적 조회수</span></div>
-        <div><b>{CHANNEL.subscribers}</b><span>채널 구독자</span></div>
-        <div><b>{CHANNEL.totalVideos}</b><span>발행 콘텐츠</span></div>
-      </section>
-
-      {/* ── 만나온 사장님들: 얼굴이 곧 신뢰 ── */}
+      {/* ── 만나온 사장님들: 조회수 순위 열 ── */}
       <section className="band">
         <div className="wrap secHead">
-          <h2>지금까지 만난 사장님들</h2>
-          <Link className="secMore" href="/interviews">전체 보기 <ChevronRight size={15} /></Link>
+          <div>
+            <h2>지금까지 만난 사장님들</h2>
+            <p className="secSub">가장 많이 본 기록 열 편입니다.</p>
+          </div>
+          <div className="rowNav">
+            <div>
+              <button type="button" onClick={() => slide(-1)} disabled={edge.start} aria-label="이전"><ChevronLeft size={17} /></button>
+              <button type="button" onClick={() => slide(1)} disabled={edge.end} aria-label="다음"><ChevronRight size={17} /></button>
+            </div>
+            <Link className="secMore" href="/interviews">전체 보기 <ChevronRight size={15} /></Link>
+          </div>
         </div>
-        <div className="faceRow">
-          {faces.map(v => (
+        <div className={'faceRow' + (edge.start ? '' : ' fadeL') + (edge.end ? '' : ' fadeR')} ref={rowRef} onScroll={syncEdge}>
+          {faces.map((v, i) => (
             <a className="face" key={v.id} href={watchUrl(v.id)} target="_blank" rel="noreferrer">
               <span className="faceShot"><img src={thumb(v.id)} alt="" loading="lazy" /></span>
-              <b>{v.cat}</b>
-              <small>조회 {v.viewsText}회</small>
+              <div className="faceMeta">
+                <span className="faceRank">{String(i + 1).padStart(2, '0')}</span>
+                <h3>{v.title}</h3>
+              </div>
+              <small>{v.cat} · 조회 {v.viewsText}회</small>
             </a>
           ))}
         </div>

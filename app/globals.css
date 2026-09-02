@@ -111,40 +111,66 @@ header{height:72px;position:sticky;top:0;z-index:30;
 .empty{text-align:center;color:var(--wnMuted);padding:var(--s7) 0;font-size:13.5px;grid-column:1/-1}
 
 /* ══════════════ 히어로 ══════════════ */
-.hero{position:relative;overflow:hidden;isolation:isolate;background:var(--wnSurface2)}
+.hero{position:relative;overflow:hidden;isolation:isolate;background:var(--wnSurface2);--heroLine:#ffffff1f}
 .heroBg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:52% 28%;
   filter:grayscale(.35) contrast(1.05)}
 .hero:after{content:'';position:absolute;inset:0;z-index:-1;
   background:linear-gradient(100deg,var(--wnBg) 24%,#0f0f0eee 46%,#0f0f0e66 78%,#0f0f0e33 100%),
-             linear-gradient(180deg,#0f0f0e99 0%,transparent 34%,#0f0f0eee 100%)}
-.heroInner{position:relative;padding-top:var(--s8);padding-bottom:var(--s8)}
+             linear-gradient(180deg,#0f0f0e99 0%,transparent 34%,#0f0f0ee6 66%,var(--wnBg) 80%)}
+.heroInner{position:relative;padding-top:var(--s8);padding-bottom:var(--s7)}
 .hero h1{font-size:clamp(28px,4vw,46px);font-weight:800;line-height:1.34;letter-spacing:-1.6px;
   margin-bottom:var(--s4);max-width:16ch}
 .hero h1 em{font-style:normal;color:var(--wnOrange)}
 .hero p{font-size:clamp(14px,1.4vw,16.5px);line-height:1.9;color:var(--wnInk2);max-width:44ch}
 .heroBtns{display:flex;align-items:center;gap:var(--s2);margin-top:var(--s5);flex-wrap:wrap}
 
-/* ══════════════ 실적 밴드 ══════════════ */
-.statBand{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);
-  padding-top:var(--s6);padding-bottom:var(--s6);border-bottom:1px solid var(--wnLine)}
-.statBand div{display:flex;flex-direction:column;gap:6px}
-.statBand b{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1}
-.statBand span{font-size:12px;color:var(--wnMuted)}
+/* ══════════════ 실적 스트립 (히어로 풋) ══════════════ */
+.statBand{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--heroLine)}
+.statBand div{display:flex;flex-direction:column-reverse;gap:10px;
+  padding:var(--s4) var(--s4) var(--s5) 0}
+.statBand div+div{padding-left:var(--s4);border-left:1px solid var(--heroLine)}
+.statBand b{font-size:clamp(30px,3.4vw,44px);font-weight:800;letter-spacing:-1.8px;line-height:1;
+  font-variant-numeric:tabular-nums}
+.statBand span{font-size:12.5px;color:var(--wnInk2);letter-spacing:.1px}
+.hero+.band{margin-top:0;padding-top:var(--s6)}
 
-/* ══════════════ 만나온 사장님들 ══════════════ */
+/* ══════════════ 만나온 사장님들 — 조회수 순위 열 ══════════════ */
+.rowNav{display:flex;align-items:center;gap:var(--s3)}
+.rowNav div{display:flex;gap:6px}
+.rowNav button{width:36px;height:36px;border-radius:50%;border:1px solid var(--wnLine);
+  background:transparent;color:var(--wnInk2);display:grid;place-items:center;
+  transition:border-color .15s,color .15s}
+.rowNav button:hover:not(:disabled){border-color:var(--wnInk);color:var(--wnInk)}
+.rowNav button:disabled{opacity:.3;cursor:default}
+.rowNav button:focus-visible{outline:2px solid var(--wnOrange);outline-offset:2px}
+
 .faceRow{display:flex;gap:var(--s3);overflow-x:auto;padding-bottom:var(--s2);
   padding-left:max(24px,calc((100% - 1180px)/2 + 24px));
   padding-right:max(24px,calc((100% - 1180px)/2 + 24px));
   scrollbar-width:none}
 .faceRow::-webkit-scrollbar{display:none}
-.face{flex:0 0 176px}
-.faceShot{display:block;aspect-ratio:4/3;border-radius:10px;overflow:hidden;
+/* 가장자리 페이드 — 더 있음을 알린다. 끝에 닿으면 페이드가 걷힌다 */
+.faceRow.fadeR{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 96px),transparent);
+  mask-image:linear-gradient(90deg,#000 calc(100% - 96px),transparent)}
+.faceRow.fadeL{-webkit-mask-image:linear-gradient(90deg,transparent,#000 96px);
+  mask-image:linear-gradient(90deg,transparent,#000 96px)}
+.faceRow.fadeL.fadeR{-webkit-mask-image:linear-gradient(90deg,transparent,#000 96px,#000 calc(100% - 96px),transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 96px,#000 calc(100% - 96px),transparent)}
+
+.face{flex:0 0 252px;display:block}
+.faceShot{display:block;aspect-ratio:16/9;border-radius:12px;overflow:hidden;
   background:var(--wnSurface2);border:1px solid var(--wnLine)}
-.faceShot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
-.face:hover .faceShot img{transform:scale(1.05)}
-.face b{display:block;font-size:13px;font-weight:600;margin-top:var(--s2);transition:color .15s}
-.face:hover b{color:var(--wnOrange)}
-.face small{display:block;font-size:11.5px;color:var(--wnMuted);margin-top:3px}
+/* 유튜브 썸네일의 원색 글씨를 휴지 상태에서 한 단계 눌러 열 전체를 진정시킨다 */
+.faceShot img{width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(.72) brightness(.9);transition:filter .3s,transform .5s cubic-bezier(.2,.7,.2,1)}
+.face:hover .faceShot img{filter:none;transform:scale(1.04)}
+.faceMeta{display:flex;align-items:baseline;gap:9px;margin-top:var(--s2)}
+.faceRank{font-size:11px;font-weight:700;color:var(--wnFaint);letter-spacing:.6px;
+  font-variant-numeric:tabular-nums;flex:0 0 auto}
+.face h3{font-size:14px;font-weight:600;line-height:1.5;letter-spacing:-.2px;margin:0;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;transition:color .15s}
+.face:hover h3{color:var(--wnOrangeText)}
+.face small{display:block;font-size:12px;color:var(--wnMuted);margin-top:6px;padding-left:calc(9px + 1.6em)}
 
 /* ══════════════ 인터뷰 카드 (홈) ══════════════ */
 .cats{display:flex;gap:var(--s1);margin-bottom:var(--s5);overflow-x:auto;padding-bottom:6px}
@@ -258,10 +284,13 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .mobile{display:block}
   .sec{padding-top:var(--s7)}
   .band{margin-top:var(--s7);padding:var(--s6) 0}
-  .statBand{grid-template-columns:repeat(2,1fr);gap:var(--s5) var(--s4)}
-  .statBand b{font-size:25px}
+  .statBand{grid-template-columns:1fr 1fr}
+  .statBand div{padding:var(--s3) var(--s3) var(--s4) 0}
+  .statBand div:nth-child(3){padding-left:0;border-left:0}
+  .statBand div:nth-child(n+3){border-top:1px solid var(--heroLine)}
+  .hero+.band{padding-top:var(--s5)}
   .heroInner{padding-top:var(--s7);padding-bottom:var(--s7)}
-  .hero:after{background:linear-gradient(180deg,#0f0f0eaa 0%,#0f0f0edd 42%,var(--wnBg) 96%)}
+  .hero:after{background:linear-gradient(180deg,#0f0f0eaa 0%,#0f0f0edd 40%,var(--wnBg) 60%)}
   .secHead{align-items:flex-start}
   .search{width:100%}
 }
@@ -282,6 +311,7 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .steps li:before{left:6px;right:auto;top:14px;bottom:calc(-1 * var(--s4));
     width:1px;height:auto;background:var(--wnLine)}
   .faceRow{padding-left:18px;padding-right:18px}
-  .face{flex-basis:150px}
+  .face{flex-basis:216px}
+  .rowNav div{display:none}
   .btnPrimary,.btnGhost{flex:1;justify-content:center}
 }
