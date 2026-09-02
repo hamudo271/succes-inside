@@ -1,7 +1,8 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, ChevronRight, ChevronLeft, Check, Users, PlayCircle, CalendarDays } from 'lucide-react';
+import { ArrowUpRight, ChevronRight, Check, Users, PlayCircle, CalendarDays, Play } from 'lucide-react';
+import { interviews, cats, watchUrl, CHANNEL } from '../interviews/data';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import './programs.css';
@@ -80,24 +81,20 @@ const vod = [
 
 const tabs = [{ k: 'all', l: '전체' }, { k: 'live', l: '정기 과정' }, { k: 'vod', l: 'VOD 과정' }];
 
+/** 사례 벽 — 업종마다 가장 많이 본 인터뷰 한 편씩, 조회수 순으로 9편 */
+const CASES = (() => {
+  const byCat = cats.filter(c => c !== '전체').map(c =>
+    interviews.filter(i => i.cat === c).sort((a, b) => b.views - a.views)[0]!);
+  const rest = [...interviews].sort((a, b) => b.views - a.views).filter(i => !byCat.includes(i));
+  return [...byCat, ...rest].slice(0, 9).sort((a, b) => b.views - a.views);
+})();
+const INDUSTRIES = cats.length - 1;
+
 export default function Programs() {
   const [tab, setTab] = useState('all');
   const [open, setOpen] = useState<string | null>(null);
   const showLive = tab === 'all' || tab === 'live';
   const showVod = tab === 'all' || tab === 'vod';
-
-  // 강사 열 스크롤 — 양 끝에서 페이드와 넘김 버튼을 거둔다
-  const rowRef = useRef<HTMLDivElement>(null);
-  const [edge, setEdge] = useState({ start: true, end: false });
-  const syncEdge = () => {
-    const el = rowRef.current; if (!el) return;
-    setEdge({ start: el.scrollLeft <= 2, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2 });
-  };
-  useEffect(() => { syncEdge(); window.addEventListener('resize', syncEdge); return () => window.removeEventListener('resize', syncEdge); }, []);
-  const slide = (dir: 1 | -1) => {
-    const el = rowRef.current; if (!el) return;
-    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
-  };
 
   return <>
     <SiteHeader active="programs" />
@@ -114,23 +111,30 @@ export default function Programs() {
         </div>
       </div></section>
 
-      <section className="wrap pgSection">
-        <div className="pgHead pgHeadRow">
-          <div><small>함께하는 사람들</small><h2>먼저 가본 실무자와 함께합니다</h2><p>성공인사이드에서 경험을 나누는 멤버가 직접 과정을 이끕니다.</p></div>
-          <div className="rowNav"><div>
-            <button type="button" onClick={() => slide(-1)} disabled={edge.start} aria-label="이전"><ChevronLeft size={17} /></button>
-            <button type="button" onClick={() => slide(1)} disabled={edge.end} aria-label="다음"><ChevronRight size={17} /></button>
-          </div></div>
+      {/* ── 교재: 이론이 아니라 인터뷰에서 나온 실제 결정 ── */}
+      <section className="wrap pgSection pgCases">
+        <div className="pgCasesText">
+          <small>교재</small>
+          <h2>교재는 이론이 아니라{' '}<br />{CHANNEL.interviews}명의 하루입니다</h2>
+          <p>성공인사이드 과정은 인터뷰에서 실제로 나온 결정을 사례로 씁니다. 왜 그 가격을 정했는지, 왜 그 자리에 가게를 냈는지 — 결과가 아니라 결정을 따라갑니다.</p>
+          <ol className="pgBeats">
+            <li><b>사례</b><span>한 사장님의 결정 장면을 영상으로 봅니다.</span></li>
+            <li><b>질문</b><span>같은 상황이면 나는 어떻게 했을지 답합니다.</span></li>
+            <li><b>적용</b><span>내 사업의 다음 결정 하나를 정해서 나갑니다.</span></li>
+          </ol>
+          <dl className="pgCaseStats">
+            <div><dd>{CHANNEL.interviews}편</dd><dt>사례 영상</dt></div>
+            <div><dd>{INDUSTRIES}개</dd><dt>업종</dt></div>
+            <div><dd>{CHANNEL.totalViewsText}</dd><dt>누적 시청</dt></div>
+          </dl>
         </div>
-        <div className={'pgMentors' + (edge.start ? '' : ' fadeL') + (edge.end ? '' : ' fadeR')} ref={rowRef} onScroll={syncEdge}>
-          {mentors.map(m => <a className="pgMentor" key={m.name} href="#live">
-            <div className="pgPortrait" style={{ '--c': m.color } as React.CSSProperties}>
-              {m.photo && <img src={m.photo} alt="" loading="lazy" />}
-              <div><b>{m.name}</b><small>{m.role}</small></div>
-            </div>
-            <i><ChevronRight size={14} />{m.course}</i>
-          </a>)}
-        </div>
+        <div className="pgWall">{CASES.map((v, i) => (
+          <a key={v.id} href={watchUrl(v.id)} target="_blank" rel="noreferrer" className={i === 0 ? 'big' : ''}>
+            <img src={`https://i.ytimg.com/vi/${v.id}/${i === 0 ? 'hq720' : 'mqdefault'}.jpg`} alt="" loading="lazy" />
+            <span className="pgWallCat">{v.cat}</span>
+            <span className="pgWallTitle"><Play size={12} fill="currentColor" />{v.title}</span>
+          </a>
+        ))}</div>
       </section>
 
       <div className="wrap pgTabs">{tabs.map(t => <button key={t.k} className={tab === t.k ? 'active' : ''} onClick={() => setTab(t.k)}>{t.l}</button>)}</div>
