@@ -1,17 +1,18 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, ChevronRight, Check, Users, PlayCircle, CalendarDays } from 'lucide-react';
+import { ArrowUpRight, ChevronRight, ChevronLeft, Check, Users, PlayCircle, CalendarDays } from 'lucide-react';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import './programs.css';
 
-const mentors = [
-  { name: '김서준', role: '커머스 브랜드 대표', course: '첫 고객 100명 만들기', init: '김', color: '#4a4540' },
+// photo: '/mentors/kim.jpg' 처럼 세로 3:4 사진 경로를 넣으면 포스터 카드에 깔린다
+const mentors: { name: string; role: string; course: string; init: string; color: string; photo?: string }[] = [
+  { name: '김서준', role: '커머스 브랜드 대표', course: '첫 고객 100명 만들기', init: '김', color: '#b5653a' },
   { name: '이하은', role: '그로스 마케터', course: '그로스 마케팅', init: '이', color: '#ff6b2c' },
-  { name: '박도윤', role: 'AI 프로덕트 빌더', course: 'AI 업무 자동화 설계', init: '박', color: '#57524b' },
+  { name: '박도윤', role: 'AI 프로덕트 빌더', course: 'AI 업무 자동화 설계', init: '박', color: '#8c5a44' },
   { name: '최유진', role: '브랜드 디렉터', course: '가격 경쟁에서 벗어나는 브랜딩', init: '최', color: '#e0824a' },
-  { name: '오민재', role: '1인 기업 운영자', course: '1인 기업 생존 부트캠프', init: '오', color: '#4a4540' },
+  { name: '오민재', role: '1인 기업 운영자', course: '1인 기업 생존 부트캠프', init: '오', color: '#c97a48' },
   { name: '정지우', role: 'SaaS 창업가', course: '사업계획서 완성 워크숍', init: '정', color: '#d4550f' },
   { name: '한소연', role: '콘텐츠 전략가', course: '읽히는 글을 쓰는 법', init: '한', color: '#8a5a3b' },
   { name: '윤태호', role: 'VC 심사역', course: '창업가의 재무 기준 세우기', init: '윤', color: '#c2865a' },
@@ -85,6 +86,19 @@ export default function Programs() {
   const showLive = tab === 'all' || tab === 'live';
   const showVod = tab === 'all' || tab === 'vod';
 
+  // 강사 열 스크롤 — 양 끝에서 페이드와 넘김 버튼을 거둔다
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [edge, setEdge] = useState({ start: true, end: false });
+  const syncEdge = () => {
+    const el = rowRef.current; if (!el) return;
+    setEdge({ start: el.scrollLeft <= 2, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2 });
+  };
+  useEffect(() => { syncEdge(); window.addEventListener('resize', syncEdge); return () => window.removeEventListener('resize', syncEdge); }, []);
+  const slide = (dir: 1 | -1) => {
+    const el = rowRef.current; if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
+  };
+
   return <>
     <SiteHeader active="programs" />
     <main>
@@ -101,11 +115,22 @@ export default function Programs() {
       </div></section>
 
       <section className="wrap pgSection">
-        <div className="pgHead"><small>함께하는 사람들</small><h2>먼저 가본 실무자와 함께합니다</h2><p>성공인사이드에서 경험을 나누는 멤버가 직접 과정을 이끕니다.</p></div>
-        <div className="pgMentors">{mentors.map(m => <div className="pgMentor" key={m.name}>
-          <span className="pgAvatar" style={{ background: m.color }}>{m.init}</span>
-          <b>{m.name}</b><small>{m.role}</small><i>{m.course}</i>
-        </div>)}</div>
+        <div className="pgHead pgHeadRow">
+          <div><small>함께하는 사람들</small><h2>먼저 가본 실무자와 함께합니다</h2><p>성공인사이드에서 경험을 나누는 멤버가 직접 과정을 이끕니다.</p></div>
+          <div className="rowNav"><div>
+            <button type="button" onClick={() => slide(-1)} disabled={edge.start} aria-label="이전"><ChevronLeft size={17} /></button>
+            <button type="button" onClick={() => slide(1)} disabled={edge.end} aria-label="다음"><ChevronRight size={17} /></button>
+          </div></div>
+        </div>
+        <div className={'pgMentors' + (edge.start ? '' : ' fadeL') + (edge.end ? '' : ' fadeR')} ref={rowRef} onScroll={syncEdge}>
+          {mentors.map(m => <a className="pgMentor" key={m.name} href="#live">
+            <div className="pgPortrait" style={{ '--c': m.color } as React.CSSProperties}>
+              {m.photo && <img src={m.photo} alt="" loading="lazy" />}
+              <div><b>{m.name}</b><small>{m.role}</small></div>
+            </div>
+            <i><ChevronRight size={14} />{m.course}</i>
+          </a>)}
+        </div>
       </section>
 
       <div className="wrap pgTabs">{tabs.map(t => <button key={t.k} className={tab === t.k ? 'active' : ''} onClick={() => setTab(t.k)}>{t.l}</button>)}</div>

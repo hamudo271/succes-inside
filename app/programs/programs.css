@@ -26,13 +26,29 @@
 .pgHead p{color:var(--wnMuted);font-size:14px;line-height:1.75;margin:10px 0 0}
 
 /* 강사진 — 얇은 보더 화이트 카드 */
-.pgMentors{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s2)}
-.pgMentor{border:1px solid var(--wnLine);border-radius:12px;padding:var(--s4) var(--s3);background:var(--wnSurface);display:grid;grid-template-columns:auto 1fr;column-gap:var(--s3);row-gap:2px;align-items:center;transition:border-color .18s}
-.pgMentor:hover{border-color:#4a3324}
-.pgAvatar{grid-row:1/3;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800}
-.pgMentor b{font-size:14.5px;letter-spacing:-.3px;align-self:end}
-.pgMentor small{font-size:11.5px;color:#8f8a84;align-self:start}
-.pgMentor i{grid-column:1/3;font-style:normal;font-size:11.5px;color:var(--wnOrangeText);font-weight:700;margin-top:var(--s3);padding-top:var(--s2);border-top:1px solid var(--wnLine2);line-height:1.5}
+/* 강사 — 세로 포스터 카드. 사진이 없어도 성립하고, photo가 들어오면 같은 자리에 깔린다 */
+.pgHeadRow{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s4);flex-wrap:wrap}
+.pgMentors{display:flex;gap:var(--s3);overflow-x:auto;scrollbar-width:none;padding-bottom:var(--s2);
+  margin-left:calc(-1 * max(24px,(100vw - 1180px)/2 + 24px));margin-right:calc(-1 * max(24px,(100vw - 1180px)/2 + 24px));
+  padding-left:max(24px,calc((100vw - 1180px)/2 + 24px));padding-right:max(24px,calc((100vw - 1180px)/2 + 24px))}
+.pgMentors::-webkit-scrollbar{display:none}
+.pgMentors.fadeR{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 96px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 96px),transparent)}
+.pgMentors.fadeL{-webkit-mask-image:linear-gradient(90deg,transparent,#000 96px);mask-image:linear-gradient(90deg,transparent,#000 96px)}
+.pgMentors.fadeL.fadeR{-webkit-mask-image:linear-gradient(90deg,transparent,#000 96px,#000 calc(100% - 96px),transparent);mask-image:linear-gradient(90deg,transparent,#000 96px,#000 calc(100% - 96px),transparent)}
+.pgMentor{flex:0 0 222px;display:block}
+.pgPortrait{display:block;position:relative;aspect-ratio:3/4;border-radius:14px;overflow:hidden;border:1px solid var(--wnLine);
+  background:radial-gradient(110% 70% at 85% 0%,color-mix(in srgb,var(--c) 58%,transparent),transparent 62%),
+             linear-gradient(180deg,var(--wnSurface2),var(--wnSurface));
+  transition:transform .4s cubic-bezier(.2,.7,.2,1),border-color .2s}
+.pgMentor:hover .pgPortrait{transform:translateY(-3px);border-color:#4a3324}
+.pgPortrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.pgPortrait:after{content:'';position:absolute;inset:auto 0 0 0;height:55%;background:linear-gradient(180deg,transparent,#0f0f0ee6)}
+.pgPortrait>div{position:absolute;left:16px;right:16px;bottom:15px;z-index:1}
+.pgPortrait b{display:block;font-size:22px;font-weight:800;letter-spacing:-.7px;line-height:1.2;color:var(--wnInk)}
+.pgPortrait small{display:block;font-size:12.5px;color:var(--wnInk2);margin-top:4px}
+.pgMentor i{display:flex;align-items:flex-start;gap:6px;margin-top:var(--s2);font-style:normal;font-size:13px;
+  font-weight:600;line-height:1.5;color:var(--wnOrangeText);letter-spacing:-.1px}
+.pgMentor i svg{flex:0 0 auto;margin-top:3px}
 
 /* 필터 탭 */
 .pgTabs{display:flex;gap:8px;margin-top:68px}
@@ -98,7 +114,6 @@
   .pgHero h1{font-size:29px;letter-spacing:-.8px}
   .pgStats{grid-template-columns:1fr 1fr;gap:26px 12px;padding:26px 0}
   .pgStats b{font-size:30px}
-  .pgMentors{grid-template-columns:1fr 1fr}
   .pgLive{grid-template-columns:1fr}
   .pgVodBody{grid-template-columns:1fr;gap:0}
   .pgCta{padding:44px 28px}
@@ -108,7 +123,9 @@
   .pgHero h1 br,.pgHeroInner p br{display:none}
   .pgSection{padding-top:52px}
   .pgHead h2{font-size:20px}
-  .pgMentors{grid-template-columns:1fr}
+  .pgMentors{margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}
+  .pgMentor{flex-basis:186px}
+  .rowNav div{display:none}
   .pgTabs{margin-top:44px;overflow:auto;padding-bottom:6px}
   .pgLive article{padding:22px}
   .pgVodHead{grid-template-columns:1fr;padding:22px 46px 22px 22px;align-items:start}
