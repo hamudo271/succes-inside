@@ -10,27 +10,25 @@ import { interviews, cats, thumb, watchUrl, CHANNEL } from './interviews/data';
 const ymd = (d: string) => `${d.slice(0, 4)}.${d.slice(5, 7)}`;
 
 /**
- * 히어로 배경 — 지금은 조회수 1위 인터뷰의 썸네일을 임시로 쓴다.
- * 촬영 현장 스틸(가로 2000px 이상)을 받으면 이 한 줄만 교체하면 된다.
- *   예) const HERO_BG = '/hero.jpg';
+ * 히어로 배경 — 조회수 1위 인터뷰(H모터스) 본편에서 뽑은 1080p 스틸.
+ * 자막 띠는 잘라냈다. 촬영 현장 스틸(가로 2000px 이상)을 받으면 파일만 교체하면 된다.
  */
-const TOP = [...interviews].sort((a, b) => b.views - a.views)[0]!;
-const HERO_BG = thumb(TOP.id);
+const HERO_BG = '/hero.jpg';
 
 // 인터뷰가 남기는 것 — 제안서의 6가지 가치를 세 갈래로 묶었다.
 const DELIVERS = [
   {
-    icon: <Video size={20} />, t: '영상',
+    icon: <Video size={18} />, t: '영상',
     d: '한 번의 촬영을 정식 인터뷰 한 편과 숏폼 여러 편으로 나눠 만듭니다.',
     items: ['유튜브 정식 인터뷰', '릴스·쇼츠·틱톡 숏폼'],
   },
   {
-    icon: <FileText size={20} />, t: '기사',
+    icon: <FileText size={18} />, t: '기사',
     d: '영상을 전사해 검색이 읽을 수 있는 글로 옮깁니다.',
     items: ['인터뷰 아카이브 기사', '검색 최적화 편집'],
   },
   {
-    icon: <SearchIcon size={20} />, t: '노출',
+    icon: <SearchIcon size={18} />, t: '노출',
     d: '만든 자산을 사람이 찾는 자리마다 올려둡니다.',
     items: ['네이버·구글·AI 검색', 'SNS 멀티채널 확산'],
   },
@@ -170,20 +168,27 @@ export default function Home() {
               <p className="secSub">촬영으로 끝나지 않습니다. 검색과 AI에 인용되는 자산으로 전환합니다.</p>
             </div>
           </div>
-          <div className="delivers">{DELIVERS.map(d => (
-            <article key={d.t}>
-              <i>{d.icon}</i>
-              <b>{d.t}</b>
-              <p>{d.d}</p>
-              <ul>{d.items.map(x => <li key={x}>{x}</li>)}</ul>
-            </article>
-          ))}</div>
+          <div className="valueGrid">
+            <div className="ledger">
+              <h3>세 갈래로 남깁니다</h3>
+              <div>{DELIVERS.map(d => (
+              <article key={d.t}>
+                <b>{d.icon}{d.t}</b>
+                <div>
+                  <p>{d.d}</p>
+                  <ul>{d.items.map(x => <li key={x}>{x}</li>)}</ul>
+                </div>
+              </article>
+            ))}</div>
+            </div>
 
-          <div className="stepsWrap">
-            <h3>진행은 이렇게 됩니다</h3>
-            <ol className="steps">{STEPS.map(s => (
-              <li key={s.n}><span>{s.n}</span><b>{s.t}</b><p>{s.d}</p></li>
-            ))}</ol>
+            <div className="flow">
+              <h3>진행은 이렇게 됩니다</h3>
+              <ol>{STEPS.map(s => (
+                <li key={s.n}><span>{s.n}</span><div><b>{s.t}</b><p>{s.d}</p></div></li>
+              ))}</ol>
+              <p className="flowNote">검토 회신은 보통 일주일, 촬영은 하루 동행입니다.</p>
+            </div>
           </div>
         </div>
       </section>

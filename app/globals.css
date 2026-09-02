@@ -112,7 +112,7 @@ header{height:72px;position:sticky;top:0;z-index:30;
 
 /* ══════════════ 히어로 ══════════════ */
 .hero{position:relative;overflow:hidden;isolation:isolate;background:var(--wnSurface2);--heroLine:#ffffff1f}
-.heroBg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:52% 28%;
+.heroBg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:62% 30%;
   filter:grayscale(.35) contrast(1.05)}
 .hero:after{content:'';position:absolute;inset:0;z-index:-1;
   background:linear-gradient(100deg,var(--wnBg) 24%,#0f0f0eee 46%,#0f0f0e66 78%,#0f0f0e33 100%),
@@ -203,33 +203,30 @@ header{height:72px;position:sticky;top:0;z-index:30;
 .ivFoot{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s2)}
 .ivFoot span{display:flex;align-items:center;gap:4px;font-size:11.5px;color:#8f8a84}
 
-/* ══════════════ 서비스 ══════════════ */
-.delivers{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
-.delivers article{display:flex;flex-direction:column;background:var(--wnBg);
-  border:1px solid var(--wnLine);border-radius:14px;padding:var(--s5) var(--s4) var(--s4)}
-.delivers i{display:grid;place-items:center;width:42px;height:42px;border-radius:11px;
-  background:var(--wnPeach);color:var(--wnPeachInk);margin-bottom:var(--s3)}
-.delivers b{font-size:17px;font-weight:700}
-.delivers p{font-size:13.5px;line-height:1.8;color:var(--wnMuted);margin-top:var(--s1)}
-.delivers ul{list-style:none;margin:var(--s3) 0 0;padding:var(--s3) 0 0;
-  border-top:1px solid var(--wnLine2);display:flex;flex-direction:column;gap:7px}
-.delivers li{position:relative;padding-left:15px;font-size:12.5px;color:var(--wnInk2);line-height:1.6}
-.delivers li:before{content:'';position:absolute;left:0;top:8px;width:5px;height:5px;
-  border-radius:50%;background:var(--wnOrange)}
+/* ══════════════ 서비스 — 남기는 것(장부) + 진행 순서 ══════════════ */
+.valueGrid{display:grid;grid-template-columns:1.3fr .9fr;gap:var(--s8);align-items:start}
 
-.stepsWrap{margin-top:var(--s6);padding-top:var(--s5);border-top:1px solid var(--wnLine)}
-.stepsWrap h3{font-size:14px;font-weight:700;color:var(--wnMuted);margin-bottom:var(--s4)}
-.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
-.steps li{position:relative;display:flex;flex-direction:column;gap:5px;padding-left:var(--s4)}
-/* 순서 표시 — 데스크톱은 점을 잇는 가로선, 모바일 세로 배치에서는 세로선 */
-.steps li:before{content:'';position:absolute;left:9px;right:calc(-1 * var(--s3));top:6px;
-  height:1px;background:var(--wnLine)}
-.steps li:after{content:'';position:absolute;left:2px;top:2px;width:9px;height:9px;
-  border-radius:50%;background:var(--wnOrange)}
-.steps li:last-child:before{display:none}
-.steps span{font-size:11.5px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.04em}
-.steps b{font-size:14.5px;font-weight:700}
-.steps p{font-size:12.5px;line-height:1.75;color:var(--wnMuted)}
+/* 장부: 갈래 라벨 | 설명 + 산출물 칩. 상단 실적 스트립과 같은 hairline 언어 */
+.ledger h3,.ledger ol,.ledger>div{border-top:1px solid var(--wnLine)}
+.ledger article{display:grid;grid-template-columns:132px 1fr;gap:var(--s4);align-items:start;
+  padding:var(--s4) 0 var(--s5);border-bottom:1px solid var(--wnLine)}
+.ledger b{display:flex;align-items:center;gap:9px;font-size:21px;font-weight:800;padding-top:1px;
+  letter-spacing:-.6px;line-height:1.25;color:var(--wnInk)}
+.ledger b svg{color:var(--wnOrangeText);flex:0 0 auto}
+.ledger p{font-size:14.5px;line-height:1.8;color:var(--wnInk2);max-width:38ch;margin:0}
+.ledger ul{list-style:none;margin:var(--s3) 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.ledger li{font-size:12.5px;font-weight:600;color:var(--wnInk);padding:7px 12px;
+  border:1px solid var(--wnLine);border-radius:999px;background:var(--wnBg);white-space:nowrap}
+
+/* 진행 순서: 세로 장부. 순서가 정보이므로 번호를 쓴다 */
+.flow ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--wnLine)}
+.flow li{display:grid;grid-template-columns:40px 1fr;gap:var(--s2);align-items:baseline;
+  padding:var(--s3) 0;border-bottom:1px solid var(--wnLine)}
+.flow span{font-size:12px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.06em;
+  font-variant-numeric:tabular-nums}
+.flow b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.3px}
+.flow p{font-size:13px;line-height:1.7;color:var(--wnMuted);margin:5px 0 0}
+.flowNote{margin:var(--s3) 0 0;font-size:12.5px;color:var(--wnMuted);line-height:1.7}
 
 /* ══════════════ 전환 ══════════════ */
 .closer{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s6);align-items:stretch;
@@ -272,7 +269,7 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
 /* ══════════════ 반응형 ══════════════ */
 @media(max-width:1000px){
   .ivGridHome{grid-template-columns:repeat(2,1fr)}
-  .delivers,.steps{grid-template-columns:repeat(2,1fr)}
+  .valueGrid{grid-template-columns:1fr;gap:var(--s6)}
   .closer{grid-template-columns:1fr;gap:var(--s5);padding:var(--s6) var(--s5)}
   .closerSub{border-left:0;border-top:1px solid var(--wnLine);padding-left:0;padding-top:var(--s5)}
 }
@@ -290,7 +287,7 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .statBand div:nth-child(n+3){border-top:1px solid var(--heroLine)}
   .hero+.band{padding-top:var(--s5)}
   .heroInner{padding-top:var(--s7);padding-bottom:var(--s7)}
-  .hero:after{background:linear-gradient(180deg,#0f0f0eaa 0%,#0f0f0edd 40%,var(--wnBg) 60%)}
+  .hero:after{background:linear-gradient(180deg,#0f0f0e99 0%,#0f0f0ed0 40%,var(--wnBg) 62%)}
   .secHead{align-items:flex-start}
   .search{width:100%}
 }
@@ -306,10 +303,8 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .hero h1 br,.hero p br{display:none}
   .hero h1{max-width:none}
   .ivGridHome{grid-template-columns:1fr;gap:var(--s5)}
-  .delivers,.steps{grid-template-columns:1fr}
-  .steps{gap:var(--s4)}
-  .steps li:before{left:6px;right:auto;top:14px;bottom:calc(-1 * var(--s4));
-    width:1px;height:auto;background:var(--wnLine)}
+  .ledger article{grid-template-columns:1fr;gap:var(--s2);padding:var(--s3) 0 var(--s4)}
+  .ledger b{font-size:18px}
   .faceRow{padding-left:18px;padding-right:18px}
   .face{flex-basis:216px}
   .rowNav div{display:none}
