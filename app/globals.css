@@ -203,30 +203,53 @@ header{height:72px;position:sticky;top:0;z-index:30;
 .ivFoot{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s2)}
 .ivFoot span{display:flex;align-items:center;gap:4px;font-size:11.5px;color:#8f8a84}
 
-/* ══════════════ 서비스 — 남기는 것(장부) + 진행 순서 ══════════════ */
-.valueGrid{display:grid;grid-template-columns:1.3fr .9fr;gap:var(--s8);align-items:start}
+/* ══════════════ 서비스 — 문장 | 산출물 실물 ══════════════ */
+.showcase{display:grid;grid-template-columns:.85fr 1.15fr;gap:var(--s7);align-items:center}
+.showText h2{font-size:clamp(26px,3vw,36px);font-weight:800;line-height:1.3;letter-spacing:-1.2px}
+.showText>p{font-size:15px;line-height:1.85;color:var(--wnInk2);margin-top:var(--s3)}
+.showList{list-style:none;margin:var(--s5) 0 0;padding:0;border-top:1px solid var(--wnLine)}
+.showList li{display:grid;grid-template-columns:56px 1fr;gap:var(--s2);padding:14px 0;
+  border-bottom:1px solid var(--wnLine);align-items:baseline}
+.showList b{font-size:15px;font-weight:700;color:var(--wnOrangeText)}
+.showList span{font-size:13.5px;line-height:1.7;color:var(--wnInk2)}
+.showText .btnGhost{margin-top:var(--s4)}
 
-/* 장부: 갈래 라벨 | 설명 + 산출물 칩. 상단 실적 스트립과 같은 hairline 언어 */
-.ledger h3,.ledger ol,.ledger>div{border-top:1px solid var(--wnLine)}
-.ledger article{display:grid;grid-template-columns:132px 1fr;gap:var(--s4);align-items:start;
-  padding:var(--s4) 0 var(--s5);border-bottom:1px solid var(--wnLine)}
-.ledger b{display:flex;align-items:center;gap:9px;font-size:21px;font-weight:800;padding-top:1px;
-  letter-spacing:-.6px;line-height:1.25;color:var(--wnInk)}
-.ledger b svg{color:var(--wnOrangeText);flex:0 0 auto}
-.ledger p{font-size:14.5px;line-height:1.8;color:var(--wnInk2);max-width:38ch;margin:0}
-.ledger ul{list-style:none;margin:var(--s3) 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-.ledger li{font-size:12.5px;font-weight:600;color:var(--wnInk);padding:7px 12px;
-  border:1px solid var(--wnLine);border-radius:999px;background:var(--wnBg);white-space:nowrap}
+/* 실물 스택 — 영상·숏폼·기사·검색이 한 장면에 겹친다. 컨테이너 비율 기준 %로 잡아 어느 폭에서도 같은 구도 */
+.showStack{position:relative;aspect-ratio:1/0.86;font-family:inherit}
+.showStack>*{position:absolute;margin:0;border-radius:12px;overflow:hidden;
+  box-shadow:0 18px 40px -12px #000c,0 2px 6px #0008;border:1px solid #ffffff14}
+.showStack img{display:block;width:100%;height:100%;object-fit:cover}
+.skVideo{left:0;top:0;width:72%;background:var(--wnSurface)}
+.skThumb{position:relative;display:block;aspect-ratio:16/9;background:var(--wnSurface2)}
+.skDur{position:absolute;right:8px;bottom:8px;background:#000c;color:#fff;font-size:11px;font-weight:700;
+  padding:2px 6px;border-radius:4px;font-variant-numeric:tabular-nums}
+.skVideo figcaption{padding:11px 14px 13px;display:flex;flex-direction:column;gap:4px}
+.skVideo figcaption b{font-size:13.5px;font-weight:700;line-height:1.45;letter-spacing:-.2px;color:var(--wnInk);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.skVideo figcaption span{font-size:11.5px;color:var(--wnMuted);display:flex;align-items:center;gap:5px}
+.skShort{right:0;top:5%;width:29%;aspect-ratio:9/16;background:var(--wnSurface2);border-radius:16px;z-index:2}
+.skShort figcaption{position:absolute;left:10px;top:10px;background:#ff0033;color:#fff;font-size:10.5px;
+  font-weight:800;letter-spacing:.3px;padding:3px 7px;border-radius:5px}
+.skArticle{left:7%;top:60%;width:58%;z-index:3;background:var(--wnSurface);padding:16px 18px;
+  display:flex;flex-direction:column;gap:6px}
+.skArticle small{font-size:11px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.2px}
+.skArticle b{font-size:14px;font-weight:700;line-height:1.5;letter-spacing:-.2px;color:var(--wnInk);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.skArticle span{font-size:11.5px;color:var(--wnMuted)}
+.skSearch{right:2%;top:80%;width:46%;z-index:4;background:#f7f5f1;color:#1a1918;padding:12px 14px;
+  display:flex;gap:10px;align-items:flex-start;border-color:#0000}
+.skSearch svg{flex:0 0 auto;color:#6d6963;margin-top:2px}
+.skSearch small{display:block;font-size:10.5px;color:#5f6368;margin-bottom:3px}
+.skSearch b{display:block;font-size:12.5px;font-weight:600;color:#1a0dab;line-height:1.4;letter-spacing:-.1px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-/* 진행 순서: 세로 장부. 순서가 정보이므로 번호를 쓴다 */
-.flow ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--wnLine)}
-.flow li{display:grid;grid-template-columns:40px 1fr;gap:var(--s2);align-items:baseline;
-  padding:var(--s3) 0;border-bottom:1px solid var(--wnLine)}
-.flow span{font-size:12px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.06em;
-  font-variant-numeric:tabular-nums}
-.flow b{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.3px}
-.flow p{font-size:13px;line-height:1.7;color:var(--wnMuted);margin:5px 0 0}
-.flowNote{margin:var(--s3) 0 0;font-size:12.5px;color:var(--wnMuted);line-height:1.7}
+/* 등장 — 스크롤로 들어올 때 한 번, 뒤에서 앞으로 */
+.showStack>*{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+.showStack.in>*{opacity:1;transform:none}
+.showStack.in>*:nth-child(2){transition-delay:.1s}
+.showStack.in>*:nth-child(3){transition-delay:.2s}
+.showStack.in>*:nth-child(4){transition-delay:.3s}
+@media(prefers-reduced-motion:reduce){.showStack>*{opacity:1;transform:none;transition:none}}
 
 /* ══════════════ 전환 ══════════════ */
 .closer{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s6);align-items:stretch;
@@ -269,7 +292,7 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
 /* ══════════════ 반응형 ══════════════ */
 @media(max-width:1000px){
   .ivGridHome{grid-template-columns:repeat(2,1fr)}
-  .valueGrid{grid-template-columns:1fr;gap:var(--s6)}
+  .showcase{grid-template-columns:1fr;gap:var(--s6)}
   .closer{grid-template-columns:1fr;gap:var(--s5);padding:var(--s6) var(--s5)}
   .closerSub{border-left:0;border-top:1px solid var(--wnLine);padding-left:0;padding-top:var(--s5)}
 }
@@ -303,8 +326,7 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .hero h1 br,.hero p br{display:none}
   .hero h1{max-width:none}
   .ivGridHome{grid-template-columns:1fr;gap:var(--s5)}
-  .ledger article{grid-template-columns:1fr;gap:var(--s2);padding:var(--s3) 0 var(--s4)}
-  .ledger b{font-size:18px}
+  .showStack{max-width:520px}
   .faceRow{padding-left:18px;padding-right:18px}
   .face{flex-basis:216px}
   .rowNav div{display:none}

@@ -30,6 +30,8 @@ export default async function ApplyPage({
             <li><b>1. 신청</b><span>아래 양식으로 사업과 이야기를 보내주세요.</span></li>
             <li><b>2. 내부 검토</b><span>성장 서사를 기준으로 검토 후 회신드립니다.</span></li>
             <li><b>3. 상담과 리서치</b><span>목표 메시지를 함께 정한 뒤 촬영 일정을 잡습니다.</span></li>
+            <li><b>4. 인터뷰 촬영</b><span>하루를 따라붙어 결정의 이유를 묻습니다.</span></li>
+            <li><b>5. 제작과 발행</b><span>영상·숏폼·기사를 한 번에 만들고, 배포 후 노출 성과를 보고합니다.</span></li>
           </ul>
           <p className="apAlt">
             양식이 어려우시면 메일로 보내셔도 됩니다.{' '}<br />

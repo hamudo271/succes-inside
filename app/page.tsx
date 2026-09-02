@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Search, Play, Eye, Clock, ArrowUpRight, ChevronRight, ChevronLeft, Youtube, Video, FileText, Search as SearchIcon } from 'lucide-react';
+import { Search, Play, Eye, Clock, ArrowUpRight, ChevronRight, ChevronLeft, Youtube } from 'lucide-react';
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
 import SubscribeForm from './components/SubscribeForm';
@@ -15,30 +15,14 @@ const ymd = (d: string) => `${d.slice(0, 4)}.${d.slice(5, 7)}`;
  */
 const HERO_BG = '/hero.jpg';
 
+/** 조회수 1위 인터뷰 — 쇼케이스에서 '한 번의 촬영'의 실물 예시로 쓴다 */
+const TOP = [...interviews].sort((a, b) => b.views - a.views)[0]!;
+
 // 인터뷰가 남기는 것 — 제안서의 6가지 가치를 세 갈래로 묶었다.
 const DELIVERS = [
-  {
-    icon: <Video size={18} />, t: '영상',
-    d: '한 번의 촬영을 정식 인터뷰 한 편과 숏폼 여러 편으로 나눠 만듭니다.',
-    items: ['유튜브 정식 인터뷰', '릴스·쇼츠·틱톡 숏폼'],
-  },
-  {
-    icon: <FileText size={18} />, t: '기사',
-    d: '영상을 전사해 검색이 읽을 수 있는 글로 옮깁니다.',
-    items: ['인터뷰 아카이브 기사', '검색 최적화 편집'],
-  },
-  {
-    icon: <SearchIcon size={18} />, t: '노출',
-    d: '만든 자산을 사람이 찾는 자리마다 올려둡니다.',
-    items: ['네이버·구글·AI 검색', 'SNS 멀티채널 확산'],
-  },
-];
-
-const STEPS = [
-  { n: '01', t: '상담과 리서치', d: '목표 메시지를 먼저 정합니다.' },
-  { n: '02', t: '인터뷰 촬영', d: '하루를 따라붙어 결정의 이유를 묻습니다.' },
-  { n: '03', t: '콘텐츠 제작', d: '영상·숏폼·기사를 한 번에 만듭니다.' },
-  { n: '04', t: '발행과 리포트', d: '배포 후 노출 성과를 보고합니다.' },
+  { t: '영상', d: '유튜브 정식 인터뷰 한 편과 릴스·쇼츠·틱톡 숏폼 여러 편' },
+  { t: '기사', d: '영상을 전사해 검색이 읽을 수 있는 아카이브 기사로' },
+  { t: '노출', d: '네이버·구글·AI 검색과 SNS 멀티채널로 확산' },
 ];
 
 export default function Home() {
@@ -61,6 +45,13 @@ export default function Home() {
     setEdge({ start: el.scrollLeft <= 2, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2 });
   };
   useEffect(() => { syncEdge(); window.addEventListener('resize', syncEdge); return () => window.removeEventListener('resize', syncEdge); }, []);
+  // 산출물 스택 등장 — 뷰포트에 들어올 때 한 번
+  const stackRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = stackRef.current; if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e?.isIntersecting) { el.classList.add('in'); io.disconnect(); } }, { threshold: .3 });
+    io.observe(el); return () => io.disconnect();
+  }, []);
   const slide = (dir: 1 | -1) => {
     const el = rowRef.current; if (!el) return;
     el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
@@ -159,35 +150,45 @@ export default function Home() {
         <Link className="btnMore" href="/interviews">인터뷰 아카이브 전체 보기 <ChevronRight size={16} /></Link>
       </section>
 
-      {/* ── 서비스: 한 번의 촬영이 무엇으로 남는가 ── */}
+      {/* ── 서비스: 한 번의 촬영이 무엇으로 남는가 — 실물로 보여준다 ── */}
       <section className="band">
-        <div className="wrap sec">
-          <div className="secHead">
-            <div>
-              <h2>한 번의 촬영이 남기는 것</h2>
-              <p className="secSub">촬영으로 끝나지 않습니다. 검색과 AI에 인용되는 자산으로 전환합니다.</p>
-            </div>
+        <div className="wrap sec showcase">
+          <div className="showText">
+            <h2>한 번의 촬영이{' '}<br />남기는 것</h2>
+            <p>촬영으로 끝나지 않습니다.{' '}<br />검색과 AI에 인용되는 자산으로 전환합니다.</p>
+            <ul className="showList">{DELIVERS.map(d => (
+              <li key={d.t}><b>{d.t}</b><span>{d.d}</span></li>
+            ))}</ul>
+            <Link className="btnGhost" href="/apply">출연 신청하기 <ArrowUpRight size={17} /></Link>
           </div>
-          <div className="valueGrid">
-            <div className="ledger">
-              <h3>세 갈래로 남깁니다</h3>
-              <div>{DELIVERS.map(d => (
-              <article key={d.t}>
-                <b>{d.icon}{d.t}</b>
-                <div>
-                  <p>{d.d}</p>
-                  <ul>{d.items.map(x => <li key={x}>{x}</li>)}</ul>
-                </div>
-              </article>
-            ))}</div>
-            </div>
 
-            <div className="flow">
-              <h3>진행은 이렇게 됩니다</h3>
-              <ol>{STEPS.map(s => (
-                <li key={s.n}><span>{s.n}</span><div><b>{s.t}</b><p>{s.d}</p></div></li>
-              ))}</ol>
-              <p className="flowNote">검토 회신은 보통 일주일, 촬영은 하루 동행입니다.</p>
+          {/* 산출물 실물 — 조회수 1위 인터뷰 한 편이 실제로 남긴 것들 */}
+          <div className="showStack" ref={stackRef} aria-hidden="true">
+            <figure className="skVideo">
+              <span className="skThumb">
+                <img src={`https://i.ytimg.com/vi/${TOP.id}/hq720.jpg`} alt="" loading="lazy" />
+                <span className="skDur">{TOP.dur}</span>
+              </span>
+              <figcaption>
+                <b>{TOP.title}</b>
+                <span><Youtube size={12} /> 성공인사이드 · 조회수 {TOP.viewsText}회 · {TOP.date.slice(0, 4)}</span>
+              </figcaption>
+            </figure>
+            <figure className="skShort">
+              <img src="/short.jpg" alt="" loading="lazy" />
+              <figcaption>Shorts</figcaption>
+            </figure>
+            <div className="skArticle">
+              <small>인터뷰 아카이브 기사</small>
+              <b>{TOP.title}</b>
+              <span>{TOP.tags.slice(0, 3).map(t => `#${t}`).join('  ')}</span>
+            </div>
+            <div className="skSearch">
+              <Search size={14} />
+              <div>
+                <small>successinside.kr › interviews</small>
+                <b>{TOP.title} — 성공인사이드</b>
+              </div>
             </div>
           </div>
         </div>
