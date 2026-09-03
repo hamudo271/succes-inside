@@ -107,19 +107,6 @@
 .pgVodBody li:before{content:'';flex:0 0 auto;width:3px;height:3px;border-radius:50%;background:#4a4742;margin-top:8px}
 .pgVodBody .pgCaseThumbs{grid-template-columns:repeat(2,1fr);gap:8px}
 
-/* 하단 CTA — 블랙 라운드 컨테이너 */
-.pgCta{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;color:var(--wnInk);padding:60px 52px;margin:88px 0 40px;text-align:center;position:relative;overflow:hidden}
-.pgCta>span{position:relative;font-size:12px;font-weight:700;color:var(--wnOrange)}
-.pgCta h2{position:relative;font-size:22px;line-height:1.5;letter-spacing:-.5px;margin:12px 0 10px}
-.pgCta>p{position:relative;color:var(--wnMuted);font-size:13px;margin:0}
-.pgCtaForm{position:relative;display:flex;gap:8px;max-width:440px;margin:28px auto 0}
-.pgCtaLink{display:inline-flex;align-items:center;gap:8px;margin:0 auto;background:var(--wnOrange);color:#fff;border-radius:8px;padding:13px 22px;font-size:13.5px;font-weight:600;transition:background .15s}
-.pgCtaLink:hover{background:var(--wnOrangeDeep)}
-.pgCtaForm{justify-content:center}
-.pgCtaForm input{width:100%;min-width:0;border:0;outline:0;padding:13px 16px;border-radius:8px;font-size:13px;background:var(--wnSurface2);color:var(--wnInk)}
-.pgCtaForm button{border:0;background:var(--wnOrange);color:#fff;font-weight:600;font-size:13px;border-radius:8px;padding:0 20px;white-space:nowrap;transition:background .15s}
-.pgCtaForm button:hover{background:var(--wnOrangeDeep)}
-
 @media(max-width:900px){
   .pgHeroInner{gap:44px;padding-top:56px;padding-bottom:56px}
   .pgHero h1{font-size:29px;letter-spacing:-.8px}
@@ -128,7 +115,6 @@
   .pgLive article{grid-template-columns:1fr;gap:var(--s4)}
   .pgRowMain p{max-width:none}
   .pgVodBody{grid-template-columns:1fr;gap:0}
-  .pgCta{padding:44px 28px}
 }
 @media(max-width:620px){
   .pgHero h1{font-size:25px;letter-spacing:-.6px}
@@ -147,9 +133,4 @@
   .pgVodHead .pgMeta{grid-column:1;grid-row:auto;flex-direction:row;flex-wrap:wrap;
     align-items:center;text-align:left;margin-top:var(--s2);white-space:normal}
   .pgVodBody{margin:0 22px}
-  .pgCta{padding:36px 22px;margin:56px 0 24px;border-radius:14px}
-  .pgCta h2{font-size:19px}
-  .pgCta h2 br{display:none}
-  .pgCtaForm{flex-direction:column}
-  .pgCtaForm button{padding:14px}
 }

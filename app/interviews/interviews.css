@@ -63,26 +63,13 @@
 .ivCardFoot span{display:flex;align-items:center;gap:4px;font-size:11px;color:#8f8a84}
 
 /* 출연 신청 CTA */
-.ivCta{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;
-  padding:56px 44px;margin:80px 0 40px;text-align:center}
-.ivCta>span{font-size:12px;font-weight:700;color:var(--wnOrange)}
-.ivCta h2{font-size:22px;line-height:1.5;letter-spacing:-.5px;margin:12px 0 10px}
-.ivCta>p{color:var(--wnMuted);font-size:13px;margin:0}
-.ivCtaBtns{display:flex;justify-content:center;gap:10px;margin-top:26px;flex-wrap:wrap}
-.ivCtaBtns a{display:inline-flex;align-items:center;gap:7px;background:var(--wnOrange);color:#fff;
-  border-radius:8px;padding:13px 20px;font-size:13.5px;font-weight:600;transition:background .15s}
-.ivCtaBtns a:hover{background:var(--wnOrangeDeep)}
-.ivCtaBtns a.ghost{background:none;border:1px solid var(--wnLine);color:var(--wnInk)}
-.ivCtaBtns a.ghost:hover{border-color:#4a453f;background:var(--wnSurface2)}
 
 @media(max-width:900px){
   .ivStats{grid-template-columns:1fr 1fr;gap:22px}
   .ivStats b{font-size:22px}
   .ivFeature{grid-template-columns:1fr;gap:22px}
   .ivGrid{grid-template-columns:1fr 1fr}
-  .ivCta{padding:44px 26px}
-}
-@media(max-width:620px){
+  @media(max-width:620px){
   .ivCats button{padding:13px 16px}
   .ivHero{padding-top:44px}
   .ivHero h1{font-size:27px;letter-spacing:-.6px}
@@ -90,8 +77,4 @@
   .ivSection{padding-top:56px}
   .ivGrid{grid-template-columns:1fr}
   .ivFeatureBody h2{font-size:19px}
-  .ivCta{padding:36px 22px;margin:56px 0 24px}
-  .ivCta h2{font-size:19px}
-  .ivCta h2 br{display:none}
-  .ivCtaBtns a{width:100%;justify-content:center}
 }

@@ -5,6 +5,7 @@ import { ArrowUpRight, ChevronRight, Users, PlayCircle, CalendarDays, Play } fro
 import { interviews, cats, watchUrl, CHANNEL } from '../interviews/data';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
+import CtaBand from '../components/CtaBand';
 import './programs.css';
 
 const live = [
@@ -174,12 +175,12 @@ export default function Programs() {
         </article>)}</div>
       </section>}
 
-      <section className="wrap"><div className="pgCta">
-        <span>과정 신청</span>
-        <h2>어떤 과정이 맞는지 모르겠다면,{' '}<br />지금 고민을 먼저 알려주세요.</h2>
-        <p>사업 단계와 목표를 남기면, 맞는 과정을 정리해 안내드립니다.</p>
-        <div className="pgCtaForm"><Link className="pgCtaLink" href="/apply?type=교육 과정 문의">과정 문의하기 <ArrowUpRight size={16} /></Link></div>
-      </div></section>
+      <CtaBand
+        title={<>어떤 과정이 맞는지 모르겠다면,{' '}<br />고민을 먼저 알려주세요.</>}
+        sub="사업 단계와 목표를 남기면, 맞는 과정을 정리해 안내드립니다. 인터뷰 출연과 함께 상담할 수도 있습니다."
+        href="/apply?type=교육 과정 문의" label="과정 문의하기"
+        facts={[{ k: '회신', v: '보통 일주일' }, { k: '정기 과정', v: '기수제 4~6주' }, { k: 'VOD', v: '언제든 시작' }]}
+      />
     </main>
     <SiteFooter />
   </>;

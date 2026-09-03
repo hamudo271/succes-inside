@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Play, ArrowUpRight, Clock, Eye } from 'lucide-react';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
+import CtaBand from '../components/CtaBand';
 import { interviews, cats, thumb, watchUrl, CHANNEL } from './data';
 import './interviews.css';
 
@@ -79,15 +80,13 @@ export default function Interviews() {
         ))}</div>
       </section>
 
-      <section className="wrap"><div className="ivCta">
-        <span>출연 신청</span>
-        <h2>다음 기록의 주인공이{' '}<br />되어 보시겠어요?</h2>
-        <p>모든 인터뷰는 내부 검토 후 진행합니다. 사업 이야기를 남겨주시면 검토 후 회신드립니다.</p>
-        <div className="ivCtaBtns">
-          <Link href="/apply">출연 신청하기 <ArrowUpRight size={16} /></Link>
-          <a href={CHANNEL.url} target="_blank" rel="noreferrer" className="ghost">채널 둘러보기</a>
-        </div>
-      </div></section>
+      <CtaBand
+        title={<>다음 기록의 주인공이{' '}<br />되어 보시겠어요?</>}
+        sub="모든 인터뷰는 내부 검토 후 진행합니다. 사업 이야기를 남겨주시면 검토 후 회신드립니다."
+        href="/apply" label="출연 신청하기"
+        secondary={<a className="btnGhost" href={CHANNEL.url} target="_blank" rel="noreferrer">채널 둘러보기</a>}
+        facts={[{ k: '검토 회신', v: '보통 일주일' }, { k: '촬영', v: '하루 동행' }, { k: '비용', v: '상담 후 안내' }]}
+      />
     </main>
     <SiteFooter />
   </>;

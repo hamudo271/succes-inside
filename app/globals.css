@@ -251,6 +251,36 @@ header{height:72px;position:sticky;top:0;z-index:30;
 .showStack.in>*:nth-child(4){transition-delay:.3s}
 @media(prefers-reduced-motion:reduce){.showStack.pre>*{opacity:1;transform:none}.showStack>*{transition:none}}
 
+/* ══════════════ 전환 밴드 (인터뷰·교육과정 공용) ══════════════ */
+.ctaBand{margin-top:var(--s8);background:var(--wnSurface);border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine)}
+.ctaInner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:var(--s7);align-items:center;padding-top:var(--s7);padding-bottom:var(--s7)}
+.ctaText,.ctaProof{min-width:0}
+.ctaText h2{font-size:clamp(26px,3vw,36px);font-weight:800;line-height:1.3;letter-spacing:-1.2px;text-wrap:balance}
+.ctaText>p{font-size:15px;line-height:1.85;color:var(--wnInk2);margin-top:var(--s3);max-width:44ch}
+.ctaBtns{display:flex;align-items:center;gap:var(--s2);margin-top:var(--s5);flex-wrap:wrap}
+.ctaMain{padding:16px 26px;font-size:15.5px;border-radius:10px;
+  box-shadow:0 12px 30px -10px #ff6b2c99;transition:background .15s,transform .2s cubic-bezier(.2,.7,.2,1),box-shadow .2s}
+.ctaMain:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px #ff6b2caa}
+.ctaMain:active{transform:none}
+.ctaFacts{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s5);margin:var(--s5) 0 0;padding-top:var(--s4);border-top:1px solid var(--wnLine)}
+.ctaFacts div{display:flex;flex-direction:column;gap:3px}
+.ctaFacts dd{margin:0;font-size:15px;font-weight:700;letter-spacing:-.3px}
+.ctaFacts dt{font-size:11.5px;color:var(--wnMuted)}
+/* 근거: 먼저 남긴 사장님들의 스틸이 겹쳐 선 열 */
+.ctaProof{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s3)}
+.ctaStack{display:flex;align-items:center;padding-left:26px;width:100%;max-width:620px;min-width:0}
+.ctaStack img{flex:1 1 0;min-width:0;max-width:150px;aspect-ratio:16/9;object-fit:cover;border-radius:10px;border:3px solid var(--wnSurface);
+  margin-left:-26px;box-shadow:0 10px 26px -8px #000c;filter:saturate(.72) brightness(.9);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),filter .3s}
+.ctaStack img:nth-child(1){z-index:5}.ctaStack img:nth-child(2){z-index:4}.ctaStack img:nth-child(3){z-index:3}
+.ctaStack img:nth-child(4){z-index:2}.ctaStack img:nth-child(5){z-index:1}
+.ctaStack:hover img{filter:none}
+.ctaStack img:hover{transform:translateY(-8px) scale(1.04);z-index:9}
+.ctaStack span{flex:0 0 auto;margin-left:-14px;height:36px;padding:0 13px;border-radius:999px;display:inline-flex;align-items:center;
+  background:var(--wnSurface2);border:1px solid var(--wnLine);font-size:13px;font-weight:700;color:var(--wnInk);
+  font-variant-numeric:tabular-nums;position:relative;z-index:6}
+.ctaProof small{font-size:13px;color:var(--wnMuted)}
+
 /* ══════════════ 전환 ══════════════ */
 .closer{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s6);align-items:stretch;
   background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;
@@ -294,6 +324,8 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
 @media(max-width:1000px){
   .ivGridHome{grid-template-columns:repeat(2,1fr)}
   .showcase{grid-template-columns:1fr;gap:var(--s6)}
+  .ctaInner{grid-template-columns:minmax(0,1fr);gap:var(--s5);padding-top:var(--s6);padding-bottom:var(--s6)}
+  .ctaProof{order:-1}
   .closer{grid-template-columns:1fr;gap:var(--s5);padding:var(--s6) var(--s5)}
   .closerSub{border-left:0;border-top:1px solid var(--wnLine);padding-left:0;padding-top:var(--s5)}
 }
@@ -336,4 +368,8 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .face{flex-basis:216px}
   .rowNav div{display:none}
   .btnPrimary,.btnGhost{flex:1;justify-content:center}
+  .ctaBand{margin-top:var(--s7)}
+  .ctaStack img{margin-left:-20px;border-width:2px}
+  .ctaStack{padding-left:20px}
+  .ctaFacts{gap:var(--s4)}
 }
