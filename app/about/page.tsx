@@ -1,16 +1,17 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Play, ArrowUpRight, ChevronRight, Search, FileText, Share2, Plus, Minus } from 'lucide-react';
-import { interviews, watchUrl } from '../interviews/data';
+import { Play, ArrowUpRight, ChevronRight, Plus, Minus, Eye } from 'lucide-react';
+import { interviews, watchUrl, CHANNEL } from '../interviews/data';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import './style.css';
 
+// 왜 — 세 가지 논지. 라벨은 문장의 핵심 동사
 const why = [
-  { icon: <Search size={20} />, title: '좋은 회사보다 잘 발견되는 회사가 성장합니다', body: '검색과 AI가 구매 결정을 대신하는 시대입니다. 2026년 미국 인구의 31.3%가 AI 검색을 이용할 것으로 전망됩니다. 검색 결과에 근거가 없는 브랜드는 비교 대상에도 오르지 못합니다.' },
-  { icon: <FileText size={20} />, title: '광고는 멈추지만, 자산은 남아야 합니다', body: '광고는 예산이 끝나는 순간 노출도 멈추는 소모성 비용입니다. 매달 비용을 태워도 남는 것이 없고, 경쟁이 붙을수록 단가만 오릅니다. 결국 남는 것은 지출 내역뿐, 브랜드가 아닙니다.' },
-  { icon: <Share2 size={20} />, title: '한 번의 촬영이 축적되는 자산이 되어야 합니다', body: '제작으로 끝나는 영상은 파일 하나로 남을 뿐입니다. 성공인사이드는 대표님의 이야기를 검색되고 AI에 인용되는 브랜드 자산으로 전환합니다. 브랜드 언급은 백링크보다 AI 인용과 3배 강한 상관을 보입니다.' },
+  { k: '발견', title: '좋은 회사보다 잘 발견되는 회사가 성장합니다', body: '검색과 AI가 구매 결정을 대신하는 시대입니다. 2026년 미국 인구의 31.3%가 AI 검색을 이용할 것으로 전망됩니다. 검색 결과에 근거가 없는 브랜드는 비교 대상에도 오르지 못합니다.' },
+  { k: '소모', title: '광고는 멈추지만, 자산은 남아야 합니다', body: '광고는 예산이 끝나는 순간 노출도 멈추는 소모성 비용입니다. 매달 비용을 태워도 남는 것이 없고, 경쟁이 붙을수록 단가만 오릅니다. 결국 남는 것은 지출 내역뿐, 브랜드가 아닙니다.' },
+  { k: '축적', title: '한 번의 촬영이 축적되는 자산이 되어야 합니다', body: '제작으로 끝나는 영상은 파일 하나로 남을 뿐입니다. 성공인사이드는 대표님의 이야기를 검색되고 AI에 인용되는 브랜드 자산으로 전환합니다. 브랜드 언급은 백링크보다 AI 인용과 3배 강한 상관을 보입니다.' },
 ];
 
 const steps = [
@@ -35,49 +36,57 @@ export default function About() {
   return <>
     <SiteHeader active="about" />
     <main>
+      {/* 히어로 — 선언 | 현장 스틸(조회수 1위 인터뷰) */}
       <section className="abHero"><div className="wrap abHeroInner">
         <div>
-          <span className="abEyebrow">비즈니스 미디어 플랫폼</span>
+          <span className="eyebrow">비즈니스 미디어 플랫폼</span>
           <h1>당신의 성공은{' '}<br /><em>기록되고 있습니까?</em></h1>
-          <p>사업가의 성장 스토리를 검색되는 디지털 자산으로 남기는 인터뷰 미디어.</p>
+          <p>사업가의 성장 스토리를 검색되는 디지털 자산으로 남기는 인터뷰 미디어. {CHANNEL.since}년부터 {CHANNEL.interviews}명의 하루를 기록했습니다.</p>
           <div className="abHeroBtns">
             <Link href="/interviews">성공 스토리 보기 <ArrowUpRight size={17} /></Link>
             <Link href="/apply">출연·파트너십 문의 <ChevronRight size={17} /></Link>
           </div>
         </div>
-        <a className="abPlay" href={watchUrl(top.id)} target="_blank" rel="noreferrer">
+        <a className="abStill" href={watchUrl(top.id)} target="_blank" rel="noreferrer">
+          <img src="/about-still.jpg" alt="" />
           <span className="abPlayBtn"><Play size={22} fill="currentColor" /></span>
-          <small>가장 많이 본 인터뷰 · {top.viewsText}회</small>
-          <p>{top.title.length > 30 ? top.title.slice(0, 30) + '…' : top.title}</p>
+          <span className="abStillCap"><small>가장 많이 본 인터뷰 · <Eye size={11} /> {top.viewsText}회</small><b>{top.title}</b></span>
         </a>
-        <span className="abScroll">아래로 스크롤</span>
       </div></section>
 
+      {/* 왜 — 세 논지를 행으로 */}
       <section className="wrap abSection" id="why">
         <div className="abHead"><small>왜 필요한가</small><h2>왜 성공인사이드인가</h2></div>
-        <div className="abWhy">{why.map(w => <div key={w.title}><i>{w.icon}</i><b>{w.title}</b><p>{w.body}</p></div>)}</div>
+        <div className="abWhy">{why.map(w => <div key={w.k}>
+          <span>{w.k}</span>
+          <b>{w.title}</b>
+          <p>{w.body}</p>
+        </div>)}</div>
       </section>
 
-      <section className="abOs" id="os"><div className="wrap">
-        <div className="abHead dark"><small>진행 과정</small><h2>한 번의 인터뷰가 브랜드 자산이 되기까지</h2><p>즉흥적인 인터뷰가 아니라, 촬영부터 기사·SEO·배포·리포트까지 하나의 자동화 파이프라인으로 운영합니다.</p></div>
-        <div className="abSteps">{steps.map(s => <div key={s.n}><strong>{s.n}</strong><b>{s.title}</b><p>{s.body}</p></div>)}</div>
-      </div></section>
+      {/* 진행 — 순서가 정보이므로 번호 */}
+      <section className="wrap abSection" id="os">
+        <div className="abHead"><small>진행 과정</small><h2>한 번의 인터뷰가 브랜드 자산이 되기까지</h2><p>즉흥적인 인터뷰가 아니라, 촬영부터 기사·SEO·배포·리포트까지 하나의 파이프라인으로 운영합니다.</p></div>
+        <ol className="abSteps">{steps.map(s => <li key={s.n}><strong>{s.n}</strong><b>{s.title}</b><p>{s.body}</p></li>)}</ol>
+      </section>
 
+      {/* 제공 가치 — 목록 | 선언 */}
       <section className="wrap abSection" id="get">
         <div className="abGet">
           <div>
             <div className="abHead"><small>제공 가치</small><h2>고객이 얻는 6가지 가치</h2></div>
-            <ul>{gets.map(g => <li key={g}>{g}</li>)}</ul>
+            <ol>{gets.map((g, i) => <li key={g}><span>{String(i + 1).padStart(2, '0')}</span>{g}</li>)}</ol>
           </div>
-          <div className="abGetCard">
-            <span>인터뷰 자산</span>
-            <b>한 번의 인터뷰가{' '}<br />계속 일하는 자산이 됩니다.</b>
-            <p>광고와 달리 멈추지 않습니다. 발행 이후에도 검색과 AI 인용을 통해 24시간 새로운 고객에게 도달합니다.</p>
+          <blockquote className="abClaim">
+            <i aria-hidden="true">“</i>
+            <p>한 번의 인터뷰가{' '}<br />계속 일하는 자산이 됩니다.</p>
+            <small>광고와 달리 멈추지 않습니다. 발행 이후에도 검색과 AI 인용을 통해 24시간 새로운 고객에게 도달합니다.</small>
             <Link href="/programs">교육 과정도 함께 보기 <ChevronRight size={15} /></Link>
-          </div>
+          </blockquote>
         </div>
       </section>
 
+      {/* FAQ — hairline 행 아코디언 */}
       <section className="wrap abSection" id="faq">
         <div className="abHead"><small>궁금한 점</small><h2>자주 묻는 질문</h2></div>
         <div className="abFaq">{faq.map((f, i) => <div key={f.q} className={open === i ? 'open' : ''}>
