@@ -10,7 +10,7 @@
 .pgHeroBtns{display:flex;align-items:center;gap:22px;margin-top:32px;flex-wrap:wrap}
 .pgHeroBtns a:first-child{display:flex;align-items:center;gap:9px;background:var(--wnOrange);color:#fff;border-radius:8px;padding:13px 20px;font-weight:600;font-size:14px;text-decoration:none;transition:background .15s}
 .pgHeroBtns a:first-child:hover{background:var(--wnOrangeDeep)}
-.pgHeroBtns a:last-child{display:flex;align-items:center;gap:4px;color:var(--wnInk);font-size:14px;font-weight:700;text-decoration:none}
+.pgHeroBtns a:last-child{display:flex;align-items:center;gap:4px;color:var(--wnInk);font-size:14px;font-weight:700;text-decoration:none;padding:13px 0}
 
 /* 스탯 밴드: 상하 헤어라인 + 큰 숫자 */
 .pgStats{list-style:none;margin:0;padding:34px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine)}
@@ -48,7 +48,7 @@
 .pgWall img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.6) brightness(.82);
   transition:filter .3s,transform .5s cubic-bezier(.2,.7,.2,1)}
 .pgWall a:hover img{filter:none;transform:scale(1.04)}
-.pgWallCat{position:absolute;left:9px;top:9px;font-size:10.5px;font-weight:700;color:#fff;background:#000a;
+.pgWallCat{position:absolute;left:9px;top:9px;font-size:11px;font-weight:700;color:#fff;background:#000a;
   padding:3px 7px;border-radius:5px;letter-spacing:.2px}
 .pgWall a.big .pgWallCat{left:12px;top:12px;font-size:11.5px}
 .pgWallTitle{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 11px;color:#fff;font-size:12.5px;
@@ -82,8 +82,8 @@
 .pgCaseThumbs a{position:relative;display:block;aspect-ratio:16/9;border-radius:7px;overflow:hidden;background:var(--wnSurface2);border:1px solid var(--wnLine)}
 .pgCaseThumbs img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.65) brightness(.85);transition:filter .25s,transform .4s}
 .pgCaseThumbs a:hover img{filter:none;transform:scale(1.05)}
-.pgCaseThumbs span{position:absolute;left:5px;bottom:5px;font-size:9.5px;font-weight:700;color:#fff;background:#000b;padding:2px 5px;border-radius:4px;letter-spacing:.2px}
-.pgRowLink{display:inline-flex;align-items:center;gap:4px;margin-top:var(--s3);font-size:12.5px;font-weight:600;color:var(--wnInk);padding:9px 0;transition:color .15s}
+.pgCaseThumbs span{position:absolute;left:5px;bottom:5px;font-size:10.5px;font-weight:700;color:#fff;background:#000b;padding:2px 5px;border-radius:4px;letter-spacing:.2px}
+.pgRowLink{display:inline-flex;align-items:center;gap:4px;margin-top:var(--s2);font-size:12.5px;font-weight:600;color:var(--wnInk);padding:14px 0;transition:color .15s}
 .pgRowLink:hover{color:var(--wnOrange)}
 
 /* VOD 과정 — 아코디언 */
@@ -141,6 +141,7 @@
   .pgWallTitle{display:none}
   .pgCaseStats{gap:var(--s4)}
   .pgTabs{margin-top:44px;overflow:auto;padding-bottom:6px}
+  .pgTabs button{padding:13px 18px}
   .pgLive article{padding:var(--s4) 0}
   .pgVodHead{grid-template-columns:1fr;padding:22px 46px 22px 22px;align-items:start}
   .pgVodHead .pgMeta{grid-column:1;grid-row:auto;flex-direction:row;flex-wrap:wrap;

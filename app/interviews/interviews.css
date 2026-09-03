@@ -83,6 +83,7 @@
   .ivCta{padding:44px 26px}
 }
 @media(max-width:620px){
+  .ivCats button{padding:13px 16px}
   .ivHero{padding-top:44px}
   .ivHero h1{font-size:27px;letter-spacing:-.6px}
   .ivHero h1 br,.ivHero p br{display:none}

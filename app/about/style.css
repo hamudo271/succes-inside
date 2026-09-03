@@ -51,7 +51,7 @@
 .abClaim i{display:block;font-style:normal;font-size:64px;line-height:.6;font-weight:800;color:var(--wnOrange);margin-bottom:18px;font-family:Georgia,'Times New Roman',serif}
 .abClaim p{font-size:clamp(20px,1.9vw,26px);line-height:1.5;letter-spacing:-.8px;font-weight:700;margin:0 0 14px;text-wrap:balance}
 .abClaim small{display:block;font-size:13.5px;line-height:1.8;color:var(--wnMuted);max-width:38ch}
-.abClaim a{display:inline-flex;align-items:center;gap:5px;margin-top:var(--s4);font-size:13px;font-weight:600;color:var(--wnInk);padding:8px 0;transition:color .15s}
+.abClaim a{display:inline-flex;align-items:center;gap:5px;margin-top:var(--s3);font-size:13px;font-weight:600;color:var(--wnInk);padding:14px 0;transition:color .15s}
 .abClaim a:hover{color:var(--wnOrangeText)}
 
 /* FAQ — hairline 행 아코디언 */

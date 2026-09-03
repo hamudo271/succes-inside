@@ -13,7 +13,7 @@
 .apSteps span{font-size:12.5px;color:var(--wnMuted);line-height:1.7}
 
 .apAlt{margin:26px 0 0;font-size:12.5px;line-height:1.8;color:var(--wnMuted)}
-.apAlt a{color:var(--wnOrangeText);font-weight:600}
+.apAlt a{color:var(--wnOrangeText);font-weight:600;display:inline-block;padding:8px 0;margin:-8px 0}
 .apAlt a:focus-visible{outline:2px solid var(--wnOrange);outline-offset:2px;border-radius:3px}
 
 /* 폼 카드 */
