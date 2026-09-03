@@ -16,7 +16,7 @@ export default function CtaBand({ title, sub, href, label, secondary, facts }: {
         <h2>{title}</h2>
         <p>{sub}</p>
         <div className="ctaBtns">
-          <Link className="btnPrimary ctaMain" href={href}>{label} <ArrowUpRight size={18} /></Link>
+          <Link className="btnPrimary ctaMain pulseBtn" href={href}>{label} <ArrowUpRight size={18} /></Link>
           {secondary}
         </div>
         <dl className="ctaFacts">{facts.map(f => <div key={f.k}><dt>{f.k}</dt><dd>{f.v}</dd></div>)}</dl>

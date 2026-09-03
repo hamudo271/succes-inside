@@ -251,6 +251,25 @@ header{height:72px;position:sticky;top:0;z-index:30;
 .showStack.in>*:nth-child(4){transition-delay:.3s}
 @media(prefers-reduced-motion:reduce){.showStack.pre>*{opacity:1;transform:none}.showStack>*{transition:none}}
 
+/* ══════════════ 파장 — 유튜브 채널 미디어의 심장, 재생 버튼에서 링이 퍼진다 ══════════════ */
+.pulse{position:relative;isolation:isolate}
+.pulse:before,.pulse:after{content:'';position:absolute;inset:0;border-radius:50%;z-index:-1;
+  border:2px solid var(--wnOrange);opacity:0;pointer-events:none;
+  animation:siRing 2.4s cubic-bezier(.2,.6,.3,1) infinite}
+.pulse:after{animation-delay:.8s}
+@keyframes siRing{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.3);opacity:0}}
+/* 주 버튼 — 그림자가 숨 쉬듯 한 번씩 번진다 */
+.pulseBtn{animation:siGlow 2.6s ease-out infinite}
+@keyframes siGlow{0%{box-shadow:0 0 0 0 #ff6b2c8c,0 12px 30px -10px #ff6b2c99}
+  55%{box-shadow:0 0 0 16px #ff6b2c00,0 12px 30px -10px #ff6b2c99}
+  100%{box-shadow:0 0 0 16px #ff6b2c00,0 12px 30px -10px #ff6b2c99}}
+.pulseBtn:hover{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.pulse:before,.pulse:after{display:none}.pulseBtn{animation:none}}
+
+/* 쇼케이스 유튜브 카드의 재생 버튼 */
+.skPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;
+  background:var(--wnOrange);color:#fff;display:grid;place-items:center;box-shadow:0 10px 26px #0009}
+
 /* ══════════════ 전환 밴드 (인터뷰·교육과정 공용) ══════════════ */
 .ctaBand{margin-top:var(--s8);background:var(--wnSurface);border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine)}
 .ctaInner{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:var(--s7);align-items:center;padding-top:var(--s8);padding-bottom:var(--s8)}

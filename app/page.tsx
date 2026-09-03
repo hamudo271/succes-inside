@@ -72,7 +72,7 @@ export default function Home() {
           <h1>전국의 사장님을 찾아가{' '}<br />하루를 <em>따라붙고 기록합니다.</em></h1>
           <p>성공한 결과가 아니라 결정의 이유를 남깁니다.{' '}<br />{CHANNEL.since}년부터 {CHANNEL.interviews}명의 하루가 여기 있습니다.</p>
           <div className="heroBtns">
-            <Link className="btnPrimary" href="/apply">출연 신청하기 <ArrowUpRight size={18} /></Link>
+            <Link className="btnPrimary pulseBtn" href="/apply">출연 신청하기 <ArrowUpRight size={18} /></Link>
             <Link className="btnGhost" href="/interviews">인터뷰 둘러보기 <ChevronRight size={17} /></Link>
           </div>
         </div>
@@ -172,6 +172,7 @@ export default function Home() {
               <span className="skThumb">
                 <img src={`https://i.ytimg.com/vi/${TOP.id}/hq720.jpg`} alt="" loading="lazy" />
                 <span className="skDur">{TOP.dur}</span>
+                <span className="skPlay pulse"><Play size={20} fill="currentColor" /></span>
               </span>
               <figcaption>
                 <b>{TOP.title}</b>

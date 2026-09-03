@@ -43,13 +43,13 @@ export default function About() {
           <h1>당신의 성공은{' '}<br /><em>기록되고 있습니까?</em></h1>
           <p>사업가의 성장 스토리를 검색되는 디지털 자산으로 남기는 인터뷰 미디어. {CHANNEL.since}년부터 {CHANNEL.interviews}명의 하루를 기록했습니다.</p>
           <div className="abHeroBtns">
-            <Link href="/interviews">성공 스토리 보기 <ArrowUpRight size={17} /></Link>
+            <Link className="pulseBtn" href="/interviews">성공 스토리 보기 <ArrowUpRight size={17} /></Link>
             <Link href="/apply">출연·파트너십 문의 <ChevronRight size={17} /></Link>
           </div>
         </div>
         <a className="abStill" href={watchUrl(top.id)} target="_blank" rel="noreferrer">
           <img src="/about-still.jpg" alt="" />
-          <span className="abPlayBtn"><Play size={22} fill="currentColor" /></span>
+          <span className="abPlayBtn pulse"><Play size={22} fill="currentColor" /></span>
           <span className="abStillCap"><small>가장 많이 본 인터뷰 · <Eye size={11} /> {top.viewsText}회</small><b>{top.title}</b></span>
         </a>
       </div></section>

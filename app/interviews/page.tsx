@@ -36,7 +36,7 @@ export default function Interviews() {
       <section className="wrap"><a className="ivFeature" href={watchUrl(featured.id)} target="_blank" rel="noreferrer">
         <div className="ivFeatureThumb">
           <img src={thumb(featured.id)} alt="" loading="lazy" />
-          <span className="ivPlay"><Play size={20} fill="currentColor" /></span>
+          <span className="ivPlay pulse"><Play size={20} fill="currentColor" /></span>
         </div>
         <div className="ivFeatureBody">
           <span className="ivBadge">가장 많이 본 인터뷰</span>
