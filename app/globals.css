@@ -276,7 +276,7 @@ header{height:72px;position:sticky;top:0;z-index:30;
 .ctaStack img:nth-child(1){z-index:3}.ctaStack img:nth-child(2){z-index:2}.ctaStack img:nth-child(3){z-index:1}
 .ctaStack:hover img{filter:none}
 .ctaStack img:hover{transform:translateY(-10px) scale(1.05);z-index:9}
-.ctaStack span{position:absolute;right:max(24px,calc((100vw - 1180px)/2 + 24px));bottom:14px;z-index:6;box-shadow:0 8px 20px #0009;flex:0 0 auto;height:48px;padding:0 18px;border-radius:999px;display:inline-flex;align-items:center;
+.ctaStack span{position:absolute;right:max(24px,calc((100vw - 1180px)/2 + 24px));top:14px;z-index:6;box-shadow:0 8px 20px #0009;flex:0 0 auto;height:48px;padding:0 18px;border-radius:999px;display:inline-flex;align-items:center;
   background:var(--wnSurface2);border:1px solid var(--wnLine);font-size:16px;font-weight:800;color:var(--wnInk);
   font-variant-numeric:tabular-nums}
 .ctaProof small{font-size:15px;color:var(--wnInk2)}
