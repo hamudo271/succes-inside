@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { interviews, CHANNEL } from '../interviews/data';
 
 /** 출연·문의 전환 밴드 — 먼저 기록을 남긴 사장님들의 실제 스틸이 근거가 된다 */
-const STILLS = [...interviews].sort((a, b) => b.views - a.views).slice(0, 5);
+const STILLS = [...interviews].sort((a, b) => b.views - a.views).slice(0, 3);
 
 export default function CtaBand({ title, sub, href, label, secondary, facts }: {
   title: ReactNode; sub: string; href: string; label: string;
