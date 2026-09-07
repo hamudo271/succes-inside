@@ -31,7 +31,11 @@ const nextConfig: NextConfig = {
   agentRules: false,
   poweredByHeader: false,   // 서버 정보 노출 최소화
   async headers() {
-    return [{ source: '/:path*', headers: securityHeaders }];
+    return [
+      { source: '/:path*', headers: securityHeaders },
+      // 히어로 배경 루프 — 브라우저·Cloudflare 엣지에 하루 두고, 그 뒤 일주일은 낡은 걸 먼저 주며 갱신한다.
+      { source: '/:file(hero\\.mp4|hero\\.webm)', headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }] },
+    ];
   },
 };
 

@@ -5,13 +5,15 @@ import { Search, Play, Eye, Clock, ArrowUpRight, ChevronRight, ChevronLeft, Yout
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
 import SubscribeForm from './components/SubscribeForm';
+import HeroVideo from './components/HeroVideo';
 import { interviews, cats, thumb, watchUrl, CHANNEL } from './interviews/data';
 
 const ymd = (d: string) => `${d.slice(0, 4)}.${d.slice(5, 7)}`;
 
 /**
- * 히어로 배경 — 조회수 1위 인터뷰(H모터스) 본편에서 뽑은 1080p 스틸.
- * 자막 띠는 잘라냈다. 촬영 현장 스틸(가로 2000px 이상)을 받으면 파일만 교체하면 된다.
+ * 히어로 배경 — 영상이 뜨기 전(그리고 모바일·동작 줄이기에서는 계속) 보이는 스틸.
+ * 조회수 1위 인터뷰(H모터스) 본편에서 뽑은 1080p 프레임. 영상 루프는 components/HeroVideo.tsx,
+ * 클립 목록과 인코딩 절차는 scripts/hero-video.sh 에 있다.
  */
 const HERO_BG = '/hero.jpg';
 
@@ -65,9 +67,9 @@ export default function Home() {
     <SiteHeader active="home" />
     <main>
 
-      {/* ── 히어로: 현장 스틸 한 장 위에 선언 ── */}
+      {/* ── 히어로: 현장 클립 루프(폴백은 스틸) 위에 선언 ── */}
       <section className="hero">
-        <div className="heroBg" style={{ backgroundImage: `url(${HERO_BG})` }} aria-hidden="true" />
+        <HeroVideo poster={HERO_BG} />
         <div className="wrap heroInner">
           <h1>전국의 사장님을 찾아가{' '}<br />하루를 <em>따라붙고 기록합니다.</em></h1>
           <p>성공한 결과가 아니라 결정의 이유를 남깁니다.{' '}<br />{CHANNEL.since}년부터 {CHANNEL.interviews}명의 하루가 여기 있습니다.</p>

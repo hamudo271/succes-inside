@@ -114,6 +114,10 @@ header{height:72px;position:sticky;top:0;z-index:30;
 .hero{position:relative;overflow:hidden;isolation:isolate;background:var(--wnSurface2);--heroLine:#ffffff1f}
 .heroBg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:62% 30%;
   filter:grayscale(.35) contrast(1.05)}
+/* 영상은 스틸 위 층에서 재생이 시작되면 스며든다. 색보정은 파일에 구워져 있어 filter를 두지 않는다(GPU 비용). */
+.heroVideo{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:62% 30%;
+  opacity:0;transition:opacity 1.4s ease}
+.heroVideo.on{opacity:1}
 .hero:after{content:'';position:absolute;inset:0;z-index:-1;
   background:linear-gradient(100deg,var(--wnBg) 24%,#0f0f0eee 46%,#0f0f0e66 78%,#0f0f0e33 100%),
              linear-gradient(180deg,#0f0f0e99 0%,transparent 34%,#0f0f0ee6 66%,var(--wnBg) 80%)}
