@@ -397,3 +397,71 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .ctaStack span{position:static;height:38px;padding:0 13px;font-size:13px;margin-left:-12px;box-shadow:none}
   .ctaFacts{gap:var(--s4)}
 }
+
+/* ══════════════ 실험: 인물 카드 (eopla 식) — components/CourseCards.tsx ══════════════
+   누끼 인물이 카드 아래 모서리에 딱 붙어 서고, 그 위로 제목·설명이 얹힌다.
+   인물은 그 과정의 사례 인터뷰 주인공 — 강사가 아니므로 캡션에 '사례 · 업종'을 적는다. */
+.ccGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:var(--s4)}
+
+.ccCard{--ccScrim:#000000ab;
+  position:relative;display:flex;flex-direction:column;aspect-ratio:67/100;
+  padding:24px 22px;border-radius:20px;overflow:hidden;isolation:isolate;
+  background:linear-gradient(168deg,#302c28 0%,#1d1b1a 58%,#171615 100%);
+  border:1px solid var(--wnLine);color:var(--wnInk);
+  transition:transform .28s cubic-bezier(.2,.7,.2,1),border-color .2s,box-shadow .28s}
+.ccCard:hover{transform:translateY(-5px);border-color:#453f39;box-shadow:0 22px 44px -20px #000c}
+
+/* 한 장만 주황 — 나머지 흑연색 사이에서 시선이 먼저 닿는 자리 */
+.ccCard.accent{--ccScrim:#7d2506c7;
+  background:linear-gradient(168deg,#ff7d3f 0%,#e2541b 52%,#b83c0c 100%);border-color:#ff8b55}
+.ccCard.accent:hover{box-shadow:0 22px 44px -18px #ff6b2c66}
+
+.ccTop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.ccCard h3{margin:0;font-size:18px;font-weight:800;line-height:1.42;letter-spacing:-.5px;text-wrap:balance}
+.ccBadge{flex:0 0 auto;font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:999px;
+  background:#0f0f0ecc;color:var(--wnOrangeText);border:1px solid #ffffff1f;white-space:nowrap}
+.ccCard.accent .ccBadge{background:#fff;color:#c2440f;border-color:transparent}
+
+.ccDesc{margin:12px 0 0;font-size:13.5px;line-height:1.78;color:#ffffffb8;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ccCard.accent .ccDesc{color:#ffffffd9}
+
+/* 인물이 강사가 아니라 '사례 인터뷰 주인공'임을 밝히는 줄 */
+.ccCase{display:inline-flex;align-items:center;gap:5px;margin-top:11px;align-self:flex-start;
+  font-size:11.5px;font-weight:600;color:var(--wnOrangeText);white-space:nowrap}
+.ccCase:before{content:'';width:4px;height:4px;border-radius:50%;background:currentColor}
+.ccCard.accent .ccCase{color:#ffe2d2}
+
+/* 인물 — 카드 아래 모서리에 발을 딛는다. 흑백으로 배경색과 싸우지 않게 */
+.ccFace{position:absolute;right:-9%;bottom:0;z-index:-1;height:58%;width:auto;
+  filter:grayscale(1) contrast(1.06) brightness(1.02);
+  transition:transform .4s cubic-bezier(.2,.7,.2,1);transform-origin:bottom center;pointer-events:none}
+.ccCard:hover .ccFace{transform:scale(1.045)}
+/* 밝은 옷 위에서도 링크가 읽히도록 발치에 그늘. 카드 색을 따라간다 */
+.ccCard:after{content:'';position:absolute;left:0;right:0;bottom:0;height:46%;z-index:-1;
+  background:linear-gradient(180deg,transparent,var(--ccScrim) 76%);pointer-events:none}
+
+.ccMore{margin-top:auto;align-self:flex-start;
+  display:inline-flex;align-items:center;gap:3px;font-size:14px;font-weight:700;color:#fff;
+  text-shadow:0 1px 10px #000000a6}
+.ccCard.accent .ccMore{text-shadow:0 1px 10px #7d250699}
+.ccMore svg{transition:transform .2s}
+.ccCard:hover .ccMore svg{transform:translateX(3px)}
+
+@media(prefers-reduced-motion:reduce){
+  .ccCard,.ccFace,.ccMore svg{transition:none}
+  .ccCard:hover{transform:none}
+  .ccCard:hover .ccFace{transform:none}
+}
+
+/* 좁은 화면 — 사장님 열과 같은 가로 스크롤로 */
+@media(max-width:900px){
+  .ccGrid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+    margin-left:-24px;margin-right:-24px;padding:0 24px 4px}
+  .ccGrid::-webkit-scrollbar{display:none}
+  .ccCard{flex:0 0 232px;scroll-snap-align:start;padding:20px 18px;border-radius:16px}
+  .ccCard h3{font-size:16.5px}
+  .ccDesc{font-size:12.5px;-webkit-line-clamp:3}
+  .ccFace{height:53%;right:-12%}   /* 좁은 카드에서는 인물을 낮춰 캡션과 겹치지 않게 */
+}
