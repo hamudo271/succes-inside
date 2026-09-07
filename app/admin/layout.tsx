@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './admin.css';
 
 export const metadata: Metadata = {
-  title: '관리자 | 성공인사이드',
+  title: { absolute: '관리자 | 성공인사이드' },
   // 관리자 화면은 검색엔진에 절대 노출하지 않는다.
   robots: { index: false, follow: false, nocache: true },
 };

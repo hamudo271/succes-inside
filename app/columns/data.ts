@@ -17,6 +17,12 @@ export type ColumnPost = {
   intro: string[];          // 도입부 문단
   sections: { h: string; ps: string[] }[];
   outro: string;            // 마무리 문단
+  // 검색 최적화 — 관리자 편집기에서 채운다. 비어 있으면 title/excerpt를 대신 쓴다.
+  seoTitle?: string;
+  seoDesc?: string;
+  keywords?: string[];      // 첫 번째가 핵심 키워드
+  publishedAt?: string;     // ISO — 구조화 데이터·사이트맵용
+  updatedAt?: string;
 };
 
 export const columns: ColumnPost[] = [

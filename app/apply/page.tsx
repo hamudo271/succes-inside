@@ -4,8 +4,9 @@ import ApplyForm from './ApplyForm';
 import './apply.css';
 
 export const metadata = {
-  title: '출연 신청 | 성공인사이드',
+  title: '출연 신청',
   description: '사업가의 성장 스토리를 기록하는 인터뷰 미디어, 성공인사이드 출연 신청.',
+  alternates: { canonical: '/apply' },
 };
 
 const TYPES = ['출연 신청', '교육 과정 문의', '기타 문의'];

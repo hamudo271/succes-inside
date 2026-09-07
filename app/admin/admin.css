@@ -112,3 +112,71 @@
 .admAppMsg{font-size:13px;line-height:1.8;color:var(--wnInk2);margin:0 0 14px;white-space:pre-wrap}
 .admAppActions{display:flex;gap:8px}
 .admBtn.danger:hover{color:#ff8a72;border-color:#5a322a}
+
+/* ── 편집기: 왼쪽 원고, 오른쪽에 검색 결과·공유 카드·점검이 따라온다 ── */
+.admWide{max-width:1240px}
+.admEditorGrid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:40px;align-items:start}
+.admEditorGrid .admEditor{max-width:none}
+.admUrl{font-size:11.5px;color:var(--wnMuted);margin:2px 0 0;word-break:break-all}
+.admUrl b{color:var(--wnInk2);font-weight:600}
+.admFieldset{border:1px solid var(--wnLine);border-radius:10px;padding:16px 18px 18px;margin:0;
+  display:flex;flex-direction:column;gap:16px;min-width:0}
+.admFieldset legend{font-size:12.5px;font-weight:700;color:var(--wnOrangeText);padding:0 6px}
+.admFieldsetNote{font-size:12px;color:var(--wnMuted);margin:-6px 0 0;line-height:1.7}
+
+.admSeo{position:sticky;top:24px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.admSeo h2{font-size:12px;font-weight:700;color:var(--wnMuted);margin:10px 0 0;
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.admSeo h2:first-child{margin-top:0}
+.admSeo h2 em{font-style:normal;font-weight:600;color:var(--wnInk2);font-variant-numeric:tabular-nums}
+
+/* 구글 검색 결과 — 실제 색과 크기를 그대로 (밝은 카드) */
+.admSerp{background:#fff;color:#202124;border-radius:10px;padding:14px 16px 16px;
+  font-family:arial,'Apple SD Gothic Neo',sans-serif;overflow:hidden}
+.admSerpSite{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.admSerpSite i{width:26px;height:26px;border-radius:50%;background:#0f0f0e;color:#ff6b2c;
+  display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800;flex:0 0 auto}
+.admSerpSite b{display:block;font-size:13px;font-weight:400;color:#202124;line-height:1.3}
+.admSerpSite small{display:block;font-size:11.5px;color:#4d5156;line-height:1.3;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admSerp h3{font-size:18px;font-weight:400;color:#1a0dab;line-height:1.3;margin:0 0 4px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admSerp p{font-size:13px;color:#4d5156;line-height:1.55;margin:0;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.admSerp p.empty{color:#9aa0a6;font-style:italic}
+
+/* 공유 카드 — opengraph-image.tsx와 같은 구도 (1200×630을 축소) */
+.admOg{aspect-ratio:1200/630;background:#0f0f0e;border:1px solid var(--wnLine);border-radius:10px;
+  overflow:hidden;position:relative;container-type:inline-size}
+.admOg:before{content:'';position:absolute;left:0;top:0;bottom:0;width:1.8%;background:#ff6b2c}
+.admOgIn{position:absolute;inset:0;padding:6.5% 6.5% 6.5% 8.5%;display:flex;flex-direction:column;
+  justify-content:space-between;color:#f2f0ed}
+.admOgTop{display:flex;align-items:center;gap:2.2cqw;font-size:2.4cqw;font-weight:700}
+.admOgTop em{font-style:normal;color:#918d86}
+.admOgMark{width:2.4cqw;height:2.4cqw;border-radius:22%;background:#ff6b2c}
+.admOgMid{display:flex;flex-direction:column;gap:1.6cqw}
+.admOgCat{font-size:2.1cqw;font-weight:700;color:#ff9560;letter-spacing:.06em}
+.admOgIn strong{display:block;font-weight:800;letter-spacing:-.03em;line-height:1.28;
+  word-break:keep-all;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.admOgIn strong[data-len=short]{font-size:6.4cqw;-webkit-line-clamp:2}
+.admOgIn strong[data-len=mid]{font-size:5.3cqw;-webkit-line-clamp:3}
+.admOgIn strong[data-len=long]{font-size:4.4cqw;-webkit-line-clamp:3}
+.admOgFoot{display:flex;justify-content:space-between;font-size:2cqw;font-weight:600;color:#918d86}
+
+/* 점검 목록 — 통과는 주황 체크, 필수 미달은 붉은 대시, 권장 미달은 회색 대시 */
+.admAudit{list-style:none;margin:0;padding:0;border:1px solid var(--wnLine);border-radius:10px;
+  background:var(--wnSurface);overflow:hidden}
+.admAudit li{display:flex;gap:11px;align-items:flex-start;padding:10px 14px;border-top:1px solid var(--wnLine2)}
+.admAudit li:first-child{border-top:0}
+.admAudit i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;margin-top:1px}
+.admAudit .ok i{background:var(--wnPeach);color:var(--wnPeachInk)}
+.admAudit .miss i{background:#3a1c18;color:#ff9d84}
+.admAudit .soft i{background:var(--wnSurface2);color:var(--wnMuted)}
+.admAudit b{display:block;font-size:12.5px;font-weight:600;color:var(--wnInk)}
+.admAudit .soft b{color:var(--wnInk2)}
+.admAudit small{display:block;font-size:11.5px;color:var(--wnMuted);line-height:1.5;margin-top:1px}
+
+@media(max-width:1000px){
+  .admEditorGrid{grid-template-columns:1fr}
+  .admSeo{position:static}
+}

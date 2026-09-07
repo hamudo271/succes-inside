@@ -29,5 +29,6 @@ export default async function EditColumn({ params }: { params: Promise<{ id: str
     id: row.id, slug: row.slug, cat: row.cat, title: row.title,
     excerpt: row.excerpt, quote: row.quote, author: row.author, role: row.role,
     published: row.published, featured: row.featured, body: toText(row.body),
+    seoTitle: row.seo_title, seoDesc: row.seo_desc, keywords: row.keywords,
   }} />;
 }

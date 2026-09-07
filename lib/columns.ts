@@ -1,13 +1,15 @@
 import 'server-only';
 import { tryQuery } from './db';
 import { columns as staticColumns, type ColumnPost } from '../app/columns/data';
+import { parseKeywords } from './seo';
 
 export type { ColumnPost };
 
 type Row = {
   slug: string; cat: string; title: string; excerpt: string; quote: string;
   author: string; role: string; read_min: number; featured: boolean;
-  published_at: string | null; created_at: string;
+  published_at: string | null; created_at: string; updated_at: string;
+  seo_title: string; seo_desc: string; keywords: string;
   body: { intro?: string[]; sections?: { h: string; ps: string[] }[]; outro?: string };
 };
 
@@ -37,11 +39,17 @@ function toPost(r: Row): ColumnPost {
     intro: r.body?.intro ?? [],
     sections: r.body?.sections ?? [],
     outro: r.body?.outro ?? '',
+    seoTitle: r.seo_title || undefined,
+    seoDesc: r.seo_desc || undefined,
+    keywords: parseKeywords(r.keywords ?? ''),
+    publishedAt: r.published_at ? new Date(r.published_at).toISOString() : undefined,
+    updatedAt: r.updated_at ? new Date(r.updated_at).toISOString() : undefined,
   };
 }
 
 const SELECT = `select slug, cat, title, excerpt, quote, author, role, read_min,
-                       featured, published_at, created_at, body
+                       featured, published_at, created_at, updated_at,
+                       seo_title, seo_desc, keywords, body
                   from columns`;
 
 /** 공개된 칼럼 목록. DB가 없거나 글이 없으면 기존 정적 데이터를 그대로 쓴다. */
@@ -71,7 +79,7 @@ export async function getAllColumnsForAdmin() {
 export async function getColumnForEdit(id: number) {
   const rows = await tryQuery<Row & { id: number; published: boolean }>(
     `select id, slug, cat, title, excerpt, quote, author, role, read_min,
-            published, featured, body
+            published, featured, seo_title, seo_desc, keywords, body
        from columns where id = $1 limit 1`,
     [id],
   );

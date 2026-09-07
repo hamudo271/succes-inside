@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { PenLine, LogOut, Eye, EyeOff, Trash2, Star, ExternalLink, MailOpen, Mail, Users } from 'lucide-react';
 import { getSessionUser } from '../../lib/auth';
 import { getAllColumnsForAdmin, getApplications, getSubscriberStats } from '../../lib/columns';
+import ConfirmSubmit from './ConfirmSubmit';
 import { logoutAction, deleteColumnAction, togglePublishAction, toggleApplicationReadAction, deleteApplicationAction } from './actions';
 
 export const dynamic = 'force-dynamic';
@@ -83,9 +84,9 @@ export default async function AdminHome({
                 </form>
                 <form action={deleteColumnAction}>
                   <input type="hidden" name="id" value={r.id} />
-                  <button type="submit" className="danger" title="삭제">
+                  <ConfirmSubmit className="danger" title="삭제" message={`‘${r.title}’ 칼럼을 삭제할까요? 되돌릴 수 없습니다.`}>
                     <Trash2 size={15} />
-                  </button>
+                  </ConfirmSubmit>
                 </form>
               </span>
             </div>
@@ -121,7 +122,9 @@ export default async function AdminHome({
                   </form>
                   <form action={deleteApplicationAction}>
                     <input type="hidden" name="id" value={a.id} />
-                    <button type="submit" className="admBtn ghost danger"><Trash2 size={14} /> 삭제</button>
+                    <ConfirmSubmit className="admBtn ghost danger" message={`${a.name}님의 신청을 삭제할까요? 되돌릴 수 없습니다.`}>
+                      <Trash2 size={14} /> 삭제
+                    </ConfirmSubmit>
                   </form>
                 </div>
               </div>

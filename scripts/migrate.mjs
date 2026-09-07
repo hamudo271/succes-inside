@@ -64,6 +64,11 @@ create table if not exists columns (
 );
 create index if not exists columns_published_idx on columns (published, published_at desc);
 
+-- 검색 최적화 — 비우면 제목·요약을 그대로 쓴다. keywords는 쉼표 구분, 첫 번째가 핵심 키워드.
+alter table columns add column if not exists seo_title text not null default '';
+alter table columns add column if not exists seo_desc  text not null default '';
+alter table columns add column if not exists keywords  text not null default '';
+
 create table if not exists subscribers (
   id         serial primary key,
   email      text not null unique,

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { query, dbEnabled } from '../../lib/db';
+import { slugify, parseKeywords } from '../../lib/seo';
 import {
   verifyPassword, createSession, destroySession, requireAdmin,
   assertSameOrigin, isLockedOut, recordAttempt, clientIp,
@@ -58,15 +59,6 @@ export async function logoutAction(): Promise<void> {
 
 /* ─────────── 칼럼 ─────────── */
 
-function slugify(input: string, fallback: string): string {
-  const s = input.trim().toLowerCase()
-    .replace(/[^a-z0-9가-힣\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .slice(0, 80);
-  return s || fallback;
-}
-
 /** 빈 줄로 문단을 나눈다. 본문은 HTML로 렌더하지 않으므로 XSS 위험이 없다. */
 function paragraphs(text: string): string[] {
   return text.split(/\n\s*\n/).map(p => p.trim().replace(/\s*\n\s*/g, ' ')).filter(Boolean);
@@ -121,6 +113,10 @@ export async function saveColumnAction(_prev: SaveState, form: FormData): Promis
   const bodyRaw = String(form.get('body') ?? '').slice(0, 60_000);
   const published = form.get('published') === 'on';
   const featured = form.get('featured') === 'on';
+  // 검색 최적화 — 비우면 공개 페이지가 제목·요약을 대신 쓴다.
+  const seoTitle = String(form.get('seo_title') ?? '').trim().slice(0, 120);
+  const seoDesc = String(form.get('seo_desc') ?? '').trim().slice(0, 320);
+  const keywords = parseKeywords(String(form.get('keywords') ?? '').slice(0, 600)).join(', ');
 
   if (!title) return { error: '제목을 입력해 주세요.' };
   if (!cat) return { error: '카테고리를 입력해 주세요.' };
@@ -137,18 +133,22 @@ export async function saveColumnAction(_prev: SaveState, form: FormData): Promis
   try {
     if (id === null) {
       await query(
-        `insert into columns (slug, cat, title, excerpt, quote, author, role, read_min, body, published, featured, published_at)
-         values ($1,$2,$3,$4,$5,$6,$7,$8,$9::jsonb,$10,$11, case when $10 then now() else null end)`,
-        [slug, cat, title, excerpt, quote, author, role, readMin, JSON.stringify(body), published, featured],
+        `insert into columns (slug, cat, title, excerpt, quote, author, role, read_min, body, published, featured,
+                              seo_title, seo_desc, keywords, published_at)
+         values ($1,$2,$3,$4,$5,$6,$7,$8,$9::jsonb,$10,$11,$12,$13,$14, case when $10 then now() else null end)`,
+        [slug, cat, title, excerpt, quote, author, role, readMin, JSON.stringify(body), published, featured,
+         seoTitle, seoDesc, keywords],
       );
     } else {
       await query(
         `update columns set slug=$1, cat=$2, title=$3, excerpt=$4, quote=$5, author=$6, role=$7,
-                            read_min=$8, body=$9::jsonb, published=$10, featured=$11, updated_at=now(),
+                            read_min=$8, body=$9::jsonb, published=$10, featured=$11,
+                            seo_title=$12, seo_desc=$13, keywords=$14, updated_at=now(),
                             published_at = case when $10 and published_at is null then now()
                                                 when $10 then published_at else null end
-           where id=$12`,
-        [slug, cat, title, excerpt, quote, author, role, readMin, JSON.stringify(body), published, featured, id],
+           where id=$15`,
+        [slug, cat, title, excerpt, quote, author, role, readMin, JSON.stringify(body), published, featured,
+         seoTitle, seoDesc, keywords, id],
       );
     }
   } catch (err) {
