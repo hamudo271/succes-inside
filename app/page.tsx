@@ -5,7 +5,7 @@ import { Search, Play, Eye, Clock, ArrowUpRight, ChevronRight, ChevronLeft, Yout
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
 import SubscribeForm from './components/SubscribeForm';
-import CourseCards from './components/CourseCards';
+import CourseCards, { COURSE_CARDS } from './components/CourseCards';
 import HeroVideo from './components/HeroVideo';
 import { interviews, cats, thumb, watchUrl, CHANNEL } from './interviews/data';
 
@@ -26,26 +26,6 @@ const DELIVERS = [
   { t: '영상', d: '유튜브 정식 인터뷰 한 편과 릴스·쇼츠·틱톡 숏폼 여러 편' },
   { t: '기사', d: '영상을 전사해 검색이 읽을 수 있는 아카이브 기사로' },
   { t: '노출', d: '네이버·구글·AI 검색과 SNS 멀티채널로 확산' },
-];
-
-/** 실험 중 — 인물 카드 4장. 누끼는 그 과정의 사례 인터뷰 주인공이다(강사 아님). */
-const CARD_ITEMS = [
-  { id: 'first-100', title: '첫 고객 100명 만들기', badge: '모집중', accent: true,
-    desc: '고객 문제를 정의하고 가설을 세워, 노코드로 MVP를 만들어 4주 안에 검증까지 마치는 과정',
-    face: 'detail', caseCat: '온라인·N잡',
-    href: '/apply?type=교육 과정 문의&course=' + encodeURIComponent('첫 고객 100명 만들기') },
-  { id: 'deck', title: '사업계획서 완성 워크숍', badge: '모집중',
-    desc: '아이디어를 투자자와 팀이 같은 그림으로 읽는 문서로. 매주 본인 사업으로 한 장씩 완성',
-    face: 'cpa', caseCat: '전문직',
-    href: '/apply?type=교육 과정 문의&course=' + encodeURIComponent('사업계획서 완성 워크숍') },
-  { id: 'cx', title: '재구매를 만드는 CX 설계', badge: '6기 대기',
-    desc: '첫 구매를 늘리는 대신 두 번째 구매를 설계합니다. 이탈 지점을 찾아 고객 경험을 다시 짜는 과정',
-    face: 'barber', caseCat: '뷰티·의료',
-    href: '/apply?type=교육 과정 문의&course=' + encodeURIComponent('재구매를 만드는 CX 설계') },
-  { id: 'solo', title: '1인 기업 생존 부트캠프', badge: '모집중',
-    desc: '막연한 자신감 대신 현금흐름과 고객 파이프라인을 숫자로 관리하는 습관을 만드는 과정',
-    face: 'interior', caseCat: '시공·인테리어',
-    href: '/apply?type=교육 과정 문의&course=' + encodeURIComponent('1인 기업 생존 부트캠프') },
 ];
 
 export default function Home() {
@@ -179,7 +159,7 @@ export default function Home() {
 
       {/* ── 실험: 인물 카드 (eopla 식) ── */}
       <CourseCards
-        items={CARD_ITEMS}
+        items={COURSE_CARDS.slice(0, 4)}
         eyebrow="교육 과정"
         title={<>먼저 가본 사람의 순서를{' '}<br />그대로 배웁니다</>}
         more={{ href: '/programs', label: '과정 전체 보기' }}

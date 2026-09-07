@@ -6,7 +6,7 @@ import { interviews, cats, watchUrl, CHANNEL } from '../interviews/data';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import CtaBand from '../components/CtaBand';
-import CourseCards from '../components/CourseCards';
+import CourseCards, { COURSE_CARDS } from '../components/CourseCards';
 import './programs.css';
 
 const live = [
@@ -67,26 +67,6 @@ const vod = [
     cases: ['기타', '온라인·N잡'],
     learn: ['읽는 사람의 질문에서 시작하기', '경험을 구조로 정리하기', '고쳐 쓰기 체크리스트'],
   },
-];
-
-/** 실험 중 — 인물 카드 4장. 누끼는 그 과정의 사례 인터뷰 주인공이다(강사 아님). */
-const CARD_ITEMS = [
-  { id: 'first-100', title: '첫 고객 100명 만들기', badge: '모집중', accent: true,
-    desc: '고객 문제를 정의하고 가설을 세워, 노코드로 MVP를 만들어 4주 안에 검증까지 마치는 과정',
-    face: 'detail', caseCat: '온라인·N잡',
-    href: '/apply?type=교육 과정 문의&course=' + encodeURIComponent('첫 고객 100명 만들기') },
-  { id: 'deck', title: '사업계획서 완성 워크숍', badge: '모집중',
-    desc: '아이디어를 투자자와 팀이 같은 그림으로 읽는 문서로. 매주 본인 사업으로 한 장씩 완성',
-    face: 'cpa', caseCat: '전문직',
-    href: '/apply?type=교육 과정 문의&course=' + encodeURIComponent('사업계획서 완성 워크숍') },
-  { id: 'cx', title: '재구매를 만드는 CX 설계', badge: '6기 대기',
-    desc: '첫 구매를 늘리는 대신 두 번째 구매를 설계합니다. 이탈 지점을 찾아 고객 경험을 다시 짜는 과정',
-    face: 'barber', caseCat: '뷰티·의료',
-    href: '/apply?type=교육 과정 문의&course=' + encodeURIComponent('재구매를 만드는 CX 설계') },
-  { id: 'solo', title: '1인 기업 생존 부트캠프', badge: '모집중',
-    desc: '막연한 자신감 대신 현금흐름과 고객 파이프라인을 숫자로 관리하는 습관을 만드는 과정',
-    face: 'interior', caseCat: '시공·인테리어',
-    href: '/apply?type=교육 과정 문의&course=' + encodeURIComponent('1인 기업 생존 부트캠프') },
 ];
 
 const tabs = [{ k: 'all', l: '전체' }, { k: 'live', l: '정기 과정' }, { k: 'vod', l: 'VOD 과정' }];
@@ -152,10 +132,11 @@ export default function Programs() {
 
       {/* ── 실험: 인물 카드 (eopla 식) ── */}
       <CourseCards
-        items={CARD_ITEMS}
-        eyebrow="이번 기수"
-        title={<>지금 문을 연 과정</>}
-        more={{ href: '#live', label: '전체 일정 보기' }}
+        items={COURSE_CARDS}
+        cols={3}
+        eyebrow="전체 과정"
+        title={<>지금 열려 있는 과정</>}
+        more={{ href: '/columns', label: '더 알아보기' }}
       />
 
       <div className="wrap pgTabs">{tabs.map(t => <button key={t.k} className={tab === t.k ? 'active' : ''} onClick={() => setTab(t.k)}>{t.l}</button>)}</div>

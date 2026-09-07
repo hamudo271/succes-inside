@@ -402,6 +402,12 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
    누끼 인물이 카드 아래 모서리에 딱 붙어 서고, 그 위로 제목·설명이 얹힌다.
    인물은 그 과정의 사례 인터뷰 주인공 — 강사가 아니므로 캡션에 '사례 · 업종'을 적는다. */
 .ccGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:var(--s4)}
+/* 3열 — 카드가 넓어지므로 세로를 줄이고 인물을 키운다 */
+.ccGrid.cols3{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.ccGrid.cols3 .ccCard{aspect-ratio:84/100;padding:26px 24px}
+.ccGrid.cols3 .ccCard h3{font-size:19.5px}
+.ccGrid.cols3 .ccDesc{font-size:14px}
+.ccGrid.cols3 .ccFace{height:60%;right:-6%}
 
 .ccCard{--ccScrim:#000000ab;
   position:relative;display:flex;flex-direction:column;aspect-ratio:67/100;
@@ -464,4 +470,10 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .ccCard h3{font-size:16.5px}
   .ccDesc{font-size:12.5px;-webkit-line-clamp:3}
   .ccFace{height:53%;right:-12%}   /* 좁은 카드에서는 인물을 낮춰 캡션과 겹치지 않게 */
+  /* 3열 설정은 넓은 화면 전용 — 좁은 화면에서는 모든 카드가 같은 규격으로 */
+  .ccGrid.cols3{display:flex;grid-template-columns:none;gap:12px}
+  .ccGrid.cols3 .ccCard{aspect-ratio:67/100;padding:20px 18px}
+  .ccGrid.cols3 .ccCard h3{font-size:16.5px}
+  .ccGrid.cols3 .ccDesc{font-size:12.5px}
+  .ccGrid.cols3 .ccFace{height:53%;right:-12%}
 }
