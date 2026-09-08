@@ -89,7 +89,8 @@
 
 /* ─── 칼럼 상세 ─── */
 .clArtHero{max-width:800px;padding-top:56px}
-.clBack{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--wnMuted);margin-bottom:34px}
+.clBack{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;
+  color:var(--wnMuted);padding:13px 0;margin-bottom:21px}
 .clBack:hover{color:var(--wnInk)}
 .clArtHero .clTag{display:block;margin-bottom:2px}
 .clArtHero h1{font-size:28px;line-height:1.45;letter-spacing:-.6px;margin:12px 0 14px;font-weight:700}
@@ -138,6 +139,8 @@
 @media(max-width:620px){
   .clCats button{padding:13px 16px}
   .clHeroBtns{gap:10px}
+  .clByline small,.clWriterCard small{font-size:12px}
+  .clWriterCard>a{padding:14px 18px}
   .clHeroBtns a{flex:1 1 auto;justify-content:center}
   .clVoice b{font-size:14px}
   .clHero h1{font-size:25px;letter-spacing:-.6px}

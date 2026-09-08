@@ -73,6 +73,7 @@
   .abClaim{border-left:0;border-top:1px solid var(--wnLine);padding:var(--s4) 0 0}
 }
 @media(max-width:620px){
+  .abGet li span{font-size:12px}
   .abHero h1 br{display:none}
   .abHeroBtns a{width:100%;justify-content:center}
   .abSection{padding-top:var(--s7)}

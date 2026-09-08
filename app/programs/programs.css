@@ -150,7 +150,7 @@
   /* 좁은 화면에는 세 사람만 — 네 번째까지 넣으면 화면 밖으로 잘린다 */
   .pgLineup{justify-content:flex-start}
   .pgLineup img{margin-left:-24px}
-  .pgLineup img{height:158px;top:0}
+  .pgLineup img{height:clamp(118px,40vw,168px);top:0}   /* 화면 폭을 따라간다 — 320px에서도 셋이 다 들어오게 */
   .pgLineup img:nth-child(1){display:none}
   .pgLineup img:nth-child(2){margin-left:0}
   .pgHeroFacts{grid-template-columns:1fr 1fr}
@@ -166,6 +166,8 @@
   .pgVodBody{grid-template-columns:1fr;gap:0}
 }
 @media(max-width:620px){
+  .pgSteps span,.pgRowCases small,.pgTag{font-size:12px}
+  .pgBadge,.pgWallCat,.pgCaseThumbs span{font-size:11.5px}
   .pgHero h1{font-size:25px;letter-spacing:-.6px}
   .pgHero h1 br,.pgHeroInner p br{display:none}
   .pgSection{padding-top:52px}

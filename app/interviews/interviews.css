@@ -70,6 +70,8 @@
   .ivFeature{grid-template-columns:1fr;gap:22px}
   .ivGrid{grid-template-columns:1fr 1fr}
   @media(max-width:620px){
+  .ivTag,.ivCardFoot span{font-size:12px}
+  .ivBadge,.ivDur{font-size:11.5px}
   .ivCats button{padding:13px 16px}
   .ivHero{padding-top:44px}
   .ivHero h1{font-size:27px;letter-spacing:-.6px}
