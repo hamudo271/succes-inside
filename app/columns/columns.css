@@ -1,14 +1,43 @@
 /* /columns — 칼럼. Winnings 레퍼런스 테마(globals.css의 --wn* 토큰) 기반 */
 
-/* 히어로: 웜 아이보리, 좌측 정렬 */
-.clHero{padding-top:60px;padding-bottom:48px}
+/* 히어로 — 왼쪽에 선언, 오른쪽에 지난 칼럼에서 남은 문장들 */
+.clHero{position:relative;isolation:isolate;overflow:hidden;padding-top:60px}
+.clHeroGlow{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 46% 58% at 78% 42%,#ff6b2c1f,transparent 70%)}
+.clHeroInner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,410px);
+  gap:var(--s7);align-items:start;padding-bottom:var(--s6)}
 .clHero h1{font-size:34px;line-height:1.45;letter-spacing:-1px;margin:14px 0 16px;font-weight:700}
 .clHero h1 em{font-style:normal;color:var(--wnOrange)}
-.clHero p{color:var(--wnMuted);font-size:15px;line-height:1.85;margin:0}
+.clHeroText p{color:var(--wnMuted);font-size:15px;line-height:1.85;margin:0;max-width:42ch}
 
-/* 이번 주 칼럼 — 블랙 라운드 피처 카드 */
-.clFeature{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s7);padding:var(--s5) 0 var(--s6);
-  border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine);align-items:center}
+.clHeroBtns{display:flex;align-items:center;gap:var(--s2);margin-top:var(--s5);flex-wrap:wrap}
+
+.clVoicesLabel{display:block;font-size:11.5px;font-weight:700;color:var(--wnFaint);
+  padding-bottom:12px;letter-spacing:.02em}
+.clVoice{display:flex;gap:13px;padding:16px 0;border-top:1px solid var(--wnLine);
+  transition:border-color .2s}
+.clVoice:last-child{border-bottom:1px solid var(--wnLine)}
+.clVoice:hover{border-color:#4a3324}
+.clVoice i{flex:0 0 auto;font-style:normal;font-family:Georgia,'Times New Roman',serif;
+  font-size:30px;line-height:.9;font-weight:800;color:var(--wnOrange);opacity:.8}
+.clVoice span{display:flex;flex-direction:column;gap:7px;min-width:0}
+.clVoice b{font-size:14.5px;font-weight:600;line-height:1.6;letter-spacing:-.3px;color:var(--wnInk2);
+  transition:color .15s;text-wrap:pretty}
+.clVoice:hover b{color:var(--wnInk)}
+.clVoice em{font-style:normal;font-size:11.5px;font-weight:600;color:var(--wnFaint)}
+
+/* 칼럼의 규격 — 문장들이 딛고 선 선 아래 */
+.clHeroFacts{display:grid;grid-template-columns:repeat(4,1fr);margin:0;
+  border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine)}
+.clHeroFacts div{display:flex;flex-direction:column-reverse;gap:8px;padding:22px 0 24px}
+.clHeroFacts div+div{padding-left:var(--s4);border-left:1px solid var(--wnLine)}
+.clHeroFacts dt{font-size:12.5px;color:var(--wnMuted)}
+.clHeroFacts dd{margin:0;font-size:26px;font-weight:800;letter-spacing:-.8px;line-height:1;
+  font-variant-numeric:tabular-nums}
+
+/* 이번 주 칼럼 — 상자 없이 hairline 사이의 에디토리얼 스프레드 */
+.clFeature{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--s7);padding:var(--s6) 0;
+  border-bottom:1px solid var(--wnLine);align-items:center}
 .clMetaLine{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:12px;color:var(--wnMuted)}
 .clMetaLine b{color:var(--wnOrangeText);font-weight:700}
 .clMetaLine span{display:inline-flex;align-items:center;gap:4px}
@@ -91,8 +120,16 @@
 .clNotFound a{display:inline-flex;align-items:center;gap:5px;background:var(--wnOrange);color:#fff;border-radius:999px;padding:13px 21px;font-size:13.5px;font-weight:700}
 
 @media(max-width:900px){
-  .clHero{padding-top:56px;padding-bottom:48px}
+  .clHero{padding-top:56px}
   .clHero h1{font-size:29px;letter-spacing:-.8px}
+  /* 한 열로 — 문장들은 선언 아래로 내려간다 */
+  .clHeroInner{grid-template-columns:1fr;gap:var(--s5);padding-bottom:var(--s5)}
+  .clHeroText p{max-width:none}
+  .clHeroFacts{grid-template-columns:1fr 1fr}
+  .clHeroFacts div{padding:18px 0 20px}
+  .clHeroFacts div:nth-child(3),.clHeroFacts div:nth-child(4){border-top:1px solid var(--wnLine)}
+  .clHeroFacts div:nth-child(3){padding-left:0;border-left:0}
+  .clHeroFacts dd{font-size:23px}
   .clFeature{grid-template-columns:1fr;gap:var(--s5)}
   .clFeatureQuote{border-left:0;border-top:1px solid var(--wnLine);padding-left:0;padding-top:var(--s4)}
   .clGrid{grid-template-columns:1fr}
@@ -100,6 +137,9 @@
 }
 @media(max-width:620px){
   .clCats button{padding:13px 16px}
+  .clHeroBtns{gap:10px}
+  .clHeroBtns a{flex:1 1 auto;justify-content:center}
+  .clVoice b{font-size:14px}
   .clHero h1{font-size:25px;letter-spacing:-.6px}
   .clHero h1 br,.clHero p br{display:none}
   .clArtHero h1{font-size:23px;letter-spacing:-.5px}
