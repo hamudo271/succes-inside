@@ -1,8 +1,43 @@
 /* /programs — 교육 과정. Winnings 레퍼런스 테마(wn.css 토큰) 기반 */
 
 /* 히어로: 웜 아이보리 + 오렌지 포인트, 하단에 스탯 밴드 */
-.pgHero{background:var(--wnBg);overflow:hidden;position:relative}
-.pgHeroInner{position:relative;display:grid;grid-template-columns:1fr;gap:56px;padding-top:84px;padding-bottom:72px}
+.pgHero{background:var(--wnBg);overflow:hidden;position:relative;isolation:isolate}
+/* 사장님들 발치에서 올라오는 주황 불빛 — 검은 배경에서 인물이 뜨게 */
+.pgHeroGlow{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 54% 66% at 76% 104%,#ff6b2c3d,transparent 70%)}
+.pgHeroInner{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto);
+  gap:var(--s5);align-items:end;padding-top:84px;padding-bottom:0}
+.pgHeroText{padding-bottom:64px}
+.pgHeroText p{max-width:44ch}
+
+/* 먼저 가본 사람들 — 한 줄로 서서 아래 헤어라인을 딛는다 */
+.pgLineup{display:flex;align-items:flex-end;justify-content:flex-end;min-width:0}
+.pgLineup img{display:block;width:auto;filter:grayscale(1) contrast(1.06) brightness(1.04);
+  margin-left:-32px;
+  -webkit-mask-image:linear-gradient(180deg,#000 91%,transparent);
+          mask-image:linear-gradient(180deg,#000 91%,transparent)}
+.pgLineup img:first-child{margin-left:0}
+.pgLineup img:nth-child(1){height:184px}
+.pgLineup img:nth-child(2){height:214px}
+.pgLineup img:nth-child(3){height:236px}
+.pgLineup img:nth-child(4){height:200px}
+/* 한 사람씩 자리에 선다 */
+@keyframes pgRise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.pgLineup img{animation:pgRise .72s cubic-bezier(.2,.7,.2,1) both}
+.pgLineup img:nth-child(1){animation-delay:.06s}
+.pgLineup img:nth-child(2){animation-delay:.16s}
+.pgLineup img:nth-child(3){animation-delay:.26s}
+.pgLineup img:nth-child(4){animation-delay:.36s}
+@media(prefers-reduced-motion:reduce){.pgLineup img{animation:none}}
+
+/* 과정의 규격 — 사장님들이 딛고 선 선 아래 */
+.pgHeroFacts{display:grid;grid-template-columns:repeat(4,1fr);margin:0;
+  border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine)}
+.pgHeroFacts div{display:flex;flex-direction:column-reverse;gap:8px;padding:22px 0 24px}
+.pgHeroFacts div+div{padding-left:var(--s4);border-left:1px solid var(--wnLine)}
+.pgHeroFacts dt{font-size:12.5px;color:var(--wnMuted)}
+.pgHeroFacts dd{margin:0;font-size:26px;font-weight:800;letter-spacing:-.8px;line-height:1;
+  font-variant-numeric:tabular-nums}
 .pgHero .eyebrow{color:var(--wnOrange)}
 .pgHero h1{font-size:34px;line-height:1.45;letter-spacing:-1px;margin:14px 0 16px;font-weight:700}
 .pgHero h1 em{font-style:normal;color:var(--wnOrange)}
@@ -108,7 +143,20 @@
 .pgVodBody .pgCaseThumbs{grid-template-columns:repeat(2,1fr);gap:8px}
 
 @media(max-width:900px){
-  .pgHeroInner{gap:44px;padding-top:56px;padding-bottom:56px}
+  .pgHeroInner{grid-template-columns:1fr;gap:0;padding-top:56px;padding-bottom:0}
+  .pgHeroText{padding-bottom:34px}
+  /* 좁은 화면에는 세 사람만 — 네 번째까지 넣으면 화면 밖으로 잘린다 */
+  .pgLineup{justify-content:flex-start}
+  .pgLineup img{margin-left:-24px}
+  .pgLineup img:nth-child(1){display:none}
+  .pgLineup img:nth-child(2){height:146px;margin-left:0}
+  .pgLineup img:nth-child(3){height:162px}
+  .pgLineup img:nth-child(4){height:138px}
+  .pgHeroFacts{grid-template-columns:1fr 1fr}
+  .pgHeroFacts div{padding:18px 0 20px}
+  .pgHeroFacts div:nth-child(3),.pgHeroFacts div:nth-child(4){border-top:1px solid var(--wnLine)}
+  .pgHeroFacts div:nth-child(3){padding-left:0;border-left:0}
+  .pgHeroFacts dd{font-size:23px}
   .pgHero h1{font-size:29px;letter-spacing:-.8px}
   .pgStats{grid-template-columns:1fr 1fr;gap:26px 12px;padding:26px 0}
   .pgStats b{font-size:30px}

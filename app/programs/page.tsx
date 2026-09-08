@@ -92,17 +92,35 @@ export default function Programs() {
   return <>
     <SiteHeader active="programs" />
     <main>
-      <section className="pgHero"><div className="wrap pgHeroInner">
-        <div>
-          <span className="eyebrow">성공인사이드 교육 과정</span>
-          <h1>다음 단계로 가는 길을,{' '}<br /><em>먼저 가본 사람과 함께.</em></h1>
-          <p>성공인사이드 교육 과정은 이론이 아니라 실제로 해본 사람의 순서를 배웁니다.{' '}<br />내 사업과 커리어에 바로 적용할 결과물을 들고 나가는 것을 목표로 합니다.</p>
-          <div className="pgHeroBtns">
-            <a href="#live">과정 둘러보기 <ArrowUpRight size={18} /></a>
-            <Link href="/about">성공인사이드가 만드는 것 <ChevronRight size={18} /></Link>
+      <section className="pgHero">
+        <div className="pgHeroGlow" aria-hidden="true" />
+        <div className="wrap pgHeroInner">
+          <div className="pgHeroText">
+            <span className="eyebrow">성공인사이드 교육 과정</span>
+            <h1>다음 단계로 가는 길을,{' '}<br /><em>먼저 가본 사람과 함께.</em></h1>
+            <p>성공인사이드 교육 과정은 이론이 아니라 실제로 해본 사람의 순서를 배웁니다. 내 사업과 커리어에 바로 적용할 결과물을 들고 나가는 것을 목표로 합니다.</p>
+            <div className="pgHeroBtns">
+              <a href="#live">과정 둘러보기 <ArrowUpRight size={18} /></a>
+              <Link href="/about">성공인사이드가 만드는 것 <ChevronRight size={18} /></Link>
+            </div>
+          </div>
+
+          {/* 먼저 가본 사람들 — 사례로 쓰이는 사장님들이 한 줄로 선다 */}
+          <div className="pgLineup" aria-hidden="true">
+            {['cpa', 'motors', 'sushi', 'interior'].map(f => (
+              <img key={f} src={`/faces/${f}.webp`} alt="" loading="eager" decoding="async" />
+            ))}
           </div>
         </div>
-      </div></section>
+
+        {/* 사장님들이 딛고 선 선 — 그 아래는 과정의 규격 */}
+        <div className="wrap"><dl className="pgHeroFacts">
+          <div><dt>정기 과정</dt><dd>4</dd></div>
+          <div><dt>VOD 과정</dt><dd>5</dd></div>
+          <div><dt>한 기수</dt><dd>4~6주</dd></div>
+          <div><dt>정원</dt><dd>12~20명</dd></div>
+        </dl></div>
+      </section>
 
       {/* ── 교재: 이론이 아니라 인터뷰에서 나온 실제 결정 ── */}
       <section className="wrap pgSection pgCases">
