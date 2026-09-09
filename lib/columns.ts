@@ -1,5 +1,6 @@
 import 'server-only';
 import { tryQuery } from './db';
+import { getSessionUser } from './auth';
 import { columns as staticColumns, type ColumnPost } from '../app/columns/data';
 import { parseKeywords } from './seo';
 
@@ -66,6 +67,17 @@ export async function getColumn(slug: string): Promise<ColumnPost | null> {
   const rows = await tryQuery<Row>(`${SELECT} where slug = $1 and published = true limit 1`, [slug]);
   if (rows && rows.length) return toPost(rows[0]!);
   return staticColumns.find(c => c.id === slug) ?? null;
+}
+
+/**
+ * 발행 전 글 미리보기.
+ * 로그인한 관리자에게만 돌려준다 — 주소를 아는 사람이 초안을 읽을 수 있으면 미리보기가 아니라 유출이다.
+ * 공개된 글이 없을 때만 부르므로, 평소 방문에는 세션 조회가 일어나지 않는다.
+ */
+export async function getColumnPreview(slug: string): Promise<ColumnPost | null> {
+  if (!await getSessionUser()) return null;
+  const rows = await tryQuery<Row>(`${SELECT} where slug = $1 limit 1`, [slug]);
+  return rows?.length ? toPost(rows[0]!) : null;
 }
 
 /** 관리자용 — 미공개 글까지 전부 */

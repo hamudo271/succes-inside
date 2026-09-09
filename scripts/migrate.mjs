@@ -4,18 +4,16 @@
  * Railway에서는 배포 시 자동 실행된다 (package.json의 build 스크립트).
  */
 import pg from 'pg';
+import { usernameProblem, passwordProblem, hashPassword, poolConfig } from './admin-account.mjs';
 
 const url = process.env.DATABASE_URL;
 if (!url) {
-  console.log('[migrate] DATABASE_URL이 없어 건너뜁니다.');
+  // 이 줄이 배포 로그에 보이면, 웹 서비스가 DB 변수를 못 받고 있다는 뜻이다.
+  // Railway → 웹 서비스 → Variables 에서 DATABASE_URL 을 ${{Postgres.DATABASE_URL}} 로 참조해야 한다.
+  console.log('[migrate] DATABASE_URL이 없어 건너뜁니다. — 관리자 기능은 꺼진 상태로 배포됩니다.');
   process.exit(0);
 }
-const internal = url.includes('.railway.internal') || url.includes('localhost') || url.includes('127.0.0.1');
-const pool = new pg.Pool({
-  connectionString: url,
-  ssl: internal ? undefined : { rejectUnauthorized: false },
-  connectionTimeoutMillis: 15_000,
-});
+const pool = new pg.Pool(poolConfig(url));
 
 const SQL = `
 create table if not exists admin_users (
@@ -91,11 +89,41 @@ create table if not exists applications (
 create index if not exists applications_idx on applications (read, created_at desc);
 `;
 
+/**
+ * 첫 관리자 계정.
+ *
+ * 계정이 하나도 없을 때만 만든다 — 이미 있으면 환경변수가 남아 있어도 아무것도 하지 않으므로,
+ * 배포할 때마다 비밀번호가 되돌아가거나 덮어써질 일이 없다.
+ * 계정을 만든 뒤에는 Railway에서 ADMIN_PASSWORD를 지워도 된다(권장).
+ */
+async function bootstrapAdmin() {
+  const { rows } = await pool.query(`select count(*)::int as n from admin_users`);
+  if (rows[0].n > 0) return;
+
+  const username = (process.env.ADMIN_USERNAME || '').trim();
+  const password = process.env.ADMIN_PASSWORD || '';
+  if (!username && !password) {
+    console.log('[migrate] 관리자 계정이 없습니다. ADMIN_USERNAME·ADMIN_PASSWORD를 설정하고 다시 배포하면 자동으로 만듭니다.');
+    return;
+  }
+  const bad = usernameProblem(username) || passwordProblem(password);
+  if (bad) {
+    console.log('[migrate] 관리자 계정을 만들지 못했습니다 — ' + bad);
+    return;
+  }
+  await pool.query(
+    `insert into admin_users (username, password_hash) values ($1, $2) on conflict (username) do nothing`,
+    [username, await hashPassword(password)],
+  );
+  console.log(`[migrate] 첫 관리자 '${username}' 생성. /admin/login 에서 로그인한 뒤 ADMIN_PASSWORD 변수는 지우세요.`);
+}
+
 try {
   await pool.query(SQL);
   // 만료 세션·오래된 로그인 기록 정리
   await pool.query(`delete from sessions where expires_at < now()`);
   await pool.query(`delete from login_attempts where at < now() - interval '7 days'`);
+  await bootstrapAdmin();
   console.log('[migrate] 완료');
 } catch (err) {
   console.error('[migrate] 실패:', err.message);

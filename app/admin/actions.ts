@@ -5,8 +5,8 @@ import { headers } from 'next/headers';
 import { query, dbEnabled } from '../../lib/db';
 import { slugify, parseKeywords } from '../../lib/seo';
 import {
-  verifyPassword, createSession, destroySession, requireAdmin,
-  assertSameOrigin, isLockedOut, recordAttempt, clientIp,
+  verifyPassword, hashPassword, passwordProblem, createSession, destroySession, requireAdmin,
+  assertSameOrigin, isLockedOut, recordAttempt, clientIp, revokeOtherSessions,
 } from '../../lib/auth';
 
 /** 로그인 실패는 원인을 구분해 알리지 않는다(계정 존재 여부 노출 방지). */
@@ -55,6 +55,54 @@ export async function logoutAction(): Promise<void> {
   await assertSameOrigin();
   await destroySession();
   redirect('/admin/login');
+}
+
+/* ─────────── 계정 ─────────── */
+
+export type PasswordState = { error?: string; ok?: string };
+
+/**
+ * 비밀번호 변경. 현재 비밀번호를 확인한 뒤에만 바꾼다.
+ * 바꾸고 나면 다른 기기의 로그인은 모두 끊는다 — 비밀번호가 샜을 때 되찾는 수단이 되어야 하므로.
+ */
+export async function changePasswordAction(_prev: PasswordState, form: FormData): Promise<PasswordState> {
+  await assertSameOrigin();
+  const user = await requireAdmin();
+
+  const current = String(form.get('current') ?? '');
+  const next = String(form.get('next') ?? '');
+  const confirm = String(form.get('confirm') ?? '');
+
+  if (!current || !next) return { error: '모든 칸을 채워 주세요.' };
+  if (next !== confirm) return { error: '새 비밀번호가 서로 다릅니다.' };
+  if (next === current) return { error: '지금 쓰는 비밀번호와 같습니다.' };
+
+  const weak = passwordProblem(next);
+  if (weak) return { error: weak };
+
+  const rows = await query<{ password_hash: string }>(
+    `select password_hash from admin_users where id = $1`, [user.id],
+  );
+  if (!rows[0] || !(await verifyPassword(current, rows[0].password_hash))) {
+    // 현재 비밀번호 확인도 무차별 대입 대상이다 — 로그인과 같은 제한을 건다.
+    const ip = clientIp(await headers());
+    await recordAttempt(ip, false);
+    if (await isLockedOut(ip)) return { error: '시도가 너무 많습니다. 15분 후 다시 시도해 주세요.' };
+    return { error: '현재 비밀번호가 올바르지 않습니다.' };
+  }
+
+  await query(`update admin_users set password_hash = $1 where id = $2`, [await hashPassword(next), user.id]);
+  const cut = await revokeOtherSessions(user.id);
+
+  revalidatePath('/admin/account');
+  return { ok: cut > 0 ? `비밀번호를 바꿨습니다. 다른 기기의 로그인 ${cut}건을 끊었습니다.` : '비밀번호를 바꿨습니다.' };
+}
+
+export async function logoutOtherDevicesAction(): Promise<void> {
+  await assertSameOrigin();
+  const user = await requireAdmin();
+  await revokeOtherSessions(user.id);
+  revalidatePath('/admin/account');
 }
 
 /* ─────────── 칼럼 ─────────── */
@@ -140,12 +188,14 @@ export async function saveColumnAction(_prev: SaveState, form: FormData): Promis
          seoTitle, seoDesc, keywords],
       );
     } else {
+      // 발행일은 한 번 정해지면 유지한다. 비공개로 돌렸다가 다시 여는 것만으로
+      // 구조화 데이터의 datePublished가 오늘로 바뀌면, 검색엔진에는 새 글로 보인다.
       await query(
         `update columns set slug=$1, cat=$2, title=$3, excerpt=$4, quote=$5, author=$6, role=$7,
                             read_min=$8, body=$9::jsonb, published=$10, featured=$11,
                             seo_title=$12, seo_desc=$13, keywords=$14, updated_at=now(),
                             published_at = case when $10 and published_at is null then now()
-                                                when $10 then published_at else null end
+                                                else published_at end
            where id=$15`,
         [slug, cat, title, excerpt, quote, author, role, readMin, JSON.stringify(body), published, featured,
          seoTitle, seoDesc, keywords, id],

@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowUpRight, Clock } from 'lucide-react';
 import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
-import { getColumns, getColumn } from '../../../lib/columns';
+import { getColumns, getColumn, getColumnPreview } from '../../../lib/columns';
 import { SITE } from '../../../lib/seo';
 import { ORG_ID, SITE_ID } from '../../../lib/schema';
 import SubscribeForm from '../../components/SubscribeForm';
@@ -18,7 +18,13 @@ type Params = { params: Promise<{ id: string }> };
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { id } = await params;
   const post = await getColumn(id);
-  if (!post) return { title: '칼럼을 찾을 수 없습니다', robots: { index: false } };
+  if (!post) {
+    // 발행 전 글을 관리자가 열어 본 경우. 색인은 절대 시키지 않는다.
+    const draft = await getColumnPreview(id);
+    return draft
+      ? { title: `[미리보기] ${draft.seoTitle || draft.title}`, robots: { index: false, follow: false } }
+      : { title: '칼럼을 찾을 수 없습니다', robots: { index: false } };
+  }
 
   const title = post.seoTitle || post.title;
   const description = post.seoDesc || post.excerpt;
@@ -40,8 +46,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function ColumnDetail({ params }: Params) {
   const { id } = await params;
-  const post = await getColumn(id);
+  const published = await getColumn(id);
+  // 공개된 글이 없을 때만 초안을 찾는다 — 관리자가 아니면 여기서도 null이 돌아온다.
+  const post = published ?? await getColumnPreview(id);
   if (!post) notFound();
+  const draft = !published;
 
   const columns = await getColumns();
   const related = [
@@ -89,13 +98,20 @@ export default async function ColumnDetail({ params }: Params) {
   };
 
   return <>
-    <script
+    {!draft && <script
       type="application/ld+json"
       // JSON 안의 '<'를 이스케이프해 </script> 주입을 막는다.
       dangerouslySetInnerHTML={{ __html: JSON.stringify(ld).replace(/</g, '\\u003c') }}
-    />
+    />}
     <SiteHeader active="columns" />
     <main>
+      {draft && (
+        <div className="clDraftBar">
+          <b>발행 전 미리보기</b>
+          <span>관리자에게만 보입니다. 검색에도 잡히지 않습니다.</span>
+          <Link href="/admin">관리자로 돌아가기</Link>
+        </div>
+      )}
       <article>
         <div className="wrap clArtHero">
           <Link className="clBack" href="/columns"><ArrowLeft size={15} /> 칼럼 목록</Link>

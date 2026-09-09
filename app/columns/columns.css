@@ -162,3 +162,12 @@
   .clCtaForm{flex-direction:column}
   .clCtaForm button{padding:14px}
 }
+
+/* 발행 전 미리보기 띠 — 로그인한 관리자에게만 렌더된다(공개 화면에는 나오지 않는다). */
+.clDraftBar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:var(--wnPeach);color:var(--wnPeachInk);
+  padding:11px 24px;font-size:12.5px;border-bottom:1px solid var(--wnLine)}
+.clDraftBar b{font-weight:700}
+.clDraftBar span{color:var(--wnOrangeText)}
+.clDraftBar a{margin-left:auto;font-weight:600;color:var(--wnPeachInk);
+  text-decoration:underline;text-underline-offset:3px}

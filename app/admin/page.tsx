@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { PenLine, LogOut, Eye, EyeOff, Trash2, Star, ExternalLink, MailOpen, Mail, Users } from 'lucide-react';
+import { PenLine, LogOut, Eye, EyeOff, Trash2, Star, ExternalLink, MailOpen, Mail, Users, UserCog, Download } from 'lucide-react';
 import { getSessionUser } from '../../lib/auth';
 import { getAllColumnsForAdmin, getApplications, getSubscriberStats } from '../../lib/columns';
 import ConfirmSubmit from './ConfirmSubmit';
@@ -31,7 +31,7 @@ export default async function AdminHome({
           <h1>칼럼 관리</h1>
         </div>
         <div className="admTopActions">
-          <span className="admUser">{user.username}</span>
+          <Link className="admUser" href="/admin/account" title="계정 설정"><UserCog size={13} /> {user.username}</Link>
           <Link className="admBtn" href="/admin/new"><PenLine size={15} /> 새 칼럼</Link>
           <form action={logoutAction}>
             <button className="admBtn ghost" type="submit"><LogOut size={15} /> 로그아웃</button>
@@ -71,11 +71,10 @@ export default async function AdminHome({
                 </em>
               </span>
               <span className="admRowActions">
-                {r.published && (
-                  <a href={`/columns/${r.slug}`} target="_blank" rel="noreferrer" title="사이트에서 보기">
-                    <ExternalLink size={15} />
-                  </a>
-                )}
+                <a href={`/columns/${r.slug}`} target="_blank" rel="noreferrer"
+                   title={r.published ? '사이트에서 보기' : '발행 전 미리보기'}>
+                  <ExternalLink size={15} />
+                </a>
                 <form action={togglePublishAction}>
                   <input type="hidden" name="id" value={r.id} />
                   <button type="submit" title={r.published ? '비공개로 전환' : '공개로 전환'}>
@@ -97,7 +96,19 @@ export default async function AdminHome({
       <section className="admBlock">
         <div className="admBlockHead">
           <h2>출연·문의 신청 {unread > 0 && <em className="admBadge">{unread} 새 신청</em>}</h2>
-          <span className="admDim"><Users size={13} /> 뉴스레터 구독자 {subs.count.toLocaleString()}명</span>
+          <div className="admBlockTools">
+            <span className="admDim"><Users size={13} /> 뉴스레터 구독자 {subs.count.toLocaleString()}명</span>
+            {subs.count > 0 && (
+              <a className="admLink" href="/admin/export/subscribers" download>
+                <Download size={13} /> 구독자 CSV
+              </a>
+            )}
+            {apps.length > 0 && (
+              <a className="admLink" href="/admin/export/applications" download>
+                <Download size={13} /> 신청 CSV
+              </a>
+            )}
+          </div>
         </div>
         {apps.length === 0 ? (
           <p className="admEmptyLine">아직 접수된 신청이 없습니다. 사이트의 ‘출연 신청’ 버튼으로 들어온 신청이 여기에 쌓입니다.</p>
@@ -111,7 +122,13 @@ export default async function AdminHome({
                 <span className="admDim right">{fmt(a.created_at)}</span>
               </summary>
               <div className="admAppBody">
-                <p className="admAppContact">연락처 — {a.contact}</p>
+                <p className="admAppContact">
+                  연락처 — {/^[^\s@]+@[^\s@]+$/.test(a.contact)
+                    ? <a href={`mailto:${a.contact}`}>{a.contact}</a>
+                    : /^[\d+\-() ]{7,}$/.test(a.contact)
+                      ? <a href={`tel:${a.contact.replace(/[^\d+]/g, '')}`}>{a.contact}</a>
+                      : a.contact}
+                </p>
                 <p className="admAppMsg">{a.message}</p>
                 <div className="admAppActions">
                   <form action={toggleApplicationReadAction}>

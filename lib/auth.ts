@@ -20,6 +20,19 @@ export async function hashPassword(password: string): Promise<string> {
   return `scrypt$${salt.toString('hex')}$${key.toString('hex')}`;
 }
 
+/**
+ * 약한 비밀번호를 막는다. 통과하면 null.
+ * 같은 규칙의 JavaScript 판이 scripts/admin-account.mjs에 있다 —
+ * 그쪽은 빌드 전에 도는 스크립트라 TypeScript를 불러올 수 없다. 한쪽을 고치면 둘 다 고친다.
+ */
+export function passwordProblem(password: string): string | null {
+  if (password.length < 12) return '비밀번호는 12자 이상이어야 합니다.';
+  const classes = [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].filter(re => re.test(password)).length;
+  if (classes < 3) return '비밀번호는 소문자·대문자·숫자·기호 중 3종류 이상을 포함해야 합니다.';
+  if (/^(password|admin|qwerty|1234)/i.test(password)) return '추측하기 쉬운 비밀번호입니다.';
+  return null;
+}
+
 /** 타이밍 공격을 피하기 위해 항상 같은 비용으로 비교한다. */
 export async function verifyPassword(password: string, stored: string): Promise<boolean> {
   const parts = stored.split('$');
@@ -99,6 +112,32 @@ export async function destroySession(): Promise<void> {
     } catch { /* 쿠키는 아래에서 어차피 지운다 */ }
   }
   jar.delete(SESSION_COOKIE);
+}
+
+/** 지금 브라우저의 세션만 남기고 나머지를 끊는다(비밀번호 변경 시). */
+export async function revokeOtherSessions(userId: number): Promise<number> {
+  const jar = await cookies();
+  const token = jar.get(SESSION_COOKIE)?.value;
+  const rows = token
+    ? await query<{ id: number }>(
+        `delete from sessions where user_id = $1 and token_hash <> $2 returning id`,
+        [userId, hashToken(token)],
+      )
+    : await query<{ id: number }>(`delete from sessions where user_id = $1 returning id`, [userId]);
+  return rows.length;
+}
+
+/** 관리자 화면에 보여줄 계정 상태 — 비밀번호 해시는 절대 내보내지 않는다. */
+export async function getAccountInfo(userId: number) {
+  const rows = await query<{ created_at: string; last_login_at: string | null; sessions: string }>(
+    `select u.created_at, u.last_login_at,
+            (select count(*)::text from sessions s
+              where s.user_id = u.id and s.expires_at > now()) as sessions
+       from admin_users u where u.id = $1`,
+    [userId],
+  );
+  const r = rows[0];
+  return r ? { createdAt: r.created_at, lastLoginAt: r.last_login_at, sessions: Number(r.sessions) } : null;
 }
 
 /* ─────────── 로그인 시도 제한 ─────────── */
