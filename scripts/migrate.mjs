@@ -1,10 +1,19 @@
 /**
  * 스키마 생성 (여러 번 실행해도 안전).
  *   DATABASE_URL=... node scripts/migrate.mjs
- * Railway에서는 배포 시 자동 실행된다 (package.json의 build 스크립트).
+ *
+ * Railway에서는 서버가 뜨기 직전에 실행된다 (package.json의 start 스크립트).
+ * 빌드 단계가 아니다 — Railway의 사설망(*.railway.internal)은 런타임에만 열리므로,
+ * 빌드에서 DB에 접속하려 하면 ENOTFOUND로 배포 전체가 실패한다.
+ *
+ * --keep-going: 실패해도 0으로 끝낸다. 공개 사이트는 DB 없이도 예시 글로 도는데,
+ * DB가 잠깐 흔들렸다고 서버를 못 뜨게 하면 멀쩡한 사이트까지 내려간다.
+ * 사람이 직접 부를 때(npm run migrate)는 이 옵션 없이 실패를 그대로 알린다.
  */
 import pg from 'pg';
 import { usernameProblem, passwordProblem, hashPassword, poolConfig } from './admin-account.mjs';
+
+const keepGoing = process.argv.includes('--keep-going');
 
 const url = process.env.DATABASE_URL;
 if (!url) {
@@ -127,7 +136,8 @@ try {
   console.log('[migrate] 완료');
 } catch (err) {
   console.error('[migrate] 실패:', err.message);
-  process.exitCode = 1;
+  if (keepGoing) console.error('[migrate] 관리자 기능 없이 계속 진행합니다. 공개 사이트는 예시 글로 동작합니다.');
+  else process.exitCode = 1;
 } finally {
   await pool.end();
 }
