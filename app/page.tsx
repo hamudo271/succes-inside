@@ -6,6 +6,7 @@ import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
 import SubscribeForm from './components/SubscribeForm';
 import CourseCards, { COURSE_CARDS } from './components/CourseCards';
+import CountUp from './components/CountUp';
 import HeroVideo from './components/HeroVideo';
 import { interviews, cats, thumb, watchUrl, CHANNEL } from './interviews/data';
 
@@ -82,10 +83,10 @@ export default function Home() {
 
         {/* 실적 스트립 — 히어로 발치에 붙여 선언과 근거를 한 화면에 둔다 */}
         <div className="wrap statBand">
-          <div><b>{CHANNEL.interviews}</b><span>기록된 인터뷰</span></div>
-          <div><b>{CHANNEL.totalViewsText}</b><span>누적 조회수</span></div>
-          <div><b>{CHANNEL.subscribers}</b><span>채널 구독자</span></div>
-          <div><b>{CHANNEL.totalVideos}</b><span>발행 콘텐츠</span></div>
+          <div><b><CountUp text={`${CHANNEL.interviews}`} /></b><span>기록된 인터뷰</span></div>
+          <div><b><CountUp text={CHANNEL.totalViewsText} delay={90} /></b><span>누적 조회수</span></div>
+          <div><b><CountUp text={CHANNEL.subscribers} delay={180} /></b><span>채널 구독자</span></div>
+          <div><b><CountUp text={`${CHANNEL.totalVideos}`} delay={270} /></b><span>발행 콘텐츠</span></div>
         </div>
       </section>
 

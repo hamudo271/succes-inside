@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Clock } from 'lucide-react';
 import SubscribeForm from '../components/SubscribeForm';
+import CountUp from '../components/CountUp';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import './columns.css';
@@ -53,10 +54,10 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
         </div>
 
         <div className="wrap"><dl className="clHeroFacts">
-          <div><dt>발행 칼럼</dt><dd>{all.length}편</dd></div>
-          <div><dt>다루는 주제</dt><dd>{catCount}개</dd></div>
-          <div><dt>발행 주기</dt><dd>주 1편</dd></div>
-          <div><dt>평균 읽는 시간</dt><dd>{avgRead}분</dd></div>
+          <div><dt>발행 칼럼</dt><dd><CountUp text={`${all.length}편`} /></dd></div>
+          <div><dt>다루는 주제</dt><dd><CountUp text={`${catCount}개`} delay={90} /></dd></div>
+          <div><dt>발행 주기</dt><dd><CountUp text="주 1편" delay={180} /></dd></div>
+          <div><dt>평균 읽는 시간</dt><dd><CountUp text={`${avgRead}분`} delay={270} /></dd></div>
         </dl></div>
       </section>
 
