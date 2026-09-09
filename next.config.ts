@@ -35,6 +35,8 @@ const nextConfig: NextConfig = {
       { source: '/:path*', headers: securityHeaders },
       // 히어로 배경 루프 — 브라우저·Cloudflare 엣지에 하루 두고, 그 뒤 일주일은 낡은 걸 먼저 주며 갱신한다.
       { source: '/:file(hero\\.mp4|hero\\.webm)', headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }] },
+      // 폰트는 파일이 바뀌면 이름도 바뀌지 않으므로, 내용이 바뀔 때만 배포로 갱신된다 — 1년 캐시.
+      { source: '/fonts/:file*', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
     ];
   },
 };

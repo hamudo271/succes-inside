@@ -38,5 +38,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="ko"><body>{children}</body></html>;
+  return (
+    <html lang="ko">
+      <head>
+        {/* 모든 페이지가 쓰는 서브셋 — 먼저 받아두면 글자가 늦게 바뀌는 일이 줄어든다 */}
+        <link rel="preload" href="/fonts/pretendard-subset.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
 }
