@@ -108,7 +108,7 @@ export default function Programs() {
 
           {/* 먼저 가본 사람들 — 머리 크기와 프레이밍을 맞춰 구운 누끼(scripts/lineup-faces.py) */}
           <div className="pgLineup" aria-hidden="true">
-            {['line-cpa', 'line-salon', 'line-yangmihee', 'line-mechanic'].map(f => (
+            {['line-fitness', 'line-salon', 'line-yangmihee', 'line-mechanic'].map(f => (
               <img key={f} src={`/faces/${f}.webp`} alt="" loading="eager" decoding="async" />
             ))}
           </div>
