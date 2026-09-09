@@ -35,7 +35,7 @@ export default function Interviews() {
 
       <section className="wrap"><a className="ivFeature" href={watchUrl(featured.id)} target="_blank" rel="noreferrer">
         <div className="ivFeatureThumb">
-          <img src={thumb(featured.id)} alt="" loading="lazy" />
+          <img src={thumb(featured.id)} alt={`${featured.title} — 가장 많이 본 성공인사이드 인터뷰`} loading="lazy" />
           <span className="ivPlay pulse"><Play size={20} fill="currentColor" /></span>
         </div>
         <div className="ivFeatureBody">
@@ -61,7 +61,7 @@ export default function Interviews() {
         <div className="ivGrid">{list.map(v => (
           <a className="ivCard" key={v.id} href={watchUrl(v.id)} target="_blank" rel="noreferrer">
             <div className="ivThumb">
-              <img src={thumb(v.id)} alt="" loading="lazy" />
+              <img src={thumb(v.id)} alt={`${v.title} — ${v.cat} 인터뷰`} loading="lazy" />
               <span className="ivDur">{v.dur}</span>
               <span className="ivPlay sm"><Play size={15} fill="currentColor" /></span>
             </div>

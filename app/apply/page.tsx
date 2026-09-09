@@ -1,12 +1,34 @@
+import JsonLd from '../components/JsonLd';
+import { pageMeta, SITE } from '../../lib/seo';
+import { breadcrumb, ORG_ID, SITE_ID } from '../../lib/schema';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import ApplyForm from './ApplyForm';
 import './apply.css';
 
-export const metadata = {
+const DESC = '사업가의 성장 스토리를 기록하는 인터뷰 미디어, 성공인사이드 출연 신청. 사업 이야기를 남겨주시면 내부 검토 후 회신드립니다.';
+export const metadata = pageMeta({
+  path: '/apply',
   title: '출연 신청',
-  description: '사업가의 성장 스토리를 기록하는 인터뷰 미디어, 성공인사이드 출연 신청.',
-  alternates: { canonical: '/apply' },
+  description: DESC,
+  keywords: ['인터뷰 출연 신청', '사장님 인터뷰 섭외', '기업 인터뷰 제작 문의', '성공인사이드 출연'],
+});
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ContactPage',
+      '@id': `${SITE}/apply#page`,
+      url: `${SITE}/apply`,
+      name: '출연 신청 | 성공인사이드',
+      description: DESC,
+      inLanguage: 'ko-KR',
+      isPartOf: { '@id': SITE_ID },
+      about: { '@id': ORG_ID },
+    },
+    breadcrumb([{ name: '출연 신청', path: '/apply' }]),
+  ],
 };
 
 const TYPES = ['출연 신청', '교육 과정 문의', '기타 문의'];
@@ -18,6 +40,7 @@ export default async function ApplyPage({
   const initialType = TYPES.includes(sp.type ?? '') ? sp.type! : TYPES[0]!;
 
   return <>
+    <JsonLd data={schema} />
     <SiteHeader active="apply" />
     <main>
       <section className="apWrap wrap">

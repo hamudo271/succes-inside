@@ -108,7 +108,7 @@ export default function Home() {
         <div className={'faceRow' + (edge.start ? '' : ' fadeL') + (edge.end ? '' : ' fadeR')} ref={rowRef} onScroll={syncEdge}>
           {faces.map((v, i) => (
             <a className="face" key={v.id} href={watchUrl(v.id)} target="_blank" rel="noreferrer">
-              <span className="faceShot"><img src={thumb(v.id)} alt="" loading="lazy" /></span>
+              <span className="faceShot"><img src={thumb(v.id)} alt={`${v.title} — 성공인사이드 인터뷰`} loading="lazy" /></span>
               <div className="faceMeta">
                 <span className="faceRank">{String(i + 1).padStart(2, '0')}</span>
                 <h3>{v.title}</h3>
@@ -139,7 +139,7 @@ export default function Home() {
         <div className="ivGridHome">{filtered.map(p => (
           <a className="ivCard" key={p.id} href={watchUrl(p.id)} target="_blank" rel="noreferrer">
             <div className="ivThumb">
-              <img src={thumb(p.id)} alt="" loading="lazy" />
+              <img src={thumb(p.id)} alt={`${p.title} — ${p.cat} 인터뷰`} loading="lazy" />
               <span className="ivDur">{p.dur}</span>
               <span className="ivPlay"><Play size={15} fill="currentColor" /></span>
             </div>

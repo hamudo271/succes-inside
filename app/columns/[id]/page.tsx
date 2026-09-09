@@ -6,6 +6,7 @@ import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
 import { getColumns, getColumn } from '../../../lib/columns';
 import { SITE } from '../../../lib/seo';
+import { ORG_ID, SITE_ID } from '../../../lib/schema';
 import SubscribeForm from '../../components/SubscribeForm';
 import '../columns.css';
 
@@ -52,8 +53,9 @@ export default async function ColumnDetail({ params }: Params) {
   const url = `${SITE}/columns/${post.id}`;
   const wordCount = [...post.intro, ...post.sections.flatMap(s => s.ps), post.outro]
     .join(' ').replace(/\s+/g, '').length;
+  // 레이아웃이 이미 Organization을 @id로 정의했으므로 여기서는 참조만 한다 — 그래프에 같은 주체가 두 번 생기지 않게.
   const author = post.author === '성공인사이드'
-    ? { '@type': 'Organization', name: '성공인사이드', url: SITE }
+    ? { '@id': ORG_ID }
     : { '@type': 'Person', name: post.author, jobTitle: post.role || undefined };
   const ld = {
     '@context': 'https://schema.org',
@@ -67,10 +69,8 @@ export default async function ColumnDetail({ params }: Params) {
         datePublished: post.publishedAt,
         dateModified: post.updatedAt ?? post.publishedAt,
         author,
-        publisher: {
-          '@type': 'Organization', name: '성공인사이드', url: SITE,
-          logo: { '@type': 'ImageObject', url: `${SITE}/icon-512.png`, width: 512, height: 512 },
-        },
+        publisher: { '@id': ORG_ID },
+        isPartOf: { '@id': SITE_ID },
         mainEntityOfPage: { '@type': 'WebPage', '@id': url },
         articleSection: post.cat,
         keywords: post.keywords?.length ? post.keywords.join(', ') : undefined,

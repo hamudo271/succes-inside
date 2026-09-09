@@ -32,6 +32,30 @@ export function parseKeywords(raw: string): string[] {
   return out;
 }
 
+/**
+ * 하위 페이지 메타데이터. Next.js는 자식이 openGraph를 정의하면 부모 것을 통째로 갈아치우므로,
+ * og:image·siteName·locale이 조용히 사라진다. 여기서 기본값을 함께 얹어 그 구멍을 막는다.
+ */
+export function pageMeta(o: { path: string; title: string; description: string; keywords?: string[] }) {
+  const full = `${o.title}${TITLE_SUFFIX}`;
+  return {
+    title: o.title,
+    description: o.description,
+    ...(o.keywords ? { keywords: o.keywords } : {}),
+    alternates: { canonical: o.path },
+    openGraph: {
+      type: 'website' as const,
+      siteName: '성공인사이드',
+      locale: 'ko_KR',
+      url: o.path,
+      title: full,
+      description: o.description,
+      images: [{ url: '/og.jpg', width: 1200, height: 630, alt: '성공인사이드 — 사업가의 하루를 기록하는 인터뷰 미디어' }],
+    },
+    twitter: { card: 'summary_large_image' as const, title: full, description: o.description, images: ['/og.jpg'] },
+  };
+}
+
 /** 검색 결과에서 차지하는 폭. 한글·한자 등 전각 글자는 2, 나머지는 1로 센다. */
 export function textWidth(s: string): number {
   let w = 0;

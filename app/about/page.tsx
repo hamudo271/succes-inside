@@ -5,6 +5,7 @@ import { Play, ArrowUpRight, ChevronRight, Plus, Minus, Eye } from 'lucide-react
 import { interviews, watchUrl, CHANNEL } from '../interviews/data';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
+import { faq } from './faq';
 import './style.css';
 
 // 왜 — 세 가지 논지. 라벨은 문장의 핵심 동사
@@ -23,12 +24,6 @@ const steps = [
 
 const gets = ['유튜브 채널에 게재되는 정식 인터뷰 영상', '릴스·쇼츠·틱톡용 숏폼 콘텐츠', '검색에 최적화된 홈페이지 인터뷰 기사', '네이버·구글·AI 검색 기반 노출', 'SNS 멀티채널 동시 확산', '시간이 지날수록 쌓이는 영구적 디지털 자산'];
 
-const faq = [
-  { q: '어느 정도 규모여야 참여할 수 있나요?', a: '아무나 출연하는 채널이 아닙니다. 모든 인터뷰는 내부 검토 후 진행하며, 매출 규모보다 스스로 설명할 수 있는 의사결정과 검증된 성장 서사가 있는지를 봅니다.' },
-  { q: '실패한 이야기도 다루나요?', a: '오히려 가장 많이 찾는 기록입니다. 성공만 남은 이야기는 따라 할 수 없습니다. 무엇을 잘못 판단했고 어떻게 고쳤는지가 핵심입니다.' },
-  { q: '기록을 남기는 데 시간이 얼마나 필요한가요?', a: '사전 리서치 자료 확인 30분, 인터뷰 90분 정도입니다. 편집과 구조화는 성공인사이드가 맡습니다.' },
-  { q: '공개 범위를 조절할 수 있나요?', a: '가능합니다. 발행 전에 전체 원고를 확인하고, 공개하지 않을 숫자나 내용을 지정할 수 있습니다.' },
-];
 
 export default function About() {
   const [open, setOpen] = useState<number | null>(0);
@@ -48,7 +43,7 @@ export default function About() {
           </div>
         </div>
         <a className="abStill" href={watchUrl(top.id)} target="_blank" rel="noreferrer">
-          <img src="/about-still.jpg" alt="" />
+          <img src="/about-still.jpg" alt={`${top.title} — 성공인사이드 인터뷰 장면`} />
           <span className="abPlayBtn pulse"><Play size={22} fill="currentColor" /></span>
           <span className="abStillCap"><small>가장 많이 본 인터뷰 · <Eye size={11} /> {top.viewsText}회</small><b>{top.title}</b></span>
         </a>

@@ -153,7 +153,8 @@ export default function Programs() {
             {/* 큰 타일만 1280px를 쓴다. 좁은 화면에서는 320px로 충분하다(표시 폭 약 215px) */}
             <picture>
               {i === 0 && <source media="(max-width: 900px)" srcSet={`https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`} />}
-              <img src={`https://i.ytimg.com/vi/${v.id}/${i === 0 ? 'hq720' : 'mqdefault'}.jpg`} alt="" loading="lazy" />
+              <img src={`https://i.ytimg.com/vi/${v.id}/${i === 0 ? 'hq720' : 'mqdefault'}.jpg`}
+                   alt={`${v.title} — ${v.cat} 사례 인터뷰`} loading="lazy" />
             </picture>
             <span className="pgWallCat">{v.cat}</span>
             <span className="pgWallTitle"><Play size={12} fill="currentColor" />{v.title}</span>
@@ -186,7 +187,7 @@ export default function Programs() {
             <small>사례 인터뷰</small>
             <div className="pgCaseThumbs">{c.cases.map(cat => { const v = caseFor(cat); return (
               <a key={v.id} href={watchUrl(v.id)} target="_blank" rel="noreferrer" title={v.title}>
-                <img src={mq(v.id)} alt="" loading="lazy" /><span>{cat}</span>
+                <img src={mq(v.id)} alt={`${v.title} — ${cat} 사례 인터뷰`} loading="lazy" /><span>{cat}</span>
               </a>); })}</div>
             <Link className="pgRowLink" href={`/apply?type=교육 과정 문의&course=${encodeURIComponent(c.title)}`}>과정 문의 <ArrowUpRight size={14} /></Link>
           </div>
@@ -208,7 +209,7 @@ export default function Programs() {
               <h4>사례 인터뷰</h4>
               <div className="pgCaseThumbs">{c.cases.map(cat => { const v = caseFor(cat); return (
                 <a key={v.id} href={watchUrl(v.id)} target="_blank" rel="noreferrer" title={v.title}>
-                  <img src={mq(v.id)} alt="" loading="lazy" /><span>{cat}</span>
+                  <img src={mq(v.id)} alt={`${v.title} — ${cat} 사례 인터뷰`} loading="lazy" /><span>{cat}</span>
                 </a>); })}</div>
             </div>
             <div><h4>주요 학습 내용</h4><ul>{c.learn.map(x => <li key={x}>{x}</li>)}</ul></div>
