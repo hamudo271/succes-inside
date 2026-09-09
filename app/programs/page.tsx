@@ -70,6 +70,9 @@ const vod = [
   },
 ];
 
+/** 1×1 투명 GIF — 좁은 화면에서 안 쓰는 이미지를 요청 없이 대체한다 */
+const BLANK_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
 const tabs = [{ k: 'all', l: '전체' }, { k: 'live', l: '정기 과정' }, { k: 'vod', l: 'VOD 과정' }];
 
 /** 사례 벽 — 업종마다 가장 많이 본 인터뷰 한 편씩, 조회수 순으로 9편 */
@@ -108,8 +111,13 @@ export default function Programs() {
 
           {/* 먼저 가본 사람들 — 머리 크기와 프레이밍을 맞춰 구운 누끼(scripts/lineup-faces.py) */}
           <div className="pgLineup" aria-hidden="true">
-            {['line-fitness', 'line-salon', 'line-yangmihee', 'line-mechanic'].map(f => (
-              <img key={f} src={`/faces/${f}.webp`} alt="" loading="eager" decoding="async" />
+            {['line-fitness', 'line-salon', 'line-yangmihee', 'line-mechanic'].map((f, i) => (
+              <picture key={f}>
+                {/* 첫 사람은 좁은 화면에서 감춘다. display:none만으로는 파일을 그대로 받으므로
+                    빈 이미지로 갈아끼워 51KB를 아낀다. */}
+                {i === 0 && <source media="(max-width: 900px)" srcSet={BLANK_PIXEL} />}
+                <img src={`/faces/${f}.webp`} alt="" loading="eager" decoding="async" />
+              </picture>
             ))}
           </div>
         </div>
@@ -142,7 +150,11 @@ export default function Programs() {
         </div>
         <div className="pgWall">{CASES.map((v, i) => (
           <a key={v.id} href={watchUrl(v.id)} target="_blank" rel="noreferrer" className={i === 0 ? 'big' : ''}>
-            <img src={`https://i.ytimg.com/vi/${v.id}/${i === 0 ? 'hq720' : 'mqdefault'}.jpg`} alt="" loading="lazy" />
+            {/* 큰 타일만 1280px를 쓴다. 좁은 화면에서는 320px로 충분하다(표시 폭 약 215px) */}
+            <picture>
+              {i === 0 && <source media="(max-width: 900px)" srcSet={`https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`} />}
+              <img src={`https://i.ytimg.com/vi/${v.id}/${i === 0 ? 'hq720' : 'mqdefault'}.jpg`} alt="" loading="lazy" />
+            </picture>
             <span className="pgWallCat">{v.cat}</span>
             <span className="pgWallTitle"><Play size={12} fill="currentColor" />{v.title}</span>
           </a>
