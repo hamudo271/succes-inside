@@ -35,7 +35,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE}/columns/${c.id}`,
       priority: 0.5,
       changeFrequency: 'monthly' as const,
-      lastModified: c.updatedAt ? new Date(c.updatedAt) : undefined,
+      // 고친 적이 없는 글의 마지막 변경은 발행 시각이다.
+      lastModified: c.updatedAt ? new Date(c.updatedAt) : c.publishedAt ? new Date(c.publishedAt) : undefined,
       images: [`${SITE}/columns/${c.id}/opengraph-image`],
     })),
   ];
