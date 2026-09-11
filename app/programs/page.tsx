@@ -145,7 +145,7 @@ export default function Programs() {
           <dl className="pgCaseStats">
             <div><dd>{CHANNEL.interviews}편</dd><dt>사례 영상</dt></div>
             <div><dd>{INDUSTRIES}개</dd><dt>업종</dt></div>
-            <div><dd>{CHANNEL.totalViewsText}</dd><dt>누적 시청</dt></div>
+            <div><dd>{CHANNEL.totalViewsText}</dd><dt>46편 누적 조회수</dt></div>
           </dl>
         </div>
         <div className="pgWall">{CASES.map((v, i) => (

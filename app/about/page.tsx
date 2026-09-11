@@ -17,7 +17,7 @@ const topAge = new Date().getFullYear() - Number(top.date.slice(0, 4));
 const why = [
   { k: '발견', title: '고객은 결국 이름을 검색합니다', body: '소개를 받아도, 광고를 봐도, 마지막엔 검색창에 이름을 칩니다. 그때 나오는 게 없으면 비교 대상에도 오르지 못합니다. 우리가 만드는 건 그 순간에 나올 것입니다.' },
   { k: '소모', title: '광고는 끄면 그날로 끝납니다', body: '예산이 멈추면 노출도 멈춥니다. 매달 태워도 남는 건 지출 내역이지 브랜드가 아닙니다. 경쟁이 붙으면 단가만 오릅니다.' },
-  { k: '축적', title: '찍어둔 하루는 계속 일합니다', body: `${topAge}년 전에 찍은 카센터 사장님 편은 지금도 재생됩니다. ${top.viewsText} 번째까지 왔습니다. 그동안 우리는 아무것도 하지 않았습니다.` },
+  { k: '축적', title: '찍어둔 하루는 계속 일합니다', body: `${topAge}년 전에 찍은 카센터 사장님 편은 지금도 재생됩니다. ${top.viewsText} 번째까지 왔습니다. 광고였다면 예산이 끝난 날 멈췄을 겁니다.` },
 ];
 
 const steps = [
@@ -40,7 +40,7 @@ export default function About() {
         <div>
           <span className="eyebrow">인터뷰 미디어</span>
           <h1>광고는 끄면 사라지고,{' '}<br /><em>기록은 켜둔 적이 없어도 남습니다.</em></h1>
-          <p>사장님의 하루를 따라가 결정의 이유를 남기는 인터뷰 미디어. {CHANNEL.since}년 {CHANNEL.origin}에서 시작해 {CHANNEL.interviews}명의 하루를 기록했고, {CHANNEL.channelViewsText} 번 재생됐습니다.</p>
+          <p>{CHANNEL.since}년 {CHANNEL.origin}에서 시작해 {CHANNEL.interviews}명의 하루를 기록했습니다. 숏폼까지 합쳐 {CHANNEL.channelViewsText} 번 재생됐습니다.</p>
           <div className="abHeroBtns">
             <Link className="pulseBtn" href="/interviews">인터뷰 보기 <ArrowUpRight size={17} /></Link>
             <Link href="/apply">출연·파트너십 문의 <ChevronRight size={17} /></Link>

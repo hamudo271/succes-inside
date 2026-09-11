@@ -26,10 +26,10 @@ export default function Interviews() {
         <h1>기록된 사장님들의{' '}<br /><em>{CHANNEL.interviews}가지 성장 서사.</em></h1>
         <p>{CHANNEL.since}년 {CHANNEL.origin}에서 시작해 전국의 사장님을 찾아가 하루를 따라갔습니다.{' '}<br />결과가 아니라 결정의 이유를 남기는 것이 성공인사이드의 일입니다.</p>
         <ul className="ivStats">
-          <li><b>{CHANNEL.interviews}</b><span>따라간 하루</span></li>
-          <li><b>{CHANNEL.channelViewsText}</b><span>그 하루가 재생된 횟수</span></li>
+          <li><b>{CHANNEL.interviews}</b><span>인터뷰</span></li>
+          <li><b>{CHANNEL.channelViewsText}</b><span>총 조회수 · 숏폼 포함</span></li>
           <li><b>{CHANNEL.subscribers}</b><span>구독자</span></li>
-          <li><b>{CHANNEL.totalVideos}</b><span>만들어진 콘텐츠</span></li>
+          <li><b>{CHANNEL.totalVideos}</b><span>발행 콘텐츠</span></li>
         </ul>
       </div></section>
 
@@ -82,7 +82,7 @@ export default function Interviews() {
 
       <CtaBand
         title={<>여기에 한 편 더{' '}<br />올라갈 자리가 있습니다.</>}
-        sub="매출 규모보다 스스로 설명할 수 있는 결정이 있는지를 봅니다. 사업 이야기를 남겨주시면 내부 검토 후 회신드립니다."
+        sub="매출 규모보다 스스로 설명할 수 있는 결정이 있는지를 봅니다. 출연을 신청하시면 검토 후 일주일 안에 회신드립니다."
         href="/apply" label="출연 신청하기"
         secondary={<a className="btnGhost" href={CHANNEL.url} target="_blank" rel="noreferrer">채널 둘러보기</a>}
         facts={[{ k: '검토 회신', v: '보통 일주일' }, { k: '촬영', v: '하루 동행' }, { k: '비용', v: '상담 후 안내' }]}
