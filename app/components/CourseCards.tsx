@@ -26,7 +26,7 @@ export const COURSE_CARDS: CourseCard[] = [
   { id: 'deck', title: '사업계획서 완성 워크숍', badge: '모집중',
     desc: '아이디어를 투자자와 팀이 같은 그림으로 읽는 문서로. 매주 본인 사업으로 한 장씩 완성',
     face: 'cpa', caseCat: '전문직' },
-  { id: 'cx', title: '재구매를 만드는 CX 설계', badge: '6기 대기',
+  { id: 'cx', title: '재구매를 만드는 CX 설계', badge: '다음 기수 대기',
     desc: '첫 구매를 늘리는 대신 두 번째 구매를 설계합니다. 이탈 지점을 찾아 고객 경험을 다시 짜는 과정',
     face: 'barber', caseCat: '뷰티·의료' },
   { id: 'solo', title: '1인 기업 생존 부트캠프', badge: '모집중',
