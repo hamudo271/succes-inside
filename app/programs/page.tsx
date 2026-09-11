@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, ChevronRight, Users, PlayCircle, CalendarDays, Play } from 'lucide-react';
-import { interviews, cats, watchUrl, CHANNEL } from '../interviews/data';
+import { ArrowUpRight, ChevronRight, PlayCircle, Play } from 'lucide-react';
+import { interviews, cats, watchUrl, CHANNEL, type Interview } from '../interviews/data';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import CtaBand from '../components/CtaBand';
@@ -14,25 +14,25 @@ const live = [
   {
     id: 'first-100', title: '첫 고객 100명 만들기', badge: '모집중', term: '4주 과정 · 주 1회 라이브', seats: '정원 20명',
     summary: '고객 문제를 정의하고 가설을 세워, 노코드로 MVP를 만들어 4주 안에 검증까지 마치는 과정입니다.',
-    curriculum: ['풀 만한 문제를 고르는 기준 세우기', '인터뷰 설계와 가설 문장으로 정리하기', '노코드로 2주 안에 MVP 만들기', '검증 지표를 읽고 다음 실험 설계하기'],
+    curriculum: ['풀 만한 문제 고르기', '가설 문장으로 정리', '노코드로 2주 안에 MVP', '검증 지표 읽고 다음 실험'],
     cases: ['온라인·N잡', '요식업', '뷰티·의료'],
   },
   {
     id: 'deck', title: '사업계획서 완성 워크숍', badge: '모집중', term: '5주 과정 · 매주 과제 피드백', seats: '정원 16명',
     summary: '아이디어를 투자자와 팀이 같은 그림으로 읽는 문서로 만듭니다. 매주 실제 본인 사업으로 한 장씩 완성합니다.',
-    curriculum: ['시장과 문제를 한 장으로 정의하기', '숫자로 설명하는 사업 구조 만들기', '투자자가 먼저 보는 페이지 다듬기', '발표와 Q&A 리허설'],
-    cases: ['전문직', '자동차', '시공·인테리어'],
+    curriculum: ['시장과 문제를 한 장으로', '숫자로 설명하는 사업 구조', '투자자가 먼저 보는 페이지', '발표와 Q&A 리허설'],
+    cases: ['자동차', '전문직', '시공·인테리어'],
   },
   {
-    id: 'cx', title: '재구매를 만드는 CX 설계', badge: '6기 대기', term: '4주 과정 · 주 1회 라이브', seats: '정원 20명',
+    id: 'cx', title: '재구매를 만드는 CX 설계', badge: '다음 기수 대기', term: '4주 과정 · 주 1회 라이브', seats: '정원 20명',
     summary: '첫 구매를 늘리는 대신 두 번째 구매를 설계합니다. 이탈이 일어나는 지점을 찾아 고객 경험을 다시 짭니다.',
-    curriculum: ['재구매율을 핵심 지표로 옮기기', '고객 여정에서 이탈 구간 찾기', '재구매를 만드는 접점 설계하기', '운영 가능한 CX 루틴 만들기'],
+    curriculum: ['재구매율을 핵심 지표로', '고객 여정의 이탈 구간', '재구매를 만드는 접점', '운영 가능한 CX 루틴'],
     cases: ['뷰티·의료', '요식업', '피트니스'],
   },
   {
     id: 'solo', title: '1인 기업 생존 부트캠프', badge: '모집중', term: '6주 과정 · 격주 1:1 코칭', seats: '정원 12명',
     summary: '막연한 자신감 대신 현금흐름과 고객 파이프라인을 숫자로 관리하는 습관을 만드는 과정입니다.',
-    curriculum: ['최소 생존 매출과 런웨이 계산하기', '혼자서도 돌아가는 파이프라인 만들기', '가격과 업무 범위 정하기', '반복 업무를 도구로 넘기기'],
+    curriculum: ['최소 생존 매출과 런웨이', '혼자서도 돌아가는 파이프라인', '가격과 업무 범위', '반복 업무를 도구로'],
     cases: ['온라인·N잡', '시공·인테리어', '기타'],
   },
 ];
@@ -86,6 +86,19 @@ const INDUSTRIES = cats.length - 1;
 /** 업종 이름 → 그 업종에서 가장 많이 본 인터뷰 */
 const caseFor = (cat: string) => interviews.filter(i => i.cat === cat).sort((a, b) => b.views - a.views)[0]!;
 const mq = (id: string) => `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+const hq = (id: string) => `https://i.ytimg.com/vi/${id}/hq720.jpg`;
+/**
+ * 행마다 스틸 한 장. cases의 순서가 편집 우선순위이고, 앞 행이 이미 쓴 인터뷰는 건너뛴다 —
+ * 조회수로만 고르면 두 과정이 같은 바버샵 스틸을 받는다.
+ */
+const LEAD = (() => {
+  const used = new Set<string>(); const out: Record<string, Interview> = {};
+  for (const c of live) {
+    const pick = c.cases.map(caseFor).find(v => !used.has(v.id)) ?? caseFor(c.cases[0]!);
+    used.add(pick.id); out[c.id] = pick;
+  }
+  return out;
+})();
 
 export default function Programs() {
   const [tab, setTab] = useState('all');
@@ -175,23 +188,29 @@ export default function Programs() {
 
       {showLive && <section className="wrap pgSection" id="live">
         <div className="pgHead"><small>기수제 운영</small><h2>정기 과정</h2><p>기수제로 함께 진행합니다. 매주 과제와 피드백으로 결과물을 완성합니다.</p></div>
-        <div className="pgLive">{live.map(c => <article key={c.id}>
+        <div className="pgLive">{live.map(c => { const v = LEAD[c.id]!; return <article key={c.id}>
           <div className="pgRowMain">
-            <span className={'pgBadge' + (c.badge === '모집중' ? ' on' : '')}>{c.badge}</span>
+            <p className="pgState">
+              <b className={c.badge === '모집중' ? 'on' : ''}>{c.badge}</b>
+              <span>{c.term}</span><span>{c.seats}</span>
+            </p>
             <h3>{c.title}</h3>
-            <p>{c.summary}</p>
-            <div className="pgMeta"><span><CalendarDays size={14} /> {c.term}</span><span><Users size={14} /> {c.seats}</span></div>
-          </div>
-          <ol className="pgSteps">{c.curriculum.map((x, i) => <li key={x}><span>{String(i + 1).padStart(2, '0')}</span>{x}</li>)}</ol>
-          <div className="pgRowCases">
-            <small>사례 인터뷰</small>
-            <div className="pgCaseThumbs">{c.cases.map(cat => { const v = caseFor(cat); return (
-              <a key={v.id} href={watchUrl(v.id)} target="_blank" rel="noreferrer" title={v.title}>
-                <img src={mq(v.id)} alt={`${v.title} — ${cat} 사례 인터뷰`} loading="lazy" /><span>{cat}</span>
-              </a>); })}</div>
+            <p className="pgSum">{c.summary}</p>
+            {/* 4주 과정이면 '4주 동안' — 커리큘럼이 기간을 채운다는 사실 그대로 */}
+            <p className="pgFlow"><small>{c.term.split(' ')[0]} 동안</small>{c.curriculum.map(x => <span key={x}>{x}</span>)}</p>
             <Link className="pgRowLink" href={`/apply?type=교육 과정 문의&course=${encodeURIComponent(c.title)}`}>과정 문의 <ArrowUpRight size={14} /></Link>
           </div>
-        </article>)}</div>
+          <a className="pgStill" href={watchUrl(v.id)} target="_blank" rel="noreferrer">
+            <span className="pgStillImg">
+              <picture>
+                <source media="(max-width: 900px)" srcSet={mq(v.id)} />
+                <img src={hq(v.id)} alt={`${v.title} — ${v.cat} 사례 인터뷰`} loading="lazy" />
+              </picture>
+              <i className="pgPlay"><Play size={16} fill="currentColor" /></i>
+            </span>
+            <span className="pgStillCap"><small>사례 인터뷰 · {v.cat}</small><b>{v.title}</b></span>
+          </a>
+        </article>; })}</div>
       </section>}
 
       {showVod && <section className="wrap pgSection" id="vod">
