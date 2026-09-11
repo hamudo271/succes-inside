@@ -1,59 +1,80 @@
 /* /apply — 출연·문의 신청. globals.css의 --wn* 토큰 사용 */
 
-.apWrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start;
-  padding-top:64px;padding-bottom:96px}
+.apWrap{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:var(--s8);align-items:start;
+  padding-top:72px;padding-bottom:112px}
 
-.apIntro h1{font-size:30px;line-height:1.45;letter-spacing:-.8px;margin:0 0 16px;font-weight:700}
-.apIntro>p{color:var(--wnMuted);font-size:14.5px;line-height:1.85;margin:0}
+.apIntro h1{font-size:clamp(30px,3.2vw,42px);line-height:1.28;letter-spacing:-.03em;margin:0 0 20px;font-weight:800}
+.apIntro>p{color:var(--wnInk2);font-size:15.5px;line-height:1.8;margin:0;max-width:40ch}
 
-.apSteps{list-style:none;margin:30px 0 0;padding:0;display:flex;flex-direction:column}
-.apSteps li{display:flex;flex-direction:column;gap:4px;padding:16px 0;border-top:1px solid var(--wnLine)}
-.apSteps li:last-child{border-bottom:1px solid var(--wnLine)}
-.apSteps b{font-size:13.5px;color:var(--wnInk)}
-.apSteps span{font-size:12.5px;color:var(--wnMuted);line-height:1.7}
+/* 무엇을 적으면 되는지 — 왼쪽 라벨은 주황, 오른쪽은 풀어쓴 말 */
+.apHints{margin:40px 0 0;padding:0;border-top:1px solid var(--wnLine)}
+.apHints>div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:18px 0;border-bottom:1px solid var(--wnLine)}
+.apHints dt{font-size:13.5px;font-weight:700;color:var(--wnOrangeText)}
+.apHints dd{margin:0;font-size:13.5px;line-height:1.7;color:var(--wnInk2)}
 
-.apAlt{margin:26px 0 0;font-size:12.5px;line-height:1.8;color:var(--wnMuted)}
+/* 보낸 뒤 순서 — 한 줄로 이어 읽는다. 진짜 순서이므로 화살표. */
+.apFlow{margin:28px 0 0;font-size:12.5px;line-height:2;color:var(--wnMuted)}
+.apFlow small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--wnFaint);margin-bottom:2px}
+.apFlow span{display:inline-block;white-space:nowrap}
+.apFlow span:not(:last-child):after{content:'→';color:var(--wnOrange);margin:0 8px}
+.apFlow em{font-style:normal;color:var(--wnInk2);font-weight:600}
+
+.apAlt{margin:32px 0 0;padding-top:22px;border-top:1px solid var(--wnLine);font-size:12.5px;line-height:1.8;color:var(--wnMuted)}
 .apAlt a{color:var(--wnOrangeText);font-weight:600;display:inline-block;padding:8px 0;margin:-8px 0}
 .apAlt a:focus-visible{outline:2px solid var(--wnOrange);outline-offset:2px;border-radius:3px}
 
-/* 폼 카드 */
-.apCard{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;
-  padding:32px;display:flex;flex-direction:column;gap:16px}
-.apField{display:flex;flex-direction:column;gap:7px}
-.apField label{font-size:12.5px;font-weight:600;color:var(--wnInk)}
-.apField label span{font-weight:400;color:var(--wnFaint);margin-left:4px}
-.apField input,.apField select,.apField textarea{
-  background:var(--wnSurface2);border:1px solid var(--wnLine);border-radius:8px;
-  padding:12px 14px;font-size:14px;color:var(--wnInk);outline:0;
-  font-family:inherit;line-height:1.7;resize:vertical}
-.apField input:focus-visible,.apField select:focus-visible,.apField textarea:focus-visible{
-  border-color:var(--wnOrange)}
-.apGrid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+/* 폼 — 상자 없이 페이지 위에 바로. 칸은 밑줄 하나로 선다. */
+.apForm{display:flex;flex-direction:column;gap:30px;padding-top:6px}
 
-.apSubmit{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;
-  border-radius:8px;background:var(--wnOrange);color:#fff;padding:14px 20px;
-  font-size:14px;font-weight:600;transition:background .15s}
-.apSubmit:hover{background:var(--wnOrangeDeep)}
-.apSubmit:disabled{opacity:.55}
+.apSeg{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.apSeg legend{font-size:12px;font-weight:600;color:var(--wnMuted);letter-spacing:.02em;margin-bottom:12px}
+.apSeg input{position:absolute;opacity:0;width:1px;height:1px}
+.apSeg span{display:inline-block;padding:11px 18px;border-radius:999px;border:1px solid var(--wnLine);
+  font-size:13.5px;font-weight:600;color:var(--wnInk2);cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.apSeg span:hover{border-color:#4a453f;color:var(--wnInk)}
+.apSeg input:checked+span{background:var(--wnInk);border-color:var(--wnInk);color:var(--wnBg)}
+.apSeg input:focus-visible+span{outline:2px solid var(--wnOrange);outline-offset:2px}
+
+.apField{display:flex;flex-direction:column;gap:6px}
+.apField label{font-size:12px;font-weight:600;color:var(--wnMuted);letter-spacing:.02em}
+.apField label span{font-weight:400;color:var(--wnFaint);margin-left:5px}
+.apField input,.apField textarea{
+  background:none;border:0;border-bottom:1px solid var(--wnLine);border-radius:0;
+  padding:10px 0 12px;font-size:17px;color:var(--wnInk);outline:0;
+  font-family:inherit;line-height:1.6;resize:vertical;transition:border-color .15s}
+.apField input::placeholder,.apField textarea::placeholder{color:var(--wnFaint)}
+.apField input:focus-visible,.apField textarea:focus-visible{border-bottom-color:var(--wnOrange)}
+.apGrid2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+
+.apActions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:6px}
+.apSubmit{display:inline-flex;align-items:center;gap:9px;border:0;
+  border-radius:10px;background:var(--wnOrange);color:#fff;padding:16px 28px;
+  font-size:15px;font-weight:700;transition:background .15s,transform .15s}
+.apSubmit:hover{background:var(--wnOrangeDeep);transform:translateY(-1px)}
+.apSubmit:disabled{opacity:.55;transform:none}
 .apSubmit:focus-visible{outline:2px solid var(--wnOrangeDeep);outline-offset:3px}
+.apPrivacy{font-size:12px;color:var(--wnFaint);margin:0}
 
 .apError{background:#3a1c18;color:#ff9d84;border-radius:8px;padding:11px 15px;font-size:13px;margin:0}
-.apPrivacy{font-size:11.5px;color:var(--wnFaint);margin:0;text-align:center}
 
-.apDone{align-items:center;text-align:center;padding:64px 32px;color:var(--wnInk)}
+.apDone{align-items:flex-start;padding:24px 0;color:var(--wnInk);gap:0}
 .apDone svg{color:var(--wnOrange)}
-.apDone h2{font-size:20px;letter-spacing:-.4px;margin:14px 0 8px}
-.apDone p{color:var(--wnMuted);font-size:13.5px;line-height:1.8;margin:0}
+.apDone h2{font-size:24px;letter-spacing:-.02em;margin:18px 0 10px}
+.apDone p{color:var(--wnInk2);font-size:14.5px;line-height:1.8;margin:0}
 
 /* 허니팟 — 화면·스크린리더 모두에서 감춘다 */
 input.hp{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;border:0!important;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;left:0;top:0}
 
 @media(max-width:900px){
-  .apWrap{grid-template-columns:1fr;gap:36px;padding-top:44px;padding-bottom:64px}
+  .apWrap{grid-template-columns:1fr;gap:48px;padding-top:44px;padding-bottom:72px}
   .apIntro h1 br{display:none}
+  .apIntro>p{max-width:none}
 }
 @media(max-width:620px){
-  .apIntro h1{font-size:25px}
-  .apCard{padding:22px}
-  .apGrid2{grid-template-columns:1fr}
+  .apHints>div{grid-template-columns:1fr;gap:4px;padding:14px 0}
+  .apFlow span{white-space:normal}
+  .apGrid2{grid-template-columns:1fr;gap:24px}
+  .apSeg span,.apSubmit{min-height:44px}
+  .apSubmit{width:100%;justify-content:center}
+  .apField input,.apField textarea{font-size:16px}
 }
