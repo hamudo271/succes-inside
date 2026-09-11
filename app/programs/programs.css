@@ -79,23 +79,44 @@
 .pgCaseStats dt{font-size:11.5px;color:var(--wnMuted)}
 
 /* 사례 벽: 3열, 첫 칸이 2×2. 휴지 상태는 채도를 눌러 벽으로 읽히고, hover에 한 편이 살아난다 */
-.pgWall{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:10px}
-.pgWall a{position:relative;display:block;aspect-ratio:16/9;border-radius:10px;overflow:hidden;
+/* 사례 벽 — 큰 칸 하나가 작은 칸과 자리를 바꾸며 돈다. 바뀌는 두 칸만 녹아들고 나머지는 제자리. */
+.pgWall{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.pgStage{grid-column:1/-1;display:block;color:inherit}
+.pgStageImg{position:relative;display:block;aspect-ratio:16/9;border-radius:14px;overflow:hidden;
   background:var(--wnSurface2);border:1px solid var(--wnLine)}
-.pgWall a.big{grid-column:span 2;grid-row:span 2;border-radius:14px}
-.pgWall img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.6) brightness(.82);
-  transition:filter .3s,transform .5s cubic-bezier(.2,.7,.2,1)}
-.pgWall a:hover img{filter:none;transform:scale(1.04)}
-.pgWallCat{position:absolute;left:9px;top:9px;font-size:11px;font-weight:700;color:#fff;background:#000a;
-  padding:3px 7px;border-radius:5px;letter-spacing:.2px}
-.pgWall a.big .pgWallCat{left:12px;top:12px;font-size:11.5px}
-.pgWallTitle{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 11px;color:#fff;font-size:12.5px;
-  font-weight:600;line-height:1.45;background:linear-gradient(180deg,transparent,#000d);
-  display:flex;gap:6px;align-items:flex-start;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s}
-.pgWallTitle svg{flex:0 0 auto;margin-top:3px}
-.pgWall a.big .pgWallTitle{font-size:14px;padding:36px 14px 13px}
-.pgWall a:hover .pgWallTitle{opacity:1;transform:none}
-.pgWall a:focus-visible{outline:2px solid var(--wnOrange);outline-offset:2px}
+.pgStageImg img,.pgTile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}
+.pgStageImg img.on,.pgTile img.on{opacity:1}
+/* 캡션은 그림 아래 한 줄 — 썸네일에 박힌 글자와 겹치지 않는다 */
+.pgStageCap{display:flex;align-items:baseline;gap:12px;margin-top:12px;min-width:0;animation:pgCapIn .55s ease both}
+.pgStageCap small{flex:0 0 auto;font-size:11.5px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.04em}
+.pgStageCap b{flex:1 1 auto;min-width:0;font-size:14.5px;font-weight:700;color:var(--wnInk);letter-spacing:-.01em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pgStageCap em{flex:0 0 auto;font-style:normal;display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--wnMuted);font-variant-numeric:tabular-nums}
+.pgStage:hover .pgStageCap b{color:var(--wnOrangeText)}
+.pgStagePlay{position:absolute;right:16px;bottom:16px;z-index:2;width:42px;height:42px;border-radius:50%;background:#000a;color:#fff;
+  border:1px solid #ffffff2e;display:grid;place-items:center;backdrop-filter:blur(4px);transition:background .2s,border-color .2s}
+.pgStage:hover .pgStagePlay{background:var(--wnOrange);border-color:var(--wnOrange)}
+/* 다음 그림까지 남은 시간 — 자동으로 넘어간다는 걸 말 없이 알린다 */
+.pgStageBar{position:absolute;left:0;top:0;height:2px;width:0;z-index:3;background:var(--wnOrange);animation:pgBar 4800ms linear forwards}
+.pgStageBar.paused{animation-play-state:paused}
+.pgTile{position:relative;aspect-ratio:16/9;border-radius:9px;overflow:hidden;background:var(--wnSurface2);border:1px solid var(--wnLine);
+  padding:0;cursor:pointer;transition:transform .35s ease,border-color .2s}
+.pgTile img{filter:saturate(.6) brightness(.78);transition:opacity .7s ease,filter .3s}
+.pgTile:hover{transform:translateY(-3px);border-color:#4a453f}
+.pgTile:hover img{filter:none}
+.pgTile:focus-visible{outline:2px solid var(--wnOrange);outline-offset:2px}
+/* 화면에 들어올 때 계단식으로 — JS가 pre를 붙인 뒤에만 숨기므로, 없으면 처음부터 다 보인다 */
+.pgWall.pre .pgStage,.pgWall.pre .pgTile{opacity:0;transform:translateY(14px)}
+.pgWall.in .pgStage,.pgWall.in .pgTile{opacity:1;transform:none;transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.pgWall.in .pgTile{transition-delay:calc(var(--i) * 55ms + 140ms)}
+.pgWall.in .pgTile:hover{transition-delay:0s}
+@keyframes pgBar{to{width:100%}}
+@keyframes pgCapIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .pgStageBar{display:none}
+  .pgStageCap{animation:none}
+  .pgWall.pre .pgStage,.pgWall.pre .pgTile{opacity:1;transform:none}
+}
 
 /* 필터 탭 */
 .pgTabs{display:flex;gap:8px;margin-top:68px}
@@ -190,8 +211,11 @@
   .pgCases{grid-template-columns:1fr;gap:var(--s5)}
   .pgHead h2{font-size:20px}
   .pgWall{gap:7px}
-  .pgWall a{border-radius:8px}
-  .pgWallTitle{display:none}
+  .pgStage{border-radius:10px}
+  .pgStageCap{flex-wrap:wrap;gap:4px 10px}
+  .pgStageCap b{flex-basis:100%;order:2;white-space:normal;font-size:14px;line-height:1.45}
+  .pgStageCap em{order:1;margin-left:auto}
+  .pgTile{border-radius:7px}
   .pgCaseStats{gap:var(--s4)}
   .pgTabs{margin-top:44px;overflow:auto;padding-bottom:6px}
   .pgTabs button{padding:13px 18px}

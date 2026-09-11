@@ -8,6 +8,7 @@ import SiteFooter from '../components/SiteFooter';
 import CtaBand from '../components/CtaBand';
 import CourseCards, { COURSE_CARDS } from '../components/CourseCards';
 import CountUp from '../components/CountUp';
+import CaseWall from './CaseWall';
 import './programs.css';
 
 const live = [
@@ -161,18 +162,7 @@ export default function Programs() {
             <div><dd>{CHANNEL.totalViewsText}</dd><dt>46편 누적 조회수</dt></div>
           </dl>
         </div>
-        <div className="pgWall">{CASES.map((v, i) => (
-          <a key={v.id} href={watchUrl(v.id)} target="_blank" rel="noreferrer" className={i === 0 ? 'big' : ''}>
-            {/* 큰 타일만 1280px를 쓴다. 좁은 화면에서는 320px로 충분하다(표시 폭 약 215px) */}
-            <picture>
-              {i === 0 && <source media="(max-width: 900px)" srcSet={`https://i.ytimg.com/vi/${v.id}/mqdefault.jpg`} />}
-              <img src={`https://i.ytimg.com/vi/${v.id}/${i === 0 ? 'hq720' : 'mqdefault'}.jpg`}
-                   alt={`${v.title} — ${v.cat} 사례 인터뷰`} loading="lazy" />
-            </picture>
-            <span className="pgWallCat">{v.cat}</span>
-            <span className="pgWallTitle"><Play size={12} fill="currentColor" />{v.title}</span>
-          </a>
-        ))}</div>
+        <CaseWall items={CASES} />
       </section>
 
       {/* ── 실험: 인물 카드 (eopla 식) ── */}
