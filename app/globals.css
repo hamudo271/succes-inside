@@ -138,13 +138,13 @@ header{height:72px;position:sticky;top:0;z-index:30;
 .heroBtns{display:flex;align-items:center;gap:var(--s2);margin-top:var(--s5);flex-wrap:wrap}
 
 /* ══════════════ 실적 스트립 (히어로 풋) ══════════════ */
-.statBand{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--heroLine)}
-.statBand div{display:flex;flex-direction:column-reverse;gap:10px;
-  padding:var(--s4) var(--s4) var(--s5) 0}
-.statBand div+div{padding-left:var(--s4);border-left:1px solid var(--heroLine)}
-.statBand b{font-size:clamp(30px,3.4vw,44px);font-weight:800;letter-spacing:-1.8px;line-height:1;
-  font-variant-numeric:tabular-nums}
-.statBand span{font-size:12.5px;color:var(--wnInk2);letter-spacing:.1px}
+.statBand{display:grid;grid-template-columns:repeat(4,1fr);gap:0 var(--s5);
+  border-top:1px solid var(--heroLine);padding:var(--s5) 0 var(--s5)}
+.statBand>div{display:flex;flex-direction:column;gap:12px;min-width:0}
+.statBand b{font-size:clamp(38px,4.2vw,56px);font-weight:800;letter-spacing:-.035em;line-height:.95;
+  font-variant-numeric:tabular-nums;color:var(--wnInk);white-space:nowrap}
+.statBand b .cuUnit{font-size:.48em;font-weight:700;letter-spacing:-.01em;color:var(--wnInk2);margin-left:3px}
+.statBand>div>span{font-size:12.5px;font-weight:500;color:var(--wnMuted);letter-spacing:.02em}
 .hero+.band{margin-top:0;padding-top:var(--s6)}
 
 /* ══════════════ 만나온 사장님들 — 조회수 순위 열 ══════════════ */
@@ -369,10 +369,9 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .mobile{display:block}
   .sec{padding-top:var(--s7)}
   .band{margin-top:var(--s7);padding:var(--s6) 0}
-  .statBand{grid-template-columns:1fr 1fr}
-  .statBand div{padding:var(--s3) var(--s3) var(--s4) 0}
-  .statBand div:nth-child(3){padding-left:0;border-left:0}
-  .statBand div:nth-child(n+3){border-top:1px solid var(--heroLine)}
+  .statBand{grid-template-columns:1fr 1fr;gap:var(--s4) var(--s3);padding:var(--s4) 0}
+  .statBand>div{gap:8px}
+  .statBand b{font-size:34px}
   .hero+.band{padding-top:var(--s5)}
   .heroInner{padding-top:var(--s7);padding-bottom:var(--s7)}
   .hero:after{background:linear-gradient(180deg,#0f0f0e99 0%,#0f0f0ed0 40%,var(--wnBg) 62%)}

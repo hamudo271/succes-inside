@@ -86,5 +86,10 @@ export default function CountUp({ text, duration = 1200, delay = 0 }: {
   const fmt = (n: number) => n.toLocaleString('ko-KR', {
     minimumFractionDigits: p.decimals, maximumFractionDigits: p.decimals,
   });
-  return <span ref={ref}>{p.prefix}{shown.map(fmt).join(p.sep)}{p.suffix}</span>;
+  return (
+    <span ref={ref}>
+      {p.prefix}{shown.map(fmt).join(p.sep)}
+      {p.suffix && <span className="cuUnit">{p.suffix}</span>}
+    </span>
+  );
 }
