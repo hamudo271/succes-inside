@@ -19,9 +19,19 @@ export const CHANNEL = {
   subscribers: '1.42만',
   totalVideos: 225,
   interviews: 46,
+  /** 롱폼 인터뷰 46편의 조회수 합 — '사례 영상 46편'처럼 인터뷰만 세는 자리에 쓴다 */
   totalViews: 1601882,
   totalViewsText: '160만',
+  /**
+   * 채널 전체 조회수(숏폼 포함) — 채널 정보란의 공개 수치. 2026-09-10 확인.
+   * '발행 콘텐츠 225' 옆에 놓는 누적 조회수는 이 값이어야 한다. 인터뷰 합만 쓰면 8.5배 축소된다.
+   */
+  channelViews: 13662879,
+  channelViewsText: '1,366만',
+  /** 조회수가 가장 많이 나온 숏폼 한 편 — 성형외과 원장 편에서 잘라낸 것. 2026-09-10 확인. */
+  topShortViewsText: '40만',
   since: '2023',
+  origin: '광주',
 };
 
 export const interviews: Interview[] = [

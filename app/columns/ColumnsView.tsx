@@ -6,6 +6,7 @@ import SubscribeForm from '../components/SubscribeForm';
 import CountUp from '../components/CountUp';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
+import { CHANNEL } from '../interviews/data';
 import './columns.css';
 
 const cats = ['전체', '창업', '마케팅', '브랜딩', '커리어', 'AI·테크', '생산성'];
@@ -30,8 +31,8 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
         <div className="wrap clHeroInner">
           <div className="clHeroText">
             <span className="eyebrow">성공인사이드 칼럼</span>
-            <h1>일하는 사람의 생각을,{' '}<br /><em>매주 한 편의 칼럼으로.</em></h1>
-            <p>경험 기록이 인사이트라면, 칼럼은 관점입니다. 먼저 가본 사람들이 지금 시장을 어떻게 읽는지 매주 전합니다.</p>
+            <h1>현장에서 본 것만{' '}<br /><em>씁니다.</em></h1>
+            <p>인터뷰에서 마주친 장면 하나가 한 편이 됩니다. 책상에서 지어낸 조언은 쓰지 않습니다.</p>
             <div className="clHeroBtns">
               <Link className="btnPrimary" href={`/columns/${featured.id}`}>이번 주 칼럼 읽기 <ArrowUpRight size={17} /></Link>
               <a className="btnGhost" href="#subscribe">메일로 받아보기</a>
@@ -56,7 +57,7 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
         <div className="wrap"><dl className="clHeroFacts">
           <div><dt>발행 칼럼</dt><dd><CountUp text={`${all.length}편`} /></dd></div>
           <div><dt>다루는 주제</dt><dd><CountUp text={`${catCount}개`} delay={90} /></dd></div>
-          <div><dt>발행 주기</dt><dd><CountUp text="주 1편" delay={180} /></dd></div>
+          <div><dt>인터뷰 현장</dt><dd><CountUp text={`${CHANNEL.interviews}곳`} delay={180} /></dd></div>
           <div><dt>평균 읽는 시간</dt><dd><CountUp text={`${avgRead}분`} delay={270} /></dd></div>
         </dl></div>
       </section>
@@ -77,7 +78,7 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
       </div></section>
 
       <section className="wrap clSection">
-        <div className="clHead"><small>매주 발행</small><h2>전체 칼럼</h2></div>
+        <div className="clHead"><small>전체 기록</small><h2>전체 칼럼</h2></div>
         <div className="clCats">{cats.map(c => <button key={c} className={c === cat ? 'active' : ''} onClick={() => setCat(c)}>{c}</button>)}</div>
         <div className="clGrid">{filtered.map(c => <Link className="clCard" key={c.id} href={`/columns/${c.id}`}>
           <div className="clMetaLine"><span>{c.cat}</span><span>{c.date}</span><span><Clock size={11} /> {c.read}</span></div>
@@ -89,7 +90,7 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
       </section>
 
       <section className="wrap" id="subscribe"><div className="clCta">
-        <span>주간 칼럼 구독</span>
+        <span>칼럼 구독</span>
         <h2>새 칼럼이 나오면{' '}<br />가장 먼저 받아보세요.</h2>
         <p>새 칼럼이 발행되면 메일로 보내드립니다.</p>
         <div className="clCtaForm"><SubscribeForm source="columns" label="구독하기" /></div>

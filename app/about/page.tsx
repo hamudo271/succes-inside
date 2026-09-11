@@ -9,36 +9,40 @@ import { faq } from './faq';
 import './style.css';
 
 // 왜 — 세 가지 논지. 라벨은 문장의 핵심 동사
+/** 조회수 1위 인터뷰 — '축적'의 실물. 찍은 지 몇 해가 지났는지도 데이터에서 센다. */
+const top = interviews.reduce((a, b) => (b.views > a.views ? b : a));
+const topAge = new Date().getFullYear() - Number(top.date.slice(0, 4));
+
+// 왜 — 세 가지 논지. 남의 통계 대신 우리 숫자를 쓴다. 출처 없는 숫자는 한 줄도 넣지 않는다.
 const why = [
-  { k: '발견', title: '좋은 회사보다 잘 발견되는 회사가 성장합니다', body: '검색과 AI가 구매 결정을 대신하는 시대입니다. 2026년 미국 인구의 31.3%가 AI 검색을 이용할 것으로 전망됩니다. 검색 결과에 근거가 없는 브랜드는 비교 대상에도 오르지 못합니다.' },
-  { k: '소모', title: '광고는 멈추지만, 자산은 남아야 합니다', body: '광고는 예산이 끝나는 순간 노출도 멈추는 소모성 비용입니다. 매달 비용을 태워도 남는 것이 없고, 경쟁이 붙을수록 단가만 오릅니다. 결국 남는 것은 지출 내역뿐, 브랜드가 아닙니다.' },
-  { k: '축적', title: '한 번의 촬영이 축적되는 자산이 되어야 합니다', body: '제작으로 끝나는 영상은 파일 하나로 남을 뿐입니다. 성공인사이드는 대표님의 이야기를 검색되고 AI에 인용되는 브랜드 자산으로 전환합니다. 브랜드 언급은 백링크보다 AI 인용과 3배 강한 상관을 보입니다.' },
+  { k: '발견', title: '고객은 결국 이름을 검색합니다', body: '소개를 받아도, 광고를 봐도, 마지막엔 검색창에 이름을 칩니다. 그때 나오는 게 없으면 비교 대상에도 오르지 못합니다. 우리가 만드는 건 그 순간에 나올 것입니다.' },
+  { k: '소모', title: '광고는 끄면 그날로 끝납니다', body: '예산이 멈추면 노출도 멈춥니다. 매달 태워도 남는 건 지출 내역이지 브랜드가 아닙니다. 경쟁이 붙으면 단가만 오릅니다.' },
+  { k: '축적', title: '찍어둔 하루는 계속 일합니다', body: `${topAge}년 전에 찍은 카센터 사장님 편은 지금도 재생됩니다. ${top.viewsText} 번째까지 왔습니다. 그동안 우리는 아무것도 하지 않았습니다.` },
 ];
 
 const steps = [
   { n: '01', title: '상담과 리서치', body: '목표 메시지를 먼저 정의합니다. 사업의 맥락과 전환점을 미리 정리하고, 무엇을 물어야 할지 정하고 들어갑니다.' },
   { n: '02', title: '인터뷰 촬영', body: '성공한 결과가 아니라 결정의 이유를 묻습니다. 시행착오까지 현장에서 함께 기록합니다.' },
-  { n: '03', title: 'AI 콘텐츠 생성', body: '촬영본을 AI로 전사해 기사화하고 검색에 최적화합니다. 영상·기사·숏폼이 하나의 파이프라인에서 만들어집니다.' },
-  { n: '04', title: '발행·확산과 리포트', body: '홈페이지 인터뷰 아카이브에 발행하고 SNS 멀티채널로 동시 확산한 뒤, 노출 성과를 측정해 보고합니다.' },
+  { n: '03', title: '기사와 숏폼 제작', body: '촬영본을 글로 옮겨 검색이 읽는 기사로 만들고, 숏폼으로 잘라 냅니다. 영상·기사·숏폼이 한 번의 촬영에서 나옵니다.' },
+  { n: '04', title: '발행과 리포트', body: '홈페이지 아카이브에 싣고 유튜브·인스타그램·틱톡에 동시에 올린 뒤, 어디서 얼마나 봤는지 보고합니다.' },
 ];
 
-const gets = ['유튜브 채널에 게재되는 정식 인터뷰 영상', '릴스·쇼츠·틱톡용 숏폼 콘텐츠', '검색에 최적화된 홈페이지 인터뷰 기사', '네이버·구글·AI 검색 기반 노출', 'SNS 멀티채널 동시 확산', '시간이 지날수록 쌓이는 영구적 디지털 자산'];
+const gets = ['릴스·쇼츠·틱톡으로 나가는 숏폼 여러 편', '유튜브 채널에 실리는 정식 인터뷰 본편', '검색이 읽을 수 있는 홈페이지 인터뷰 기사', '네이버·구글·AI 검색에 남는 근거', '유튜브·인스타그램·틱톡 동시 발행', '해가 지나도 재생 수가 쌓이는 기록'];
 
 
 export default function About() {
   const [open, setOpen] = useState<number | null>(0);
-  const top = interviews.reduce((a, b) => (b.views > a.views ? b : a));
   return <>
     <SiteHeader active="about" />
     <main>
       {/* 히어로 — 선언 | 현장 스틸(조회수 1위 인터뷰) */}
       <section className="abHero"><div className="wrap abHeroInner">
         <div>
-          <span className="eyebrow">비즈니스 미디어 플랫폼</span>
-          <h1>당신의 성공은{' '}<br /><em>기록되고 있습니까?</em></h1>
-          <p>사업가의 성장 스토리를 검색되는 디지털 자산으로 남기는 인터뷰 미디어. {CHANNEL.since}년부터 {CHANNEL.interviews}명의 하루를 기록했습니다.</p>
+          <span className="eyebrow">인터뷰 미디어</span>
+          <h1>광고는 끄면 사라지고,{' '}<br /><em>기록은 켜둔 적이 없어도 남습니다.</em></h1>
+          <p>사장님의 하루를 따라가 결정의 이유를 남기는 인터뷰 미디어. {CHANNEL.since}년 {CHANNEL.origin}에서 시작해 {CHANNEL.interviews}명의 하루를 기록했고, {CHANNEL.channelViewsText} 번 재생됐습니다.</p>
           <div className="abHeroBtns">
-            <Link className="pulseBtn" href="/interviews">성공 스토리 보기 <ArrowUpRight size={17} /></Link>
+            <Link className="pulseBtn" href="/interviews">인터뷰 보기 <ArrowUpRight size={17} /></Link>
             <Link href="/apply">출연·파트너십 문의 <ChevronRight size={17} /></Link>
           </div>
         </div>
@@ -61,7 +65,7 @@ export default function About() {
 
       {/* 진행 — 순서가 정보이므로 번호 */}
       <section className="wrap abSection" id="os">
-        <div className="abHead"><small>진행 과정</small><h2>한 번의 인터뷰가 브랜드 자산이 되기까지</h2><p>즉흥적인 인터뷰가 아니라, 촬영부터 기사·SEO·배포·리포트까지 하나의 파이프라인으로 운영합니다.</p></div>
+        <div className="abHead"><small>진행 과정</small><h2>한 번의 인터뷰가 기록으로 남기까지</h2><p>즉흥적으로 찍지 않습니다. 촬영부터 기사·배포·리포트까지 한 흐름으로 갑니다.</p></div>
         <ol className="abSteps">{steps.map(s => <li key={s.n}><strong>{s.n}</strong><b>{s.title}</b><p>{s.body}</p></li>)}</ol>
       </section>
 
@@ -75,7 +79,7 @@ export default function About() {
           <blockquote className="abClaim">
             <i aria-hidden="true">“</i>
             <p>한 번의 인터뷰가{' '}<br />계속 일하는 자산이 됩니다.</p>
-            <small>광고와 달리 멈추지 않습니다. 발행 이후에도 검색과 AI 인용을 통해 24시간 새로운 고객에게 도달합니다.</small>
+            <small>광고와 달리 멈추지 않습니다. 발행한 뒤에도 검색으로 계속 찾아옵니다.</small>
             <Link href="/programs">교육 과정도 함께 보기 <ChevronRight size={15} /></Link>
           </blockquote>
         </div>

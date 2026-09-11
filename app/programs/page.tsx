@@ -101,8 +101,8 @@ export default function Programs() {
         <div className="wrap pgHeroInner">
           <div className="pgHeroText">
             <span className="eyebrow">성공인사이드 교육 과정</span>
-            <h1>다음 단계로 가는 길을,{' '}<br /><em>먼저 가본 사람과 함께.</em></h1>
-            <p>성공인사이드 교육 과정은 이론이 아니라 실제로 해본 사람의 순서를 배웁니다. 내 사업과 커리어에 바로 적용할 결과물을 들고 나가는 것을 목표로 합니다.</p>
+            <h1>교재가{' '}<br /><em>{CHANNEL.interviews}명의 하루</em>입니다.</h1>
+            <p>이론 말고, 실제로 내린 결정을 봅니다. 왜 그 가격을 정했는지, 왜 그 자리에 냈는지. 내 사업에 바로 쓸 결정 하나를 들고 나가는 것이 목표입니다.</p>
             <div className="pgHeroBtns">
               <a href="#live">과정 둘러보기 <ArrowUpRight size={18} /></a>
               <Link href="/about">성공인사이드가 만드는 것 <ChevronRight size={18} /></Link>

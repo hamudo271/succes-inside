@@ -4,7 +4,7 @@ import { pageMeta } from '../../lib/seo';
 import { collectionPage, itemList } from '../../lib/schema';
 import { CHANNEL, interviews, cats, watchUrl } from './data';
 
-const DESC = `${CHANNEL.since}년부터 ${CHANNEL.interviews}명의 사장님을 찾아가 하루를 따라붙고 기록했습니다. 요식업·뷰티·온라인 등 업종별 인터뷰를 조회수 순으로 봅니다.`;
+const DESC = `${CHANNEL.since}년 ${CHANNEL.origin}에서 시작해 ${CHANNEL.interviews}명의 사장님의 하루를 따라갔습니다. 요식업·뷰티·온라인 등 업종별 인터뷰를 조회수 순으로 봅니다.`;
 
 export const metadata: Metadata = pageMeta({
   path: '/interviews',

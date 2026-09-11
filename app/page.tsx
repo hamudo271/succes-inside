@@ -22,12 +22,14 @@ const HERO_BG = '/hero.jpg';
 /** 조회수 1위 인터뷰 — 쇼케이스에서 '한 번의 촬영'의 실물 예시로 쓴다 */
 const TOP = [...interviews].sort((a, b) => b.views - a.views)[0]!;
 
-// 인터뷰가 남기는 것 — 제안서의 6가지 가치를 세 갈래로 묶었다.
+// 인터뷰가 남기는 것 — 만나는 사람이 다른 세 그릇. 도달의 대부분이 숏폼에서 나오므로 숏폼이 먼저다.
 const DELIVERS = [
-  { t: '영상', d: '유튜브 정식 인터뷰 한 편과 릴스·쇼츠·틱톡 숏폼 여러 편' },
-  { t: '기사', d: '영상을 전사해 검색이 읽을 수 있는 아카이브 기사로' },
-  { t: '노출', d: '네이버·구글·AI 검색과 SNS 멀티채널로 확산' },
+  { t: '숏폼', d: '처음 만나는 사람에게. 릴스·쇼츠·틱톡으로 동시에' },
+  { t: '본편', d: '깊이 볼 사람에게. 하루를 통째로, 유튜브 정식 인터뷰로' },
+  { t: '기사', d: '검색해서 오는 사람에게. 영상을 글로 옮겨 아카이브에' },
 ];
+/** 같은 인터뷰의 두 숫자 — 본편과 숏폼이 만나는 사람이 다르다는 걸 숫자가 대신 말한다 */
+const SPLIT = interviews.find(v => v.id === 'wtHwI3pCcu8')!;
 
 export default function Home() {
   const [category, setCategory] = useState('전체');
@@ -73,8 +75,8 @@ export default function Home() {
       <section className="hero">
         <HeroVideo poster={HERO_BG} />
         <div className="wrap heroInner">
-          <h1>전국의 사장님을 찾아가{' '}<br />하루를 <em>따라붙고 기록합니다.</em></h1>
-          <p>성공한 결과가 아니라 결정의 이유를 남깁니다.{' '}<br />{CHANNEL.since}년부터 {CHANNEL.interviews}명의 하루가 여기 있습니다.</p>
+          <h1>결과는 이미 알고 계실 겁니다.{' '}<br />우리는 <em>그날의 결정</em>을 묻습니다.</h1>
+          <p>{CHANNEL.since}년 {CHANNEL.origin}에서 시작해 {CHANNEL.interviews}명의 하루를 따라갔습니다.{' '}<br />그 기록이 {CHANNEL.channelViewsText} 번 재생됐습니다.</p>
           <div className="heroBtns">
             <Link className="btnPrimary pulseBtn" href="/apply">출연 신청하기 <ArrowUpRight size={18} /></Link>
             <Link className="btnGhost" href="/interviews">인터뷰 둘러보기 <ChevronRight size={17} /></Link>
@@ -83,10 +85,10 @@ export default function Home() {
 
         {/* 실적 스트립 — 히어로 발치에 붙여 선언과 근거를 한 화면에 둔다 */}
         <div className="wrap statBand">
-          <div><b><CountUp text={`${CHANNEL.interviews}`} /></b><span>기록된 인터뷰</span></div>
-          <div><b><CountUp text={CHANNEL.totalViewsText} delay={90} /></b><span>누적 조회수</span></div>
-          <div><b><CountUp text={CHANNEL.subscribers} delay={180} /></b><span>채널 구독자</span></div>
-          <div><b><CountUp text={`${CHANNEL.totalVideos}`} delay={270} /></b><span>발행 콘텐츠</span></div>
+          <div><b><CountUp text={`${CHANNEL.interviews}`} /></b><span>따라간 하루</span></div>
+          <div><b><CountUp text={CHANNEL.channelViewsText} delay={90} /></b><span>그 하루가 재생된 횟수</span></div>
+          <div><b><CountUp text={CHANNEL.subscribers} delay={180} /></b><span>구독자</span></div>
+          <div><b><CountUp text={`${CHANNEL.totalVideos}`} delay={270} /></b><span>만들어진 콘텐츠</span></div>
         </div>
       </section>
 
@@ -128,7 +130,7 @@ export default function Home() {
           </div>
           <div className="search">
             <Search size={17} />
-            <input placeholder="업종이나 키워드를 검색하세요" value={query} onChange={e => setQuery(e.target.value)} />
+            <input placeholder="업종이나 사장님으로 찾아보세요" value={query} onChange={e => setQuery(e.target.value)} />
           </div>
         </div>
 
@@ -170,8 +172,8 @@ export default function Home() {
       <section className="band">
         <div className="wrap sec showcase">
           <div className="showText">
-            <h2>한 번의 촬영이{' '}<br />남기는 것</h2>
-            <p>촬영으로 끝나지 않습니다.{' '}<br />검색과 AI에 인용되는 자산으로 전환합니다.</p>
+            <h2>한 번 찍고,{' '}<br />여러 번 만납니다.</h2>
+            <p>성형외과 원장님 편은 본편이 {SPLIT.viewsText}회 재생됐습니다.{' '}<br />거기서 자른 숏폼 한 편은 {CHANNEL.topShortViewsText} 회입니다.</p>
             <ul className="showList">{DELIVERS.map(d => (
               <li key={d.t}><b>{d.t}</b><span>{d.d}</span></li>
             ))}</ul>
@@ -215,8 +217,8 @@ export default function Home() {
       <section className="wrap sec">
         <div className="closer">
           <div className="closerMain">
-            <h2>다음 기록의 주인공이{' '}<br />되어 보시겠어요?</h2>
-            <p>모든 인터뷰는 내부 검토 후 진행합니다. 사업 이야기를 남겨주시면 검토 후 회신드립니다.</p>
+            <h2>{CHANNEL.interviews + 1}번째 하루를{' '}<br />찾고 있습니다.</h2>
+            <p>{CHANNEL.interviews}명을 만났습니다. 사업 이야기를 남겨주시면 내부 검토 후 회신드립니다.</p>
             <div className="heroBtns">
               <Link className="btnPrimary" href="/apply">출연 신청하기 <ArrowUpRight size={17} /></Link>
               <a className="btnGhost" href={CHANNEL.url} target="_blank" rel="noreferrer"><Youtube size={17} /> 채널 구독하기</a>

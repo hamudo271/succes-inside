@@ -24,12 +24,12 @@ export default function Interviews() {
       <section className="ivHero"><div className="wrap">
         <span className="eyebrow">인터뷰 아카이브</span>
         <h1>기록된 사장님들의{' '}<br /><em>{CHANNEL.interviews}가지 성장 서사.</em></h1>
-        <p>{CHANNEL.since}년부터 전국의 사업가를 찾아가 하루를 따라붙고 물었습니다.{' '}<br />결과가 아니라 결정의 이유를 남기는 것이 성공인사이드의 일입니다.</p>
+        <p>{CHANNEL.since}년 {CHANNEL.origin}에서 시작해 전국의 사장님을 찾아가 하루를 따라갔습니다.{' '}<br />결과가 아니라 결정의 이유를 남기는 것이 성공인사이드의 일입니다.</p>
         <ul className="ivStats">
-          <li><b>{CHANNEL.interviews}</b><span>기록된 인터뷰</span></li>
-          <li><b>{CHANNEL.totalViewsText}</b><span>누적 조회수</span></li>
-          <li><b>{CHANNEL.subscribers}</b><span>채널 구독자</span></li>
-          <li><b>{CHANNEL.totalVideos}</b><span>발행 콘텐츠</span></li>
+          <li><b>{CHANNEL.interviews}</b><span>따라간 하루</span></li>
+          <li><b>{CHANNEL.channelViewsText}</b><span>그 하루가 재생된 횟수</span></li>
+          <li><b>{CHANNEL.subscribers}</b><span>구독자</span></li>
+          <li><b>{CHANNEL.totalVideos}</b><span>만들어진 콘텐츠</span></li>
         </ul>
       </div></section>
 
@@ -41,7 +41,7 @@ export default function Interviews() {
         <div className="ivFeatureBody">
           <span className="ivBadge">가장 많이 본 인터뷰</span>
           <h2>{featured.title}</h2>
-          <p>한 편의 인터뷰가 {featured.viewsText}회 재생되며 이 사업장을 알렸습니다. 광고를 멈춘 뒤에도 검색과 추천으로 계속 도달하는, 축적되는 자산의 사례입니다.</p>
+          <p>{new Date().getFullYear() - Number(featured.date.slice(0, 4))}년 전에 찍은 하루입니다. 지금도 재생되고 있고, {featured.viewsText} 번째까지 왔습니다.</p>
           <div className="ivMeta">
             <span>{featured.cat}</span>
             <span><Eye size={13} /> {featured.viewsText}회</span>
@@ -81,8 +81,8 @@ export default function Interviews() {
       </section>
 
       <CtaBand
-        title={<>다음 기록의 주인공이{' '}<br />되어 보시겠어요?</>}
-        sub="모든 인터뷰는 내부 검토 후 진행합니다. 사업 이야기를 남겨주시면 검토 후 회신드립니다."
+        title={<>여기에 한 편 더{' '}<br />올라갈 자리가 있습니다.</>}
+        sub="매출 규모보다 스스로 설명할 수 있는 결정이 있는지를 봅니다. 사업 이야기를 남겨주시면 내부 검토 후 회신드립니다."
         href="/apply" label="출연 신청하기"
         secondary={<a className="btnGhost" href={CHANNEL.url} target="_blank" rel="noreferrer">채널 둘러보기</a>}
         facts={[{ k: '검토 회신', v: '보통 일주일' }, { k: '촬영', v: '하루 동행' }, { k: '비용', v: '상담 후 안내' }]}

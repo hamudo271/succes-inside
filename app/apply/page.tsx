@@ -45,7 +45,7 @@ export default async function ApplyPage({
     <main>
       <section className="apWrap wrap">
         <div className="apIntro">
-          <h1>다음 기록의 주인공이{' '}<br />되어 보시겠어요?</h1>
+          <h1>잘 오셨습니다.{' '}<br />어떤 하루를 기록할까요?</h1>
           <p>
             성공인사이드는 결과가 아니라 결정의 이유를 기록합니다.
             모든 인터뷰는 내부 검토 후 진행하며, 검토에는 보통 일주일이 걸립니다.
