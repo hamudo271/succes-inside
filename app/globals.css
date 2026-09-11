@@ -301,16 +301,18 @@ header{height:72px;position:sticky;top:0;z-index:30;
 /* 근거: 먼저 남긴 사장님들의 스틸이 겹쳐 선 열 */
 .ctaProof{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s4);
   margin-right:calc(-1 * max(24px,(100vw - 1180px)/2 + 24px))} /* 오른쪽 뷰포트 끝까지 스틸이 나간다 */
-.ctaStack{display:flex;align-items:center;padding-left:40px;width:100%;min-width:0;position:relative}
-.ctaStack img{flex:1 1 0;min-width:0;max-width:300px;aspect-ratio:16/9;object-fit:cover;border-radius:14px;border:4px solid var(--wnSurface);
-  margin-left:-40px;box-shadow:0 10px 26px -8px #000c;filter:saturate(.72) brightness(.9);
-  transition:transform .35s cubic-bezier(.2,.7,.2,1),filter .3s}
-.ctaStack img:nth-child(1){z-index:3}.ctaStack img:nth-child(2){z-index:2}.ctaStack img:nth-child(3){z-index:1}
-.ctaStack:hover img{filter:none}
-.ctaStack img:hover{transform:translateY(-10px) scale(1.05);z-index:9}
-.ctaStack span{position:absolute;right:max(24px,calc((100vw - 1180px)/2 + 24px));top:14px;z-index:6;box-shadow:0 8px 20px #0009;flex:0 0 auto;height:48px;padding:0 18px;border-radius:999px;display:inline-flex;align-items:center;
-  background:var(--wnSurface2);border:1px solid var(--wnLine);font-size:16px;font-weight:800;color:var(--wnInk);
-  font-variant-numeric:tabular-nums}
+/* 기록의 두루마리 — 46편이 최신순으로 천천히 올라간다. 위아래는 마스크로 사라지고, 손을 올리면 멈춘다. */
+.ctaRoll{width:100%;height:330px;overflow:hidden;
+  mask-image:linear-gradient(#0000,#000 16%,#000 84%,#0000);-webkit-mask-image:linear-gradient(#0000,#000 16%,#000 84%,#0000)}
+.ctaRollTrack{list-style:none;margin:0;padding:0;animation:ctaRoll 80s linear infinite}
+.ctaRoll:hover .ctaRollTrack{animation-play-state:paused}
+.ctaRollTrack li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:16px;align-items:baseline;
+  padding:12px 0;border-bottom:1px solid var(--wnLine2);font-size:13.5px}
+.ctaRollTrack span{color:var(--wnFaint);font-variant-numeric:tabular-nums;font-size:12px}
+.ctaRollTrack b{font-weight:600;color:var(--wnInk2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctaRollTrack em{font-style:normal;color:var(--wnOrangeText);font-weight:700;font-variant-numeric:tabular-nums;font-size:12.5px}
+@keyframes ctaRoll{to{transform:translateY(-50%)}}
+@media(prefers-reduced-motion:reduce){.ctaRollTrack{animation:none}}
 .ctaProof small{font-size:15px;color:var(--wnInk2)}
 
 /* ══════════════ 전환 ══════════════ */
@@ -357,7 +359,8 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .ivGridHome{grid-template-columns:repeat(2,1fr)}
   .showcase{grid-template-columns:1fr;gap:var(--s6)}
   .ctaInner{grid-template-columns:minmax(0,1fr);gap:var(--s5);padding-top:var(--s6);padding-bottom:var(--s6)}
-  .ctaProof{order:-1;margin-right:0}
+  .ctaProof{margin-right:0}
+  .ctaRoll{height:230px}
   .closer{grid-template-columns:1fr;gap:var(--s5);padding:var(--s6) var(--s5)}
   .closerSub{border-left:0;border-top:1px solid var(--wnLine);padding-left:0;padding-top:var(--s5)}
 }
@@ -403,14 +406,11 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .rowNav div{display:none}
   .btnPrimary,.btnGhost{flex:1;justify-content:center}
   .ctaBand{margin-top:var(--s7)}
-  .ctaStack img{margin-left:-22px;border-width:2px;border-radius:10px}
   /* 좁은 화면에서 11px는 너무 작다 — 정보를 담은 글자만 올린다 */
   .faceRank,.ivBody .ivTag,footer small{font-size:12px}
   .ivGridHome .ivDur,.skDur,.skShort figcaption,.skArticle small,.skSearch small{font-size:11.5px}
   .subForm input,.subForm button{min-height:44px}
   .subForm button{padding:0 18px}
-  .ctaStack{padding-left:22px}
-  .ctaStack span{position:static;height:38px;padding:0 13px;font-size:13px;margin-left:-12px;box-shadow:none}
   .ctaFacts{gap:var(--s4)}
 }
 
