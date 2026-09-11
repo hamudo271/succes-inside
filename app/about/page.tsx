@@ -39,7 +39,7 @@ export default function About() {
       <section className="abHero"><div className="wrap abHeroInner">
         <div>
           <span className="eyebrow">인터뷰 미디어</span>
-          <h1>광고는 끄면 사라지고,{' '}<br /><em>기록은 켜둔 적이 없어도 남습니다.</em></h1>
+          <h1>광고는 끄면 끝납니다.{' '}<br /><em>{topAge}년 전에 찍은 영상은 지금도 재생됩니다.</em></h1>
           <p>{CHANNEL.since}년 {CHANNEL.origin}에서 시작해 {CHANNEL.interviews}명의 하루를 기록했습니다. 숏폼까지 합쳐 {CHANNEL.channelViewsText} 번 재생됐습니다.</p>
           <div className="abHeroBtns">
             <Link className="pulseBtn" href="/interviews">인터뷰 보기 <ArrowUpRight size={17} /></Link>

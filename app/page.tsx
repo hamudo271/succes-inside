@@ -30,6 +30,8 @@ const DELIVERS = [
 ];
 /** 같은 인터뷰의 두 숫자 — 본편과 숏폼이 만나는 사람이 다르다는 걸 숫자가 대신 말한다 */
 const SPLIT = interviews.find(v => v.id === 'wtHwI3pCcu8')!;
+/** 히어로가 여는 사례 — 광주 카센터(H모터스). 조회수 1위라서가 아니라 '동네 가게 한 곳'이라는 그림 때문에 고른다. */
+const HERO_CASE = interviews.find(v => v.id === 'i66hU39qSV4')!;
 
 export default function Home() {
   const [category, setCategory] = useState('전체');
@@ -75,8 +77,8 @@ export default function Home() {
       <section className="hero">
         <HeroVideo poster={HERO_BG} />
         <div className="wrap heroInner">
-          <h1>결과는 이미 보입니다.{' '}<br />우리는 <em>그날의 결정</em>을 묻습니다.</h1>
-          <p>사장님의 하루를 따라가 결정의 이유를 남기는 인터뷰 미디어.{' '}<br />{CHANNEL.since}년 {CHANNEL.origin}에서 시작해 {CHANNEL.interviews}명을 만났습니다.</p>
+          <h1>광주 카센터 사장님의 하루를{' '}<br /><em>{HERO_CASE.viewsText} 명이 봤습니다.</em></h1>
+          <p>성공인사이드는 사장님을 찾아가 하루를 찍고, 왜 그렇게 결정했는지 묻습니다.{' '}<br />{CHANNEL.since}년부터 {CHANNEL.interviews}명의 사장님이 출연했습니다.</p>
           <div className="heroBtns">
             <Link className="btnPrimary pulseBtn" href="/apply">출연 신청하기 <ArrowUpRight size={18} /></Link>
             <Link className="btnGhost" href="/interviews">인터뷰 둘러보기 <ChevronRight size={17} /></Link>
@@ -164,7 +166,7 @@ export default function Home() {
       <CourseCards
         items={COURSE_CARDS.slice(0, 4)}
         eyebrow="교육 과정"
-        title={<>먼저 가본 사람의 순서를{' '}<br />그대로 배웁니다</>}
+        title={<>사장님들이 실제로 내린{' '}<br />결정으로 배웁니다</>}
         more={{ href: '/programs', label: '과정 전체 보기' }}
       />
 
@@ -217,8 +219,8 @@ export default function Home() {
       <section className="wrap sec">
         <div className="closer">
           <div className="closerMain">
-            <h2>{CHANNEL.interviews + 1}번째 하루를{' '}<br />찾고 있습니다.</h2>
-            <p>사장님이라면 출연을 신청해 주세요. 사업 이야기를 남겨주시면 검토 후 일주일 안에 회신드립니다.</p>
+            <h2>{CHANNEL.interviews}명이 출연했습니다.{' '}<br />다음은 사장님입니다.</h2>
+            <p>출연을 신청하면 일주일 안에 회신드립니다. 매출보다 스스로 설명할 수 있는 결정이 있는지를 봅니다.</p>
             <div className="heroBtns">
               <Link className="btnPrimary" href="/apply">출연 신청하기 <ArrowUpRight size={17} /></Link>
               <a className="btnGhost" href={CHANNEL.url} target="_blank" rel="noreferrer"><Youtube size={17} /> 채널 구독하기</a>

@@ -31,7 +31,7 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
         <div className="wrap clHeroInner">
           <div className="clHeroText">
             <span className="eyebrow">성공인사이드 칼럼</span>
-            <h1>현장에서 본 것만{' '}<br /><em>씁니다.</em></h1>
+            <h1>인터뷰에서 본 것만{' '}<br /><em>씁니다.</em></h1>
             <p>인터뷰에서 마주친 장면 하나가 한 편이 됩니다. 책상에서 지어낸 조언은 쓰지 않습니다.</p>
             <div className="clHeroBtns">
               <Link className="btnPrimary" href={`/columns/${featured.id}`}>이번 주 칼럼 읽기 <ArrowUpRight size={17} /></Link>
