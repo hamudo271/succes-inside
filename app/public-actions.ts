@@ -2,6 +2,7 @@
 import { headers } from 'next/headers';
 import { query, dbEnabled } from '../lib/db';
 import { assertSameOrigin, clientIp } from '../lib/auth';
+import { notifyApplication } from '../lib/notify';
 
 const FALLBACK = '지금은 접수가 어렵습니다. success.inside.kr@gmail.com 으로 직접 보내주세요.';
 const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/;
@@ -80,6 +81,8 @@ export async function applyAction(_prev: ApplyState, form: FormData): Promise<Ap
        values ($1, $2, $3, $4, $5, $6)`,
       [type, name, business, contact, message, ip],
     );
+    // DB에 남긴 뒤 메일로도 알린다. 메일이 실패해도 접수는 이미 됐으므로 결과를 바꾸지 않는다.
+    await notifyApplication({ type, name, business, contact, message });
     return { ok: true };
   } catch (err) {
     console.error('[apply] failed:', (err as Error).message);
