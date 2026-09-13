@@ -174,8 +174,9 @@ export default function Home() {
       <section className="band">
         <div className="wrap sec showcase">
           <div className="showText">
-            <h2>하루 찍으면,{' '}<br />세 곳에 남습니다.</h2>
-            <p>유튜브 본편, 숏폼, 검색용 기사. 같은 하루라도 보는 사람이 다릅니다.{' '}<br />성형외과 원장님 편은 본편이 {SPLIT.viewsText}회, 거기서 자른 숏폼 한 편이 {CHANNEL.topShortViewsText}회였습니다.</p>
+            {/* 긴장은 헤드라인에 — 하루 들여서 40만. 설명은 그 다음. */}
+            <h2>촬영은 하루,{' '}<br />조회수는 {CHANNEL.topShortViewsText}.</h2>
+            <p>성형외과 원장님 편입니다. 본편은 {SPLIT.viewsText}회, 거기서 자른 숏폼 한 편이 {CHANNEL.topShortViewsText} 회.{' '}<br />같은 하루를 본편·숏폼·기사로 나눠 내보내면 보는 사람이 달라집니다.</p>
             <ul className="showList">{DELIVERS.map(d => (
               <li key={d.t}><b>{d.t}</b><span>{d.d}</span></li>
             ))}</ul>
