@@ -10,6 +10,7 @@ const menu = [
   { key: 'programs', label: '교육과정', href: '/programs' },
   { key: 'columns', label: '칼럼', href: '/columns' },
   { key: 'about', label: '소개', href: '/about' },
+  { key: 'test', label: '테스트', href: '/test' },   // 개편 시안 — 확정되면 뺀다
 ];
 
 export default function SiteHeader({ active }: { active?: string }) {

@@ -1,0 +1,121 @@
+/* 개편 시안 페이지 — 여덟 절을 번호 순으로. 부품은 각 절이 실제로 갈 자리의 모습 그대로 */
+
+.tsMain{padding-bottom:var(--s8)}
+.tsIntro{padding-top:var(--s7);padding-bottom:var(--s5);border-bottom:1px solid var(--wnLine)}
+.tsIntro small{font-size:12px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.04em}
+.tsIntro h1{font-size:clamp(28px,3.6vw,42px);font-weight:800;line-height:1.3;letter-spacing:-1.4px;margin-top:var(--s3)}
+.tsIntro>p{color:var(--wnMuted);font-size:14.5px;line-height:1.8;max-width:62ch;margin-top:var(--s3)}
+.tsToc{list-style:none;margin:var(--s5) 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.tsToc a{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--wnLine);border-radius:999px;padding:8px 14px 8px 10px;font-size:13px;color:var(--wnInk2);transition:border-color .15s,color .15s}
+.tsToc a:hover{border-color:#4a3324;color:var(--wnInk)}
+.tsToc span{font-size:11px;font-weight:800;color:var(--wnOrangeText);font-variant-numeric:tabular-nums}
+
+.tsSec{padding-top:var(--s8)}
+.tsHead{display:grid;grid-template-columns:72px minmax(0,1fr);gap:var(--s4);align-items:start;margin-bottom:var(--s6)}
+.tsNum{font-size:clamp(40px,5vw,64px);font-weight:800;line-height:.9;letter-spacing:-.04em;color:var(--wnOrange);font-variant-numeric:tabular-nums}
+.tsHead h2{font-size:clamp(20px,2.4vw,27px);font-weight:800;letter-spacing:-.8px;line-height:1.35}
+.tsHead p{color:var(--wnMuted);font-size:14px;line-height:1.85;max-width:68ch;margin-top:var(--s2)}
+.tsCaption{color:var(--wnFaint);font-size:12.5px;margin-top:var(--s3)}
+.tsNote{margin-top:var(--s5);border-left:2px solid var(--wnOrange);padding:4px 0 4px var(--s4)}
+.tsNote b{display:block;font-size:14px}
+.tsNote p{color:var(--wnMuted);font-size:13.5px;line-height:1.8;margin-top:6px}
+.tsNote em{font-style:normal;color:var(--wnOrangeText);font-weight:700}
+
+/* 1. 비용 */
+.tsPrice{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.tsPrice>div{border-top:1px solid var(--wnLine);padding-top:var(--s4)}
+.tsPrice small{font-size:12px;font-weight:700;color:var(--wnMuted)}
+.tsPrice b{display:block;font-size:20px;letter-spacing:-.6px;line-height:1.4;margin-top:10px}
+.tsPrice p{color:var(--wnMuted);font-size:13px;line-height:1.75;margin-top:8px}
+.tsPriceHole{border-top-color:var(--wnOrange)!important}
+.tsPriceHole b{color:var(--wnOrangeText)}
+
+/* 2. 진행 표 */
+.tsSpec{margin:0;border-top:1px solid var(--wnLine)}
+.tsSpec>div{display:grid;grid-template-columns:140px minmax(0,1fr);gap:var(--s4);padding:20px 0;border-bottom:1px solid var(--wnLine)}
+.tsSpec dt{font-size:13.5px;font-weight:700;color:var(--wnOrangeText);padding-top:2px}
+.tsSpec dd{margin:0}
+.tsSpec dd b{font-size:16px;letter-spacing:-.4px;line-height:1.5}
+.tsSpec dd p{color:var(--wnMuted);font-size:13px;line-height:1.75;margin-top:5px;max-width:64ch}
+.tsSpecFaq{margin-top:var(--s5)}
+.tsSpecFaq small{font-size:12px;font-weight:700;color:var(--wnMuted)}
+.tsSpecFaq ul{list-style:none;margin:var(--s3) 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+.tsSpecFaq li b{display:block;font-size:14px;letter-spacing:-.3px}
+.tsSpecFaq li span{display:block;color:var(--wnMuted);font-size:13px;line-height:1.75;margin-top:6px}
+
+/* 3. 세 갈래 */
+.tsBranch{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:12px}
+.tsBranch a{display:flex;flex-direction:column;gap:8px;border:1px solid var(--wnLine);border-radius:14px;padding:26px 24px 22px;background:var(--wnSurface);transition:border-color .15s,transform .2s}
+.tsBranch a:hover{border-color:#4a3324;transform:translateY(-2px)}
+.tsBranch small{font-size:11.5px;font-weight:800;color:var(--wnOrangeText);letter-spacing:.06em}
+.tsBranch b{font-size:19px;letter-spacing:-.6px;line-height:1.4;text-wrap:balance}
+.tsBranch p{color:var(--wnMuted);font-size:13.5px;line-height:1.7;flex:1}
+.tsBranch span{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--wnInk);margin-top:10px}
+.tsBranchMain{background:linear-gradient(160deg,#2a1a10,var(--wnSurface) 60%)!important;border-color:#4a3324!important}
+.tsBranchMain b{font-size:22px}
+.tsBranchMain span{color:var(--wnOrangeText)}
+
+/* 4. 띠 — 페이지 여백 밖으로 */
+.tsBleed .ctaBand{margin-top:0}
+
+/* 5. 아카이브 상단 */
+.tsArchive{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;align-items:stretch}
+.tsFeat{display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:var(--wnSurface);border:1px solid var(--wnLine);transition:border-color .15s}
+.tsFeat:hover{border-color:#4a3324}
+.tsFeatImg{aspect-ratio:16/9;overflow:hidden;background:var(--wnSurface2)}
+.tsFeatImg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.tsFeat:hover img{transform:scale(1.03)}
+.tsFeatText{padding:20px 24px 22px;display:flex;flex-direction:column;gap:8px}
+.tsFeatText small{font-size:12px;font-weight:700;color:var(--wnOrangeText)}
+.tsFeatText b{font-size:clamp(20px,2.2vw,26px);letter-spacing:-.7px;line-height:1.35;text-wrap:balance}
+.tsFeatText span{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--wnInk2)}
+.tsFeatText em{display:inline-flex;align-items:center;gap:6px;font-style:normal;font-size:13px;font-weight:700;color:var(--wnInk);margin-top:6px}
+.tsCats{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.tsCats a{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;align-items:center;padding:8px 12px 8px 8px;border:1px solid var(--wnLine);border-radius:10px;background:var(--wnSurface);transition:border-color .15s}
+.tsCats a:hover{border-color:#4a3324}
+.tsCats img{width:64px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;display:block}
+.tsCats span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tsCats b{font-size:14px;letter-spacing:-.3px}
+.tsCats small{font-size:11.5px;color:var(--wnMuted)}
+.tsCats svg{color:var(--wnFaint)}
+.tsWall{margin-top:var(--s5)}
+
+/* 6. 숫자 — 굴리지 않는 것 말고는 홈과 같다 */
+.tsStat{padding-left:0;padding-right:0}
+
+/* 7. 신청 */
+.tsApply{display:grid;grid-template-columns:1fr 1.15fr;gap:var(--s6);align-items:start}
+.tsCriteria small,.tsSample small{display:block;font-size:12px;font-weight:700;color:var(--wnMuted);margin-bottom:var(--s3)}
+.tsCriteria ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--wnLine)}
+.tsCriteria li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:12px;padding:16px 0;border-bottom:1px solid var(--wnLine)}
+.tsCriteria svg{color:var(--wnOrange);margin-top:3px}
+.tsCriteria b{font-size:15px;letter-spacing:-.3px}
+.tsCriteria p{color:var(--wnMuted);font-size:13px;line-height:1.7;margin-top:4px}
+.tsSample pre{margin:0;white-space:pre-wrap;font:inherit;font-size:15px;line-height:1.9;color:var(--wnInk);background:var(--wnSurface);border:1px solid var(--wnLine);border-left:3px solid var(--wnOrange);border-radius:10px;padding:22px 24px}
+.tsSample p{color:var(--wnMuted);font-size:13px;line-height:1.75;margin-top:var(--s3)}
+
+/* 8. 카드 */
+.tsCompare{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);max-width:820px}
+.tsCompare>div>small{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--wnFaint);margin-bottom:12px}
+.tsCompare>div>small.ok{color:var(--wnOrangeText)}
+.tsOld{display:block}
+.tsCard{display:block}
+.tsCardThumb{aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--wnSurface2)}
+.tsCardThumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.tsCard:hover .tsCardThumb img{transform:scale(1.04)}
+.tsCard h3{font-size:17px;font-weight:700;line-height:1.5;letter-spacing:-.5px;margin-top:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tsCard p{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--wnMuted);margin-top:8px;font-variant-numeric:tabular-nums}
+.tsCard p span:first-child{color:var(--wnOrangeText);font-weight:700}
+.tsCard p i{font-style:normal;color:var(--wnFaint)}
+.tsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:var(--s6);padding-top:var(--s5);border-top:1px solid var(--wnLine)}
+
+.tsEnd{border-top:1px solid var(--wnLine);margin-top:var(--s8);padding-top:var(--s6)}
+.tsEnd p{font-size:16px;color:var(--wnInk2)}
+
+@media (max-width:960px){
+  .tsPrice,.tsBranch,.tsArchive,.tsApply,.tsCompare,.tsGrid,.tsSpecFaq ul{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .tsHead{grid-template-columns:1fr;gap:var(--s2)}
+  .tsSpec>div{grid-template-columns:1fr;gap:6px}
+}
