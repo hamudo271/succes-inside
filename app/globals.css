@@ -227,41 +227,28 @@ header{height:72px;position:sticky;top:0;z-index:30;
 .showList span{font-size:13.5px;line-height:1.7;color:var(--wnInk2)}
 .showText .btnGhost{margin-top:var(--s4)}
 
-/* 실물 스택 — 영상·숏폼·기사·검색이 한 장면에 겹친다. 컨테이너 비율 기준 %로 잡아 어느 폭에서도 같은 구도 */
-.showStack{position:relative;aspect-ratio:1/0.86;font-family:inherit}
-.showStack>*{position:absolute;margin:0;border-radius:12px;overflow:hidden;
-  box-shadow:0 18px 40px -12px #000c,0 2px 6px #0008;border:1px solid #ffffff14}
+/* 같은 하루의 세 모습 — 본편(가로) · 숏폼(세로) · 기사(글). 겹치는 목업 대신 나란히.
+   세로 칸을 24%로 두면 9:16 높이가 옆 16:9 높이와 거의 같아진다 — 행 높이는 세로 칸이 정하고 본편은 그 높이를 채운다. */
+.showStack{display:grid;grid-template-columns:minmax(0,1fr) 24%;gap:10px;align-items:stretch}
+.showStack figure{margin:0;position:relative;min-width:0;border-radius:12px;overflow:hidden;background:var(--wnSurface);border:1px solid var(--wnLine)}
 .showStack img{display:block;width:100%;height:100%;object-fit:cover}
-.skVideo{left:0;top:0;width:72%;background:var(--wnSurface)}
-.skThumb{position:relative;display:block;aspect-ratio:16/9;background:var(--wnSurface2)}
-.skDur{position:absolute;right:8px;bottom:8px;background:#000c;color:#fff;font-size:11px;font-weight:700;
-  padding:2px 6px;border-radius:4px;font-variant-numeric:tabular-nums}
-.skVideo figcaption{padding:11px 14px 13px;display:flex;flex-direction:column;gap:4px}
-.skVideo figcaption b{font-size:13.5px;font-weight:700;line-height:1.45;letter-spacing:-.2px;color:var(--wnInk);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.skVideo figcaption span{font-size:11.5px;color:var(--wnMuted);display:flex;align-items:center;gap:5px}
-.skShort{right:0;top:5%;width:29%;aspect-ratio:9/16;background:var(--wnSurface2);border-radius:16px;z-index:2}
-.skShort figcaption{position:absolute;left:10px;top:10px;background:#ff0033;color:#fff;font-size:11px;
-  font-weight:800;letter-spacing:.3px;padding:3px 7px;border-radius:5px}
-.skArticle{left:7%;top:60%;width:58%;z-index:3;background:var(--wnSurface);padding:16px 18px;
-  display:flex;flex-direction:column;gap:6px}
-.skArticle small{font-size:11px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.2px}
-.skArticle b{font-size:14px;font-weight:700;line-height:1.5;letter-spacing:-.2px;color:var(--wnInk);
+.skVideo{grid-column:1}
+.skShort{grid-column:2;aspect-ratio:9/16}
+.skVideo figcaption,.skShort figcaption{position:absolute;left:0;right:0;top:0;padding:12px 14px 22px;
+  display:flex;flex-direction:column;gap:3px;background:linear-gradient(#000c,#0000)}
+.skVideo figcaption small,.skShort figcaption small,.skArticle small{font-size:11px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.04em}
+.skVideo figcaption b,.skShort figcaption b{font-size:12.5px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums}
+.skArticle{grid-column:1/-1;padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px}
+.skArticle b{font-size:15.5px;font-weight:700;line-height:1.45;letter-spacing:-.01em;color:var(--wnInk);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.skArticle span{font-size:11.5px;color:var(--wnMuted)}
-.skSearch{right:2%;top:80%;width:46%;z-index:4;background:#f7f5f1;color:#1a1918;padding:12px 14px;
-  display:flex;gap:10px;align-items:flex-start;border-color:#0000}
-.skSearch svg{flex:0 0 auto;color:#6d6963;margin-top:2px}
-.skSearch small{display:block;font-size:11px;color:#5f6368;margin-bottom:3px}
-.skSearch b{display:block;font-size:12.5px;font-weight:600;color:#1a0dab;line-height:1.4;letter-spacing:-.1px;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.skArticle span{font-size:12px;color:var(--wnMuted)}
+.skArticle em{font-style:normal;font-size:12px;color:var(--wnFaint)}
 
-/* 등장 — 스크롤로 들어올 때 한 번, 뒤에서 앞으로 */
+/* 등장 — 스크롤로 들어올 때 한 번, 위에서 아래로 */
 .showStack>*{transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
 .showStack.pre>*{opacity:0;transform:translateY(14px)}
 .showStack.in>*:nth-child(2){transition-delay:.1s}
 .showStack.in>*:nth-child(3){transition-delay:.2s}
-.showStack.in>*:nth-child(4){transition-delay:.3s}
 @media(prefers-reduced-motion:reduce){.showStack.pre>*{opacity:1;transform:none}.showStack>*{transition:none}}
 
 /* ══════════════ 파장 — 유튜브 채널 미디어의 심장, 재생 버튼에서 링이 퍼진다 ══════════════ */
@@ -280,8 +267,6 @@ header{height:72px;position:sticky;top:0;z-index:30;
 @media(prefers-reduced-motion:reduce){.pulse:before,.pulse:after{display:none}.pulseBtn{animation:none}}
 
 /* 쇼케이스 유튜브 카드의 재생 버튼 */
-.skPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;
-  background:var(--wnOrange);color:#fff;display:grid;place-items:center;box-shadow:0 10px 26px #0009}
 
 /* ══════════════ 전환 밴드 (인터뷰·교육과정 공용) ══════════════ */
 .ctaBand{margin-top:var(--s8);background:var(--wnSurface);border-top:1px solid var(--wnLine);border-bottom:1px solid var(--wnLine)}
@@ -393,14 +378,8 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .hero h1 br,.hero p br{display:none}
   .hero h1{max-width:none}
   .ivGridHome{grid-template-columns:1fr;gap:var(--s5)}
-  /* 겹쳐 쌓던 목업을 좁은 화면에서는 순서대로 편다 — 겹치면 서로의 글을 가린다 */
-  .showStack{position:static;aspect-ratio:auto;max-width:none;
-    display:grid;grid-template-columns:minmax(0,1fr) 98px;gap:12px;align-items:start}
-  .showStack>*{position:relative;inset:auto;width:auto}   /* static이 아니라 relative — 안의 배지·재생버튼이 기준을 잃지 않게 */
-  .skVideo{grid-area:1/1/2/2}
-  .skShort{grid-area:1/2/2/3;width:98px;aspect-ratio:9/16}
-  .skArticle{grid-area:2/1/3/3}
-  .skSearch{grid-area:3/1/4/3}
+  .showStack{grid-template-columns:minmax(0,1fr) 28%;gap:8px}
+  .skArticle{padding:14px 16px 16px}
   .faceRow{padding-left:18px;padding-right:18px}
   .face{flex-basis:216px}
   .rowNav div{display:none}
@@ -408,7 +387,7 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .ctaBand{margin-top:var(--s7)}
   /* 좁은 화면에서 11px는 너무 작다 — 정보를 담은 글자만 올린다 */
   .faceRank,.ivBody .ivTag,footer small{font-size:12px}
-  .ivGridHome .ivDur,.skDur,.skShort figcaption,.skArticle small,.skSearch small{font-size:11.5px}
+  .ivGridHome .ivDur,.skArticle small{font-size:11.5px}
   .subForm input,.subForm button{min-height:44px}
   .subForm button{padding:0 18px}
   .ctaFacts{gap:var(--s4)}

@@ -24,9 +24,9 @@ const TOP = [...interviews].sort((a, b) => b.views - a.views)[0]!;
 
 // 인터뷰가 남기는 것 — 만나는 사람이 다른 세 그릇. 도달의 대부분이 숏폼에서 나오므로 숏폼이 먼저다.
 const DELIVERS = [
-  { t: '숏폼', d: '처음 만나는 사람에게. 릴스·쇼츠·틱톡' },
-  { t: '본편', d: '깊이 볼 사람에게. 유튜브 정식 인터뷰' },
-  { t: '기사', d: '검색해서 오는 사람에게. 홈페이지 아카이브' },
+  { t: '숏폼', d: '릴스·쇼츠·틱톡. 처음 보는 사람이 여기서 만납니다.' },
+  { t: '본편', d: '유튜브 정식 인터뷰. 깊이 볼 사람이 끝까지 봅니다.' },
+  { t: '기사', d: '홈페이지 아카이브. 검색한 사람이 찾아옵니다.' },
 ];
 /** 같은 인터뷰의 두 숫자 — 본편과 숏폼이 만나는 사람이 다르다는 걸 숫자가 대신 말한다 */
 const SPLIT = interviews.find(v => v.id === 'wtHwI3pCcu8')!;
@@ -174,8 +174,8 @@ export default function Home() {
       <section className="band">
         <div className="wrap sec showcase">
           <div className="showText">
-            <h2>한 번의 촬영이{' '}<br />세 가지로 남습니다.</h2>
-            <p>본편은 {SPLIT.viewsText} 회, 거기서 자른 숏폼 한 편은 {CHANNEL.topShortViewsText} 회.{' '}<br />같은 하루라도 만나는 사람이 다릅니다. 그래서 셋을 다 만듭니다.</p>
+            <h2>하루 찍으면,{' '}<br />세 곳에 남습니다.</h2>
+            <p>유튜브 본편, 숏폼, 검색용 기사. 같은 하루라도 보는 사람이 다릅니다.{' '}<br />성형외과 원장님 편은 본편이 {SPLIT.viewsText}회, 거기서 자른 숏폼 한 편이 {CHANNEL.topShortViewsText}회였습니다.</p>
             <ul className="showList">{DELIVERS.map(d => (
               <li key={d.t}><b>{d.t}</b><span>{d.d}</span></li>
             ))}</ul>
@@ -183,34 +183,22 @@ export default function Home() {
           </div>
 
           {/* 산출물 실물 — 조회수 1위 인터뷰 한 편이 실제로 남긴 것들 */}
+          {/* 같은 하루의 세 모습 — 가짜 UI 틀 없이 실제 스틸과 실제 제목만 */}
           <div className="showStack" ref={stackRef} aria-hidden="true">
             <figure className="skVideo">
-              <span className="skThumb">
-                <img src={`https://i.ytimg.com/vi/${TOP.id}/hq720.jpg`} alt="" loading="lazy" />
-                <span className="skDur">{TOP.dur}</span>
-                <span className="skPlay pulse"><Play size={20} fill="currentColor" /></span>
-              </span>
-              <figcaption>
-                <b>{TOP.title}</b>
-                <span><Youtube size={12} /> 성공인사이드 · 조회수 {TOP.viewsText}회 · {TOP.date.slice(0, 4)}</span>
-              </figcaption>
+              <img src={`https://i.ytimg.com/vi/${TOP.id}/hq720.jpg`} alt="" loading="lazy" />
+              <figcaption><small>본편 · 유튜브</small><b>{TOP.dur} · 조회수 {TOP.viewsText}회</b></figcaption>
             </figure>
             <figure className="skShort">
               <img src="/short.jpg" alt="" loading="lazy" />
-              <figcaption>Shorts</figcaption>
+              <figcaption><small>숏폼</small><b>릴스·쇼츠·틱톡</b></figcaption>
             </figure>
-            <div className="skArticle">
-              <small>인터뷰 아카이브 기사</small>
+            <figure className="skArticle">
+              <small>기사 · 검색</small>
               <b>{TOP.title}</b>
-              <span>{TOP.tags.slice(0, 3).map(t => `#${t}`).join('  ')}</span>
-            </div>
-            <div className="skSearch">
-              <Search size={14} />
-              <div>
-                <small>successinside.kr › interviews</small>
-                <b>{TOP.title} — 성공인사이드</b>
-              </div>
-            </div>
+              <span>successinside.kr › interviews</span>
+              <em>{TOP.tags.slice(0, 3).map(t => `#${t}`).join('  ')}</em>
+            </figure>
           </div>
         </div>
       </section>
