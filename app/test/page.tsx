@@ -200,7 +200,7 @@ export default function TestPage() {
 
       {/* ══ 6. 카운트업 제거 ══ */}
       <section className="wrap tsSec" id="s6">
-        <Num n={6} done="홈·칼럼·교육과정" title="숫자 띠 — 굴리지 않는다" why="피드백이 '34 인터뷰 · 885만'이라고 읽은 건 굴러가는 도중 값을 크롤러가 잡은 겁니다. AI 도구가 사이트를 요약하는 시대라 이 리스크는 실제이고, 카운트업은 'AI 티'의 대표 패턴이기도 합니다. 서버가 그린 최종값을 그대로 둡니다." />
+        <Num n={6} done="기준일만 · 애니메이션은 유지" title="숫자 띠 — 사람에게는 굴리고, 봇에게는 굴리지 않는다" why="피드백이 '34 인터뷰 · 885만'이라고 읽은 건 굴러가는 도중 값을 크롤러가 잡은 겁니다. 카운트업은 그대로 두되 자동화 브라우저(크롤러·스크린샷 봇)에는 최종값만 보여주도록 바꿨고, 숫자 옆에 기준일을 붙였습니다." />
         <div className="statBand tsStat">
           <div><b>{CHANNEL.interviews}</b><span>인터뷰</span></div>
           <div><b>{CHANNEL.channelViewsText}</b><span>총 조회수 · 숏폼 포함</span></div>
