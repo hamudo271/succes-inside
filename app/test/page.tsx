@@ -75,6 +75,29 @@ const SAMPLE = `광주에서 카센터 7년째. 직원 3명, 월 매출은 3천 
 현금 흐름이 좋아지고 직원이 안 그만둡니다.
 요즘 고민은 둘째 지점을 낼지 말지입니다.`;
 
+/* ── 10. 쌓이는 것 — 연도별 편수와, 그해 찍은 편들이 지금까지 모은 조회수 ── */
+const YEARS = Array.from(new Set(interviews.map(i => i.date.slice(0, 4)))).sort();
+const BY_YEAR = YEARS.map(y => {
+  const list = interviews.filter(i => i.date.startsWith(y));
+  return { y, n: list.length, views: list.reduce((a, b) => a + b.views, 0) };
+});
+let acc = 0;
+const TIMELINE = BY_YEAR.map(r => ({ ...r, cum: (acc += r.views) }));
+const man = (n: number) => `${Math.round(n / 10000)}만`;
+const bestYear = BY_YEAR.reduce((a, b) => (b.views > a.views ? b : a));
+
+/* ── 11. 신청하면 이렇게 됩니다 ── */
+const FLOW = [
+  { k: '신청', v: '양식 5분', d: '어떤 사업인지, 가장 큰 결정 하나, 요즘 고민. 네 줄이면 됩니다.' },
+  { k: '검토', v: '보통 일주일', d: '매출보다 스스로 설명할 수 있는 결정이 있는지를 봅니다.' },
+  { k: '촬영', v: '하루 동행', d: '사업장에서 인터뷰 90분. 편집은 전부 저희 몫.' },
+  { k: '발행', v: '본편·숏폼·기사', d: '유튜브·인스타그램·틱톡·홈페이지에 동시에. 어디서 얼마나 봤는지 보고.' },
+];
+
+/* ── 12. 최신 기록 ── */
+const LATEST = [...interviews].sort((a, b) => b.date.localeCompare(a.date))[0]!;
+const RANK = [...interviews].sort((a, b) => b.views - a.views).slice(0, 5);
+
 /* ── 8. 카드 위계 — 비교용 표본 ── */
 const SAMPLE_CARDS = [...interviews].sort((a, b) => b.views - a.views).slice(1, 4);
 
@@ -94,10 +117,10 @@ export default function TestPage() {
 
       <section className="wrap tsIntro">
         <small>개편 시안 · 검색엔진 비공개</small>
-        <h1>바꾸면 좋을 여덟 가지,{' '}<br />하면 좋을 순서대로.</h1>
+        <h1>바꾸면 좋을 열두 가지,{' '}<br />하면 좋을 순서대로.</h1>
         <p>기존 페이지는 그대로 두고 여기에만 만들었습니다. 각 절이 실제로 동작하는 부품이라, 마음에 드는 것만 골라 제자리에 옮기면 됩니다. 번호는 우선순위입니다.</p>
         <ol className="tsToc">
-          {['비용 범위', '소개 → 진행 표', '홈 세 갈래 진입', '띠 보조 버튼', '아카이브 상단', '카운트업 제거', '신청 폼 예시·기준', '카드 위계'].map((t, i) => (
+          {['비용 범위', '소개 → 진행 표', '홈 세 갈래 진입', '띠 보조 버튼', '아카이브 상단', '카운트업 제거', '신청 폼 예시·기준', '카드 위계', '홈 · 세 갈래 자리', '홈 · 타임라인', '홈 · 절차', '홈 · 최신 기록'].map((t, i) => (
             <li key={t}><a href={`#s${i + 1}`}><span>{String(i + 1).padStart(2, '0')}</span>{t}</a></li>
           ))}
         </ol>
@@ -267,8 +290,80 @@ export default function TestPage() {
         <p className="tsCaption">↑ 바꾼 카드로 세 장 나란히. 격자에서는 이렇게 보입니다.</p>
       </section>
 
+      {/* ════ 홈에 넣을 섹션 네 개 ════ */}
+      <section className="wrap tsGroup" id="home">
+        <small>홈 추가 섹션</small>
+        <h2>홈에 넣을 네 절 — 지금 데이터로 되는 것만</h2>
+        <p>순서대로 넣으면 홈은 <em>히어로 → 세 갈래 → 숫자 → 순위+최신 → 산출물 → 타임라인 → 교육 → 칼럼 → 절차 → 띠</em>가 됩니다. 후기·검색 캡처·팀 소개는 재료가 오면 붙입니다.</p>
+      </section>
+
+      {/* ══ 9. 세 갈래 — 위치 ══ */}
+      <section className="wrap tsSec" id="s9">
+        <Num n={9} title="세 갈래 — 히어로 바로 아래" why="03에서 만든 그 부품입니다. 홈에서는 히어로의 숫자 띠보다 위, 즉 첫 화면을 넘기자마자 나옵니다. 여기서 갈라진 사람은 그 아래 섹션을 자기 순서로 읽습니다." />
+        <div className="tsBranch">
+          {BRANCHES.map(b => (
+            <Link key={b.n} href={b.href} className={b.primary ? 'tsBranchMain' : ''}>
+              <small>{b.n}</small>
+              <b>{b.title}</b>
+              <p>{b.body}</p>
+              <span>{b.label} <ArrowRight size={15} /></span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ══ 10. 타임라인 ══ */}
+      <section className="wrap tsSec" id="s10">
+        <Num n={10} title="쌓이는 것 — 해마다 찍은 편수와, 그 편들이 지금까지 모은 조회수" why="'광고는 끄면 끝, 영상은 계속 일한다'를 소개 페이지는 문장으로 말합니다. 홈에서는 그래프 하나로 보여줍니다. 칸 하나가 인터뷰 한 편이라 46칸이 그대로 46명입니다. 이 사이트 데이터로만 그릴 수 있는 모양이라 어디서 본 섹션이 아닙니다." />
+        <div className="tsTl">
+          {TIMELINE.map(r => (
+            <div key={r.y} className={r.y === bestYear.y ? 'best' : ''}>
+              <div className="tsTlCells" aria-hidden="true">{Array.from({ length: r.n }).map((_, i) => <i key={i} />)}</div>
+              <b>{r.y}</b>
+              <span>{r.n}편</span>
+              <em>{man(r.views)}</em>
+              <small>누적 {man(r.cum)}</small>
+            </div>
+          ))}
+        </div>
+        <p className="tsTlCap">{bestYear.y}년에 찍은 {bestYear.n}편이 지금까지 {man(bestYear.views)} 회. 광고였다면 그해 예산이 끝난 날 멈췄을 겁니다. 조회수는 인터뷰 본편 {CHANNEL.interviews}편만 센 것입니다.</p>
+      </section>
+
+      {/* ══ 11. 절차 ══ */}
+      <section className="wrap tsSec" id="s11">
+        <Num n={11} title="신청하면 이렇게 됩니다 — 마무리 띠 바로 위" why="'귀찮은 일 아닌가'를 띠의 버튼을 보기 전에 풀어줍니다. 지금은 신청 페이지에 가야 나오는데, 홈에서 네 칸으로 먼저 보여주면 띠가 눌립니다. 시간이 정보라서 각 칸의 큰 글자는 시간입니다." />
+        <ol className="tsFlow">
+          {FLOW.map((f, i) => (
+            <li key={f.k}>
+              <small>{String(i + 1).padStart(2, '0')} · {f.k}</small>
+              <b>{f.v}</b>
+              <p>{f.d}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* ══ 12. 최신 기록 ══ */}
+      <section className="wrap tsSec" id="s12">
+        <Num n={12} title="최신 기록 한 편 — 순위 열 옆에" why="지금 홈의 인터뷰 열은 조회수 순이라 2024년 것만 보입니다. 이번 달에 올라온 편이 안 보이면 채널이 멈춘 것처럼 보입니다. 순위 열 옆에 최신 한 편을 날짜와 함께 세웁니다. 아래는 그 자리를 흉내 낸 것입니다." />
+        <div className="tsLatest">
+          <a className="tsLatestCard" href={watchUrl(LATEST.id)} target="_blank" rel="noreferrer">
+            <div className="tsCardThumb"><img src={thumb(LATEST.id)} alt="" loading="lazy" /></div>
+            <small>최신 기록 · {ymd(LATEST.date)}</small>
+            <h3>{LATEST.title}</h3>
+            <p><span>{LATEST.cat}</span><i>·</i><span>{LATEST.viewsText}회</span><i>·</i><span>{LATEST.dur}</span></p>
+          </a>
+          <ol className="tsRank" aria-label="많이 본 순">
+            <li className="tsRankHead"><small>많이 본 순</small></li>
+            {RANK.map((v, i) => (
+              <li key={v.id}><span>{i + 1}</span><b>{v.title}</b><em>{v.viewsText}</em></li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       <section className="wrap tsSec tsEnd">
-        <p>여기까지가 여덟 가지입니다. 번호를 말씀해 주시면 그 절을 제자리로 옮깁니다.</p>
+        <p>여기까지가 열두 가지입니다. 번호를 말씀해 주시면 그 절을 제자리로 옮깁니다.</p>
       </section>
     </main>
     <SiteFooter />

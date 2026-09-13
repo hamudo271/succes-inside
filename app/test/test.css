@@ -110,11 +110,56 @@
 .tsCard p i{font-style:normal;color:var(--wnFaint)}
 .tsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:var(--s6);padding-top:var(--s5);border-top:1px solid var(--wnLine)}
 
+/* 홈 추가 절 묶음 머리 */
+.tsGroup{margin-top:var(--s8);padding-top:var(--s6);border-top:1px solid var(--wnLine)}
+.tsGroup small{font-size:12px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.04em}
+.tsGroup h2{font-size:clamp(22px,2.6vw,30px);font-weight:800;letter-spacing:-.9px;margin-top:var(--s2)}
+.tsGroup p{color:var(--wnMuted);font-size:14px;line-height:1.85;max-width:70ch;margin-top:var(--s2)}
+.tsGroup em{font-style:normal;color:var(--wnInk2)}
+
+/* 10. 타임라인 — 칸 하나가 한 편 */
+.tsTl{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);align-items:end;border-bottom:1px solid var(--wnLine);padding-bottom:var(--s4)}
+.tsTl>div{display:flex;flex-direction:column;gap:4px}
+.tsTlCells{display:grid;grid-template-columns:repeat(4,14px);gap:4px;margin-bottom:14px;justify-content:start}
+.tsTlCells i{display:block;width:14px;height:14px;border-radius:3px;background:var(--wnLine);}
+.tsTl .best .tsTlCells i{background:var(--wnOrange)}
+.tsTl b{font-size:22px;font-weight:800;letter-spacing:-.6px;font-variant-numeric:tabular-nums}
+.tsTl span{font-size:13px;color:var(--wnInk2)}
+.tsTl em{font-style:normal;font-size:15px;font-weight:700;color:var(--wnInk);font-variant-numeric:tabular-nums;margin-top:6px}
+.tsTl .best em{color:var(--wnOrangeText)}
+.tsTl small{font-size:11.5px;color:var(--wnFaint);font-variant-numeric:tabular-nums}
+.tsTlCap{color:var(--wnMuted);font-size:13.5px;line-height:1.8;margin-top:var(--s3);max-width:70ch}
+
+/* 11. 절차 — 큰 글자는 시간 */
+.tsFlow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4)}
+.tsFlow li{border-top:1px solid var(--wnLine);padding-top:var(--s3);position:relative}
+.tsFlow li::before{content:'';position:absolute;left:0;top:-1px;width:28px;height:1px;background:var(--wnOrange)}
+.tsFlow small{font-size:11.5px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.tsFlow b{display:block;font-size:22px;font-weight:800;letter-spacing:-.7px;margin-top:10px}
+.tsFlow p{color:var(--wnMuted);font-size:13px;line-height:1.75;margin-top:8px}
+
+/* 12. 최신 + 순위 */
+.tsLatest{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:var(--s6);align-items:start}
+.tsLatestCard{display:block}
+.tsLatestCard small{display:block;font-size:12px;font-weight:700;color:var(--wnOrangeText);margin-top:14px}
+.tsLatestCard h3{font-size:18px;font-weight:700;line-height:1.5;letter-spacing:-.5px;margin-top:8px}
+.tsLatestCard p{display:flex;gap:7px;font-size:12.5px;color:var(--wnMuted);margin-top:8px;font-variant-numeric:tabular-nums}
+.tsLatestCard p i{font-style:normal;color:var(--wnFaint)}
+.tsRank{list-style:none;margin:0;padding:0}
+.tsRankHead{display:block!important;padding:0 0 10px!important;border:0!important}
+.tsRankHead small{font-size:12px;font-weight:700;color:var(--wnMuted)}
+.tsRank li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:14px;align-items:baseline;padding:14px 0;border-top:1px solid var(--wnLine)}
+.tsRank li:last-child{border-bottom:1px solid var(--wnLine)}
+.tsRank span{font-size:12px;font-weight:800;color:var(--wnFaint);font-variant-numeric:tabular-nums}
+.tsRank b{font-size:14.5px;font-weight:600;color:var(--wnInk2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tsRank em{font-style:normal;font-size:12.5px;font-weight:700;color:var(--wnOrangeText);font-variant-numeric:tabular-nums}
+
 .tsEnd{border-top:1px solid var(--wnLine);margin-top:var(--s8);padding-top:var(--s6)}
 .tsEnd p{font-size:16px;color:var(--wnInk2)}
 
 @media (max-width:960px){
-  .tsPrice,.tsBranch,.tsArchive,.tsApply,.tsCompare,.tsGrid,.tsSpecFaq ul{grid-template-columns:1fr}
+  .tsPrice,.tsBranch,.tsArchive,.tsApply,.tsCompare,.tsGrid,.tsSpecFaq ul,.tsLatest{grid-template-columns:1fr}
+  .tsTl,.tsFlow{grid-template-columns:1fr 1fr}
 }
 @media (max-width:640px){
   .tsHead{grid-template-columns:1fr;gap:var(--s2)}
