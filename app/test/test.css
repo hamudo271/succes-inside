@@ -16,7 +16,7 @@
 .tsHead h2{font-size:clamp(20px,2.4vw,27px);font-weight:800;letter-spacing:-.8px;line-height:1.35}
 .tsHead p{color:var(--wnMuted);font-size:14px;line-height:1.85;max-width:68ch;margin-top:var(--s2)}
 .tsCaption{color:var(--wnFaint);font-size:12.5px;margin-top:var(--s3)}
-.tsNote{margin-top:var(--s5);border-left:2px solid var(--wnOrange);padding:4px 0 4px var(--s4)}
+.tsNote{margin-top:var(--s5);border-top:1px solid var(--wnLine);padding-top:var(--s4)}
 .tsNote b{display:block;font-size:14px}
 .tsNote p{color:var(--wnMuted);font-size:13.5px;line-height:1.8;margin-top:6px}
 .tsNote em{font-style:normal;color:var(--wnOrangeText);font-weight:700}
@@ -91,7 +91,7 @@
 .tsCriteria svg{color:var(--wnOrange);margin-top:3px}
 .tsCriteria b{font-size:15px;letter-spacing:-.3px}
 .tsCriteria p{color:var(--wnMuted);font-size:13px;line-height:1.7;margin-top:4px}
-.tsSample pre{margin:0;white-space:pre-wrap;font:inherit;font-size:15px;line-height:1.9;color:var(--wnInk);background:var(--wnSurface);border:1px solid var(--wnLine);border-left:3px solid var(--wnOrange);border-radius:10px;padding:22px 24px}
+.tsSample pre{margin:0;white-space:pre-wrap;font:inherit;font-size:15px;line-height:1.9;color:var(--wnInk);background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:10px;padding:22px 24px}
 .tsSample p{color:var(--wnMuted);font-size:13px;line-height:1.75;margin-top:var(--s3)}
 
 /* 8. 카드 */
