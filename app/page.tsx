@@ -19,6 +19,22 @@ const ymd = (d: string) => `${d.slice(0, 4)}.${d.slice(5, 7)}`;
  */
 const HERO_BG = '/hero.jpg';
 
+/**
+ * 쌓이는 것 — 해마다 찍은 편수와, 그해 찍은 편들이 지금까지 모은 조회수.
+ * 칸 하나가 인터뷰 한 편이라 46칸이 그대로 46명이다. 조회수는 본편만 센 것(숏폼 제외).
+ */
+const TIMELINE = (() => {
+  const years = Array.from(new Set(interviews.map(i => i.date.slice(0, 4)))).sort();
+  let cum = 0;
+  return years.map(y => {
+    const list = interviews.filter(i => i.date.startsWith(y));
+    const views = list.reduce((a, b) => a + b.views, 0);
+    return { y, n: list.length, views, cum: (cum += views) };
+  });
+})();
+const BEST_YEAR = TIMELINE.reduce((a, b) => (b.views > a.views ? b : a));
+const man = (n: number) => `${Math.round(n / 10000)}만`;
+
 /** 조회수 1위 인터뷰 — 쇼케이스에서 '한 번의 촬영'의 실물 예시로 쓴다 */
 const TOP = [...interviews].sort((a, b) => b.views - a.views)[0]!;
 
@@ -203,6 +219,27 @@ export default function Home() {
             </figure>
           </div>
         </div>
+      </section>
+
+      {/* ── 쌓이는 것: 해마다 찍은 편수 · 그 편들이 지금까지 모은 조회수 ── */}
+      <section className="wrap sec tl">
+        <div className="tlHead">
+          <small>쌓이는 것</small>
+          <h2>찍어둔 하루는{' '}<br />해가 지나도 계속 일합니다.</h2>
+          <p>{BEST_YEAR.y}년에 찍은 {BEST_YEAR.n}편이 지금까지 {man(BEST_YEAR.views)} 회. 광고였다면 그해 예산이 끝난 날 멈췄을 겁니다.</p>
+        </div>
+        <div className="tlYears">
+          {TIMELINE.map(r => (
+            <div key={r.y} className={r.y === BEST_YEAR.y ? 'best' : ''}>
+              <div className="tlCells" aria-hidden="true">{Array.from({ length: r.n }).map((_, i) => <i key={i} />)}</div>
+              <b>{r.y}</b>
+              <span>{r.n}편</span>
+              <em>{man(r.views)}</em>
+              <small>누적 {man(r.cum)}</small>
+            </div>
+          ))}
+        </div>
+        <p className="tlNote">칸 하나가 인터뷰 한 편 · 조회수는 본편 {CHANNEL.interviews}편만 센 것, {CHANNEL.asOf} 기준</p>
       </section>
 
       <CtaBand

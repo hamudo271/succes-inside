@@ -301,6 +301,23 @@ header{height:72px;position:sticky;top:0;z-index:30;
 @media(prefers-reduced-motion:reduce){.ctaRollTrack{animation:none}}
 .ctaProof small{font-size:15px;color:var(--wnInk2)}
 
+/* ══════════════ 쌓이는 것 — 연도별 타임라인. 칸 하나가 한 편 ══════════════ */
+.tlHead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s5);align-items:end;margin-bottom:var(--s6)}
+.tlHead small{grid-column:1/-1;display:block;font-size:12px;font-weight:700;color:var(--wnOrangeText);letter-spacing:.04em;margin-bottom:var(--s2)}
+.tlHead h2{font-size:clamp(24px,2.8vw,34px);font-weight:800;line-height:1.3;letter-spacing:-1.1px}
+.tlHead p{font-size:14.5px;line-height:1.85;color:var(--wnMuted);max-width:46ch}
+.tlYears{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);align-items:end;border-bottom:1px solid var(--wnLine);padding-bottom:var(--s4)}
+.tlYears>div{display:flex;flex-direction:column;gap:4px}
+.tlCells{display:grid;grid-template-columns:repeat(4,14px);gap:4px;margin-bottom:14px;justify-content:start}
+.tlCells i{display:block;width:14px;height:14px;border-radius:3px;background:var(--wnLine)}
+.tlYears .best .tlCells i{background:var(--wnOrange)}
+.tlYears b{font-size:22px;font-weight:800;letter-spacing:-.6px;font-variant-numeric:tabular-nums}
+.tlYears span{font-size:13px;color:var(--wnInk2)}
+.tlYears em{font-style:normal;font-size:15px;font-weight:700;color:var(--wnInk);font-variant-numeric:tabular-nums;margin-top:6px}
+.tlYears .best em{color:var(--wnOrangeText)}
+.tlYears small{font-size:11.5px;color:var(--wnFaint);font-variant-numeric:tabular-nums}
+.tlNote{font-size:12px;color:var(--wnFaint);margin-top:var(--s3)}
+
 /* 구독 폼 */
 .subForm{display:flex;gap:var(--s1);margin-top:var(--s3)}
 .subForm input{width:100%;min-width:0;border:1px solid var(--wnLine);background:var(--wnSurface2);
@@ -334,6 +351,8 @@ footer small{display:block;color:#5f5f5f;border-top:1px solid var(--wnLine);
   .ctaProof{margin-right:0}
   .ctaRoll{height:230px}
   .footTop{grid-template-columns:1fr;gap:var(--s5)}
+  .tlHead{grid-template-columns:1fr;gap:var(--s3)}
+  .tlYears{grid-template-columns:1fr 1fr;gap:var(--s5) var(--s4)}
 }
 @media(max-width:900px){
   .nav nav{display:none;position:absolute;left:0;right:0;top:72px;background:var(--wnSurface);
