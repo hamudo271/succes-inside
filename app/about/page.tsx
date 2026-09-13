@@ -5,6 +5,7 @@ import { Play, ArrowUpRight, ChevronRight, Plus, Minus, Eye } from 'lucide-react
 import { interviews, watchUrl, CHANNEL } from '../interviews/data';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
+import CtaBand from '../components/CtaBand';
 import { faq } from './faq';
 import './style.css';
 
@@ -95,6 +96,14 @@ export default function About() {
           <p>{f.a}</p>
         </div>)}</div>
       </section>
+
+      <CtaBand
+        title={<>{CHANNEL.interviews}명이 출연했습니다.{' '}<br />다음은 사장님입니다.</>}
+        sub="출연을 신청하면 일주일 안에 회신드립니다. 매출보다 스스로 설명할 수 있는 결정이 있는지를 봅니다."
+        href="/apply" label="출연 신청하기"
+        secondary={<a className="btnGhost" href={CHANNEL.url} target="_blank" rel="noreferrer">채널 둘러보기</a>}
+        facts={[{ k: '검토 회신', v: '보통 일주일' }, { k: '촬영', v: '하루 동행' }, { k: '비용', v: '상담 후 안내' }]}
+      />
     </main>
     <SiteFooter />
   </>;

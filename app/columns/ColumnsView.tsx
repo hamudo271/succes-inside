@@ -2,7 +2,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Clock } from 'lucide-react';
-import SubscribeForm from '../components/SubscribeForm';
+import CtaBand from '../components/CtaBand';
 import CountUp from '../components/CountUp';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
@@ -89,12 +89,13 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
         {!filtered.length && <div className="clEmpty">이 카테고리의 칼럼이 아직 없습니다.</div>}
       </section>
 
-      <section className="wrap" id="subscribe"><div className="clCta">
-        <span>칼럼 구독</span>
-        <h2>새 칼럼이 나오면{' '}<br />가장 먼저 받아보세요.</h2>
-        <p>새 칼럼이 발행되면 메일로 보내드립니다.</p>
-        <div className="clCtaForm"><SubscribeForm source="columns" label="구독하기" /></div>
-      </div></section>
+      <CtaBand
+        title={<>읽는 쪽에서{' '}<br />기록되는 쪽으로.</>}
+        sub="칼럼은 남의 결정입니다. 사장님의 결정도 인터뷰로 남길 수 있습니다. 출연을 신청하면 일주일 안에 회신드립니다."
+        href="/apply" label="출연 신청하기"
+        secondary={<a className="btnGhost" href="#subscribe">새 칼럼 메일로 받기</a>}
+        facts={[{ k: '검토 회신', v: '보통 일주일' }, { k: '촬영', v: '하루 동행' }, { k: '비용', v: '상담 후 안내' }]}
+      />
     </main>
     <SiteFooter />
   </>;

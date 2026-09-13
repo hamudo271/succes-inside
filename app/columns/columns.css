@@ -75,17 +75,6 @@
 
 
 /* 하단 구독 CTA — 블랙 라운드 컨테이너 */
-.clCta{background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;color:var(--wnInk);padding:60px 52px;margin:88px 0 40px;text-align:center;position:relative;overflow:hidden}
-.clCta>span{position:relative;font-size:12px;font-weight:700;color:var(--wnOrange)}
-.clCta h2{position:relative;font-size:22px;line-height:1.5;letter-spacing:-.5px;margin:12px 0 10px}
-.clCta>p{position:relative;color:var(--wnMuted);font-size:13px;margin:0}
-.clCtaForm{position:relative;display:flex;gap:8px;max-width:440px;margin:28px auto 0}
-.clCtaForm .subForm{display:flex;gap:8px;width:100%;margin:0}
-.clCtaForm .subForm input{width:100%;min-width:0;border:0;outline:0;padding:13px 16px;border-radius:8px;font-size:13px;background:var(--wnSurface2);color:var(--wnInk)}
-.clCtaForm .subForm button{border:0;background:var(--wnOrange);color:#fff;font-weight:600;font-size:13px;border-radius:8px;padding:0 20px;white-space:nowrap;transition:background .15s}
-.clCtaForm .subForm button:hover{background:var(--wnOrangeDeep)}
-.clCtaForm .subDone{justify-content:center;width:100%;font-size:13px;display:flex;align-items:center;gap:6px;color:var(--wnOrangeText);font-weight:600;margin:0}
-.clCta .subError{margin:10px 0 0;font-size:12px;color:#ff9d84}
 
 /* ─── 칼럼 상세 ─── */
 .clArtHero{max-width:800px;padding-top:56px}
@@ -134,7 +123,6 @@
   .clFeature{grid-template-columns:1fr;gap:var(--s5)}
   .clFeatureQuote{border-left:0;border-top:1px solid var(--wnLine);padding-left:0;padding-top:var(--s4)}
   .clGrid{grid-template-columns:1fr}
-  .clCta{padding:44px 28px}
 }
 @media(max-width:620px){
   .clCats button{padding:13px 16px}
@@ -156,11 +144,6 @@
   .clSection{padding-top:56px}
   .clHead h2{font-size:20px}
   .clFeatureQuote i{font-size:48px}
-  .clCta{padding:36px 22px;margin:56px 0 24px;border-radius:14px}
-  .clCta h2{font-size:19px}
-  .clCta h2 br{display:none}
-  .clCtaForm{flex-direction:column}
-  .clCtaForm button{padding:14px}
 }
 
 /* 발행 전 미리보기 띠 — 로그인한 관리자에게만 렌더된다(공개 화면에는 나오지 않는다). */

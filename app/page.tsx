@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Search, Play, Eye, Clock, ArrowUpRight, ChevronRight, ChevronLeft, Youtube } from 'lucide-react';
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
-import SubscribeForm from './components/SubscribeForm';
+import CtaBand from './components/CtaBand';
 import CourseCards, { COURSE_CARDS } from './components/CourseCards';
 import CountUp from './components/CountUp';
 import HeroVideo from './components/HeroVideo';
@@ -204,29 +204,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 전환 ── */}
-      <section className="wrap sec">
-        <div className="closer">
-          <div className="closerMain">
-            <h2>{CHANNEL.interviews}명이 출연했습니다.{' '}<br />다음은 사장님입니다.</h2>
-            <p>출연을 신청하면 일주일 안에 회신드립니다. 매출보다 스스로 설명할 수 있는 결정이 있는지를 봅니다.</p>
-            <div className="heroBtns">
-              <Link className="btnPrimary" href="/apply">출연 신청하기 <ArrowUpRight size={17} /></Link>
-              <a className="btnGhost" href={CHANNEL.url} target="_blank" rel="noreferrer"><Youtube size={17} /> 채널 구독하기</a>
-            </div>
-          </div>
-          <div className="closerSub">
-            <b>새 기록이 발행되면 알려드립니다</b>
-            <p>인터뷰와 칼럼을 메일로 받아보세요.</p>
-            <SubscribeForm source="home" label="구독" />
-            <dl className="closerFacts">
-              <div><dt>검토 회신</dt><dd>보통 일주일</dd></div>
-              <div><dt>촬영</dt><dd>하루 동행</dd></div>
-            </dl>
-          </div>
-        </div>
-      </section>
-
+      <CtaBand
+        title={<>{CHANNEL.interviews}명이 출연했습니다.{' '}<br />다음은 사장님입니다.</>}
+        sub="출연을 신청하면 일주일 안에 회신드립니다. 매출보다 스스로 설명할 수 있는 결정이 있는지를 봅니다."
+        href="/apply" label="출연 신청하기"
+        secondary={<a className="btnGhost" href={CHANNEL.url} target="_blank" rel="noreferrer"><Youtube size={17} /> 채널 구독하기</a>}
+        facts={[{ k: '검토 회신', v: '보통 일주일' }, { k: '촬영', v: '하루 동행' }, { k: '비용', v: '상담 후 안내' }]}
+      />
     </main>
     <SiteFooter />
   </>;
