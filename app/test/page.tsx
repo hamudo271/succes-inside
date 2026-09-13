@@ -78,11 +78,11 @@ const SAMPLE = `광주에서 카센터 7년째. 직원 3명, 월 매출은 3천 
 /* ── 8. 카드 위계 — 비교용 표본 ── */
 const SAMPLE_CARDS = [...interviews].sort((a, b) => b.views - a.views).slice(1, 4);
 
-function Num({ n, title, why }: { n: number; title: string; why: string }) {
+function Num({ n, title, why, done }: { n: number; title: string; why: string; done?: string }) {
   return (
     <div className="tsHead">
       <span className="tsNum">{String(n).padStart(2, '0')}</span>
-      <div><h2>{title}</h2><p>{why}</p></div>
+      <div>{done && <span className="tsDone"><Check size={12} /> 적용됨 · {done}</span>}<h2>{title}</h2><p>{why}</p></div>
     </div>
   );
 }
@@ -172,7 +172,7 @@ export default function TestPage() {
 
       {/* ══ 5. 아카이브 상단 ══ */}
       <section className="wrap tsSec" id="s5">
-        <Num n={5} title="인터뷰 아카이브 — 대표 사례 위로, 목록은 아래로" why="46개 카드가 같은 크기라 많이 보여주고 덜 기억됩니다. 상단에 대표 사례 한 편과 업종별 진입을 두고, 그 아래에 지금의 필터·격자를 둡니다. 사례 벽은 교육과정에 이미 있는 부품입니다." />
+        <Num n={5} done="/interviews" title="인터뷰 아카이브 — 대표 사례 위로, 목록은 아래로" why="46개 카드가 같은 크기라 많이 보여주고 덜 기억됩니다. 상단에 대표 사례 한 편과 업종별 진입을 두고, 그 아래에 지금의 필터·격자를 둡니다. 사례 벽은 교육과정에 이미 있는 부품입니다." />
         <div className="tsArchive">
           {/* 캡션은 스틸 아래에 — 썸네일에 박힌 글자와 싸우지 않게 */}
           <a className="tsFeat" href={watchUrl(TOP.id)} target="_blank" rel="noreferrer">
@@ -200,7 +200,7 @@ export default function TestPage() {
 
       {/* ══ 6. 카운트업 제거 ══ */}
       <section className="wrap tsSec" id="s6">
-        <Num n={6} title="숫자 띠 — 굴리지 않는다" why="피드백이 '34 인터뷰 · 885만'이라고 읽은 건 굴러가는 도중 값을 크롤러가 잡은 겁니다. AI 도구가 사이트를 요약하는 시대라 이 리스크는 실제이고, 카운트업은 'AI 티'의 대표 패턴이기도 합니다. 서버가 그린 최종값을 그대로 둡니다." />
+        <Num n={6} done="홈·칼럼·교육과정" title="숫자 띠 — 굴리지 않는다" why="피드백이 '34 인터뷰 · 885만'이라고 읽은 건 굴러가는 도중 값을 크롤러가 잡은 겁니다. AI 도구가 사이트를 요약하는 시대라 이 리스크는 실제이고, 카운트업은 'AI 티'의 대표 패턴이기도 합니다. 서버가 그린 최종값을 그대로 둡니다." />
         <div className="statBand tsStat">
           <div><b>{CHANNEL.interviews}</b><span>인터뷰</span></div>
           <div><b>{CHANNEL.channelViewsText}</b><span>총 조회수 · 숏폼 포함</span></div>

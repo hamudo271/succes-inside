@@ -1,14 +1,30 @@
 'use client';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Play, ArrowUpRight, Clock, Eye } from 'lucide-react';
+import { Play, ArrowUpRight, Eye } from 'lucide-react';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import CtaBand from '../components/CtaBand';
 import { interviews, cats, thumb, watchUrl, CHANNEL } from './data';
+import CaseWall from '../programs/CaseWall';
+import '../programs/programs.css';   // 사례 벽
 import './interviews.css';
 
 const ymd = (d: string) => `${d.slice(2, 4)}.${d.slice(5, 7)}`;
+
+/** 조회수 1위 — 상단 대표 사례. 사례 벽에서는 뺀다(같은 스틸이 두 번 보이지 않게). */
+const FEATURED = interviews.reduce((a, b) => (b.views > a.views ? b : a));
+const FEATURED_AGE = new Date().getFullYear() - Number(FEATURED.date.slice(0, 4));
+/** 업종별 편수와 최다 조회 편 — 편수 많은 순. 누르면 아래 목록이 그 업종으로 걸러진다. */
+const BY_CAT = cats.filter(c => c !== '전체').map(c => {
+  const list = interviews.filter(i => i.cat === c);
+  return { cat: c, n: list.length, top: [...list].sort((a, b) => b.views - a.views)[0]! };
+}).sort((a, b) => b.n - a.n);
+const WALL = (() => {
+  const heads = BY_CAT.map(b => b.top).filter(i => i !== FEATURED);
+  const rest = [...interviews].sort((a, b) => b.views - a.views).filter(i => i !== FEATURED && !heads.includes(i));
+  return [...heads, ...rest].slice(0, 9).sort((a, b) => b.views - a.views);
+})();
 
 export default function Interviews() {
   const [cat, setCat] = useState('전체');
@@ -16,7 +32,10 @@ export default function Interviews() {
     () => interviews.filter(i => cat === '전체' || i.cat === cat),
     [cat],
   );
-  const featured = interviews.reduce((a, b) => (b.views > a.views ? b : a));
+  const pick = (c: string) => {
+    setCat(c);
+    document.getElementById('archive')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return <>
     <SiteHeader active="interviews" />
@@ -31,28 +50,33 @@ export default function Interviews() {
           <li><b>{CHANNEL.subscribers}</b><span>구독자</span></li>
           <li><b>{CHANNEL.totalVideos}</b><span>발행 콘텐츠</span></li>
         </ul>
+        <small className="ivAsOf">{CHANNEL.asOf} 기준</small>
       </div></section>
 
-      <section className="wrap"><a className="ivFeature" href={watchUrl(featured.id)} target="_blank" rel="noreferrer">
-        <div className="ivFeatureThumb">
-          <img src={thumb(featured.id)} alt={`${featured.title} — 가장 많이 본 성공인사이드 인터뷰`} loading="lazy" />
-          <span className="ivPlay pulse"><Play size={20} fill="currentColor" /></span>
-        </div>
-        <div className="ivFeatureBody">
-          <span className="ivBadge">가장 많이 본 인터뷰</span>
-          <h2>{featured.title}</h2>
-          <p>{new Date().getFullYear() - Number(featured.date.slice(0, 4))}년 전에 찍은 하루입니다. 지금도 재생되고 있고, {featured.viewsText} 번째까지 왔습니다.</p>
-          <div className="ivMeta">
-            <span>{featured.cat}</span>
-            <span><Eye size={13} /> {featured.viewsText}회</span>
-            <span><Clock size={13} /> {featured.dur}</span>
-            <span>{featured.date.replace(/-/g, '.')}</span>
+      {/* 대표 사례 한 편 + 업종 진입 — 46장을 같은 크기로 늘어놓기 전에 눈이 멈출 곳 */}
+      <section className="wrap ivTop">
+        <a className="ivFeat" href={watchUrl(FEATURED.id)} target="_blank" rel="noreferrer">
+          <div className="ivFeatImg"><img src={`https://i.ytimg.com/vi/${FEATURED.id}/hq720.jpg`} alt={`${FEATURED.title} — 가장 많이 본 성공인사이드 인터뷰`} loading="lazy" /></div>
+          <div className="ivFeatText">
+            <small>가장 많이 본 인터뷰 · {FEATURED.cat}</small>
+            <h2>{FEATURED.title}</h2>
+            <span><Eye size={14} /> {FEATURED.viewsText}회 · {FEATURED_AGE}년 전 촬영, 지금도 재생 중</span>
+            <em><Play size={13} fill="currentColor" /> 본편 보기</em>
           </div>
-          <span className="ivWatch">유튜브에서 보기 <ArrowUpRight size={15} /></span>
-        </div>
-      </a></section>
+        </a>
+        <ul className="ivInd" aria-label="업종별 보기">
+          {BY_CAT.slice(0, 6).map(b => (
+            <li key={b.cat}><button type="button" onClick={() => pick(b.cat)}>
+              <img src={thumb(b.top.id)} alt="" loading="lazy" />
+              <span><b>{b.cat}</b><small>{b.n}편 · 최다 {b.top.viewsText}회</small></span>
+              <ArrowUpRight size={15} />
+            </button></li>
+          ))}
+        </ul>
+      </section>
+      <section className="wrap ivWall"><CaseWall items={WALL} /></section>
 
-      <section className="wrap ivSection">
+      <section className="wrap ivSection" id="archive">
         <div className="ivHead"><small>전체 기록</small><h2>인터뷰 아카이브</h2></div>
         <div className="ivCats">{cats.map(c => (
           <button key={c} className={c === cat ? 'active' : ''} onClick={() => setCat(c)}>{c}</button>

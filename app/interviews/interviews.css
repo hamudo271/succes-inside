@@ -10,20 +10,31 @@
 .ivStats b{font-size:26px;font-weight:700;letter-spacing:-.5px;color:var(--wnInk)}
 .ivStats span{font-size:12px;color:var(--wnMuted)}
 
-/* 대표 인터뷰 */
-.ivFeature{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;
-  background:var(--wnSurface);border:1px solid var(--wnLine);border-radius:16px;padding:24px;transition:border-color .18s}
-.ivFeature:hover{border-color:#4a3324}
-.ivFeatureThumb{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:var(--wnSurface2)}
-.ivFeatureThumb img{width:100%;height:100%;object-fit:cover;display:block}
-.ivBadge{display:inline-block;font-size:11px;font-weight:700;color:var(--wnPeachInk);background:var(--wnPeach);border-radius:20px;padding:5px 12px}
-.ivFeatureBody h2{font-size:22px;line-height:1.5;letter-spacing:-.5px;margin:14px 0 10px}
-.ivFeatureBody>p{font-size:13.5px;line-height:1.8;color:var(--wnMuted);margin:0 0 18px}
-.ivMeta{display:flex;flex-wrap:wrap;gap:14px;padding-top:16px;border-top:1px solid var(--wnLine2)}
-.ivMeta span{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#8f8a84}
-.ivMeta span:first-child{color:var(--wnOrangeText);font-weight:700}
-.ivWatch{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:13px;font-weight:600;color:var(--wnInk)}
-.ivFeature:hover .ivWatch{color:var(--wnOrange)}
+.ivAsOf{display:block;font-size:11.5px;color:var(--wnFaint);margin-top:14px}
+
+/* 상단 — 대표 사례 | 업종 진입. 캡션은 스틸 아래에(썸네일에 박힌 글자와 싸우지 않게) */
+.ivTop{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;align-items:stretch}
+.ivFeat{display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:var(--wnSurface);border:1px solid var(--wnLine);transition:border-color .15s}
+.ivFeat:hover{border-color:#4a3324}
+.ivFeatImg{aspect-ratio:16/9;overflow:hidden;background:var(--wnSurface2)}
+.ivFeatImg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.ivFeat:hover img{transform:scale(1.03)}
+.ivFeatText{padding:20px 24px 22px;display:flex;flex-direction:column;gap:8px}
+.ivFeatText small{font-size:12px;font-weight:700;color:var(--wnOrangeText)}
+.ivFeatText h2{font-size:clamp(20px,2.2vw,26px);letter-spacing:-.7px;line-height:1.35;margin:0}
+.ivFeatText span{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--wnInk2)}
+.ivFeatText em{display:inline-flex;align-items:center;gap:6px;font-style:normal;font-size:13px;font-weight:700;color:var(--wnInk);margin-top:6px}
+.ivFeat:hover .ivFeatText em{color:var(--wnOrange)}
+.ivInd{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.ivInd button{width:100%;display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;align-items:center;text-align:left;
+  padding:8px 12px 8px 8px;border:1px solid var(--wnLine);border-radius:10px;background:var(--wnSurface);color:inherit;font:inherit;cursor:pointer;transition:border-color .15s}
+.ivInd button:hover{border-color:#4a3324}
+.ivInd img{width:64px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;display:block}
+.ivInd span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ivInd b{font-size:14px;letter-spacing:-.3px}
+.ivInd small{font-size:11.5px;color:var(--wnMuted)}
+.ivInd svg{color:var(--wnFaint)}
+.ivWall{margin-top:14px}
 
 /* 재생 버튼 */
 .ivPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
@@ -31,7 +42,6 @@
   display:grid;place-items:center;transition:transform .18s}
 .ivPlay.sm{width:38px;height:38px;opacity:0;transition:opacity .18s}
 .ivCard:hover .ivPlay.sm{opacity:1}
-.ivFeature:hover .ivPlay{transform:translate(-50%,-50%) scale(1.08)}
 
 /* 섹션 */
 .ivSection{padding-top:80px}
@@ -67,7 +77,7 @@
 @media(max-width:900px){
   .ivStats{grid-template-columns:1fr 1fr;gap:22px}
   .ivStats b{font-size:22px}
-  .ivFeature{grid-template-columns:1fr;gap:22px}
+  .ivTop{grid-template-columns:1fr}
   .ivGrid{grid-template-columns:1fr 1fr}
   @media(max-width:620px){
   .ivTag,.ivCardFoot span{font-size:12px}
@@ -78,5 +88,4 @@
   .ivHero h1 br,.ivHero p br{display:none}
   .ivSection{padding-top:56px}
   .ivGrid{grid-template-columns:1fr}
-  .ivFeatureBody h2{font-size:19px}
 }

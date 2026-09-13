@@ -30,6 +30,8 @@ export const CHANNEL = {
   channelViewsText: '1,366만',
   /** 조회수가 가장 많이 나온 숏폼 한 편 — 성형외과 원장 편에서 잘라낸 것. 2026-09-10 확인. */
   topShortViewsText: '40만',
+  /** 위 수치를 확인한 날 — 숫자 옆에 기준일로 붙인다 */
+  asOf: '2026.09.10',
   since: '2023',
   origin: '광주',
 };

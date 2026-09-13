@@ -7,7 +7,6 @@ import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import CtaBand from '../components/CtaBand';
 import CourseCards, { COURSE_CARDS } from '../components/CourseCards';
-import CountUp from '../components/CountUp';
 import CaseWall from './CaseWall';
 import './programs.css';
 
@@ -138,10 +137,10 @@ export default function Programs() {
 
         {/* 사장님들이 딛고 선 선 — 그 아래는 과정의 규격 */}
         <div className="wrap"><dl className="pgHeroFacts">
-          <div><dt>정기 과정</dt><dd><CountUp text={`${live.length}`} /></dd></div>
-          <div><dt>VOD 과정</dt><dd><CountUp text={`${vod.length}`} delay={90} /></dd></div>
-          <div><dt>한 기수</dt><dd><CountUp text="4~6주" delay={180} /></dd></div>
-          <div><dt>정원</dt><dd><CountUp text="12~20명" delay={270} /></dd></div>
+          <div><dt>정기 과정</dt><dd>{`${live.length}`}</dd></div>
+          <div><dt>VOD 과정</dt><dd>{`${vod.length}`}</dd></div>
+          <div><dt>한 기수</dt><dd>4~6주</dd></div>
+          <div><dt>정원</dt><dd>12~20명</dd></div>
         </dl></div>
       </section>
 
