@@ -66,6 +66,12 @@ export async function getColumns(): Promise<ColumnPost[]> {
 export async function getColumn(slug: string): Promise<ColumnPost | null> {
   const rows = await tryQuery<Row>(`${SELECT} where slug = $1 and published = true limit 1`, [slug]);
   if (rows && rows.length) return toPost(rows[0]!);
+  if (rows && rows.length === 0) {
+    // DB는 살아 있는데 이 슬러그가 없다. 진짜 글이 한 편이라도 있으면 자리표시 글은 404여야 한다 —
+    // 목록에는 없는데 주소로는 열리는 글이 검색엔진에 색인되면 안 된다.
+    const any = await tryQuery<{ n: number }>(`select count(*)::int as n from columns where published = true`);
+    if (any && any[0]!.n > 0) return null;
+  }
   return staticColumns.find(c => c.id === slug) ?? null;
 }
 

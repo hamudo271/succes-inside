@@ -2,8 +2,11 @@ import type { MetadataRoute } from 'next';
 import { getColumns } from '../lib/columns';
 import { SITE } from '../lib/seo';
 
-/** 관리자가 칼럼을 발행하면 한 시간 안에 사이트맵에 반영된다. */
-export const revalidate = 3600;
+/**
+ * 요청마다 만든다 — 관리자가 칼럼을 발행·비공개·삭제하면 다음 요청부터 바로 반영된다.
+ * 한 시간 캐시를 두었더니 빌드 때(DB 없음) 만든 자리표시 목록이 배포 후에도 한참 남았다.
+ */
+export const dynamic = 'force-dynamic';
 
 /**
  * 공개 페이지만 넣는다 — /admin 이하는 색인될 이유가 없다.
