@@ -19,12 +19,11 @@ export const metadata: Metadata = {
     index: true, follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   },
-  // 서치 어드바이저·서치 콘솔 소유 확인 코드. 환경변수로 넣으면 코드를 고치지 않아도 된다.
+  // 서치 어드바이저·서치 콘솔 소유 확인 코드 — 2026-09-16 등록. 공개 HTML에 실리는 값이라 코드에 둬도 된다.
+  // 다시 발급받으면 환경변수로 덮어쓸 수 있다.
   verification: {
-    ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
-    ...(process.env.NAVER_SITE_VERIFICATION
-      ? { other: { 'naver-site-verification': process.env.NAVER_SITE_VERIFICATION } }
-      : {}),
+    google: process.env.GOOGLE_SITE_VERIFICATION || 'f2tP9CpjTZyNT7HDMWTHwS8UW2BFMh1WwunEKpG00sc',
+    other: { 'naver-site-verification': process.env.NAVER_SITE_VERIFICATION || '00c17cfc96ecc84967bef90df32cdcc1da6af4ed' },
   },
   icons: {
     icon: [
