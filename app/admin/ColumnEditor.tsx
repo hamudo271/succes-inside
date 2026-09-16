@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Save, ArrowLeft, Check, Minus } from 'lucide-react';
 import { saveColumnAction, type SaveState } from './actions';
 import {
-  slugify, parseKeywords, textWidth, SITE, TITLE_SUFFIX, TITLE_MAX, DESC_MIN, DESC_MAX,
+  slugify, parseKeywords, textWidth, stripSiteName, clipWidth, SITE, TITLE_SUFFIX, TITLE_MAX, DESC_MIN, DESC_MAX,
 } from '../../lib/seo';
 
 const CATS = ['창업', '마케팅', '브랜딩', '커리어', 'AI·테크', '생산성', '재테크'];
@@ -85,9 +85,12 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
   const [keywords, setKeywords] = useState(initial.keywords ?? '');
 
   const chars = body.replace(/\s+/g, '').length;
-  const effTitle = seoTitle.trim() || title.trim();
+  // 저장할 때 사이트명 꼬리를 떼므로, 미리보기도 뗀 것으로 본다.
+  const effTitle = stripSiteName(seoTitle) || stripSiteName(title);
+  const typedSiteName = /성공\s*인사이드\s*$/.test(seoTitle.trim()) || /성공\s*인사이드\s*$/.test(title.trim());
   const effDesc = seoDesc.trim() || excerpt.trim();
   const effSlug = slugify(slug || title);
+  const slugChanged = !!initial.id && !!initial.published && !!initial.slug && effSlug !== initial.slug;
   const focus = parseKeywords(keywords)[0] ?? '';
 
   const checks = useMemo(
@@ -129,6 +132,7 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
             <input id="f-slug" name="slug" value={slug} onChange={e => setSlug(e.target.value)} maxLength={80}
                    placeholder="direction-over-speed" spellCheck={false} />
             <p className="admUrl">{SITE.replace('https://', '')}/columns/<b>{effSlug || '…'}</b></p>
+            {slugChanged && <p className="admWarn">발행된 글의 주소를 바꾸면 이전 주소(<b>/columns/{initial.slug}</b>)는 404가 됩니다. 이미 공유되거나 검색에 잡힌 글이면 그대로 두세요.</p>}
           </div>
         </div>
 
@@ -173,10 +177,11 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
           <div className="admField">
             <label htmlFor="f-seo-title">
               검색 제목
-              <span className="hint">끝에 “{TITLE_SUFFIX.trim()}”가 자동으로 붙습니다 · 지금 {han(textWidth(effTitle + TITLE_SUFFIX))}</span>
+              <span className="hint">끝에 “{TITLE_SUFFIX.trim()}”가 자동으로 붙습니다 — 직접 적지 마세요 · 지금 {han(textWidth(effTitle + TITLE_SUFFIX))}</span>
             </label>
             <input id="f-seo-title" name="seo_title" value={seoTitle} onChange={e => setSeoTitle(e.target.value)}
                    maxLength={120} placeholder={title || '비우면 제목을 씁니다'} />
+            {typedSiteName && <p className="admWarn">끝의 “성공인사이드”는 저장할 때 뗍니다 — 자동으로 붙어서 두 번 나오게 됩니다.</p>}
           </div>
 
           <div className="admField">
@@ -215,8 +220,9 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
             <i>성</i>
             <div><b>성공인사이드</b><small>{SITE.replace('https://', '')} › columns › {effSlug || '…'}</small></div>
           </div>
-          <h3>{effTitle ? effTitle + TITLE_SUFFIX : '제목을 쓰면 여기에 보입니다'}</h3>
-          <p className={effDesc ? '' : 'empty'}>{effDesc || '요약이나 검색 설명을 쓰면 여기에 보입니다.'}</p>
+          {/* 검색엔진이 자르는 지점에서 같이 자른다 — 잘린 채로 보여야 고친다 */}
+          <h3>{effTitle ? clipWidth(effTitle + TITLE_SUFFIX, TITLE_MAX + textWidth(TITLE_SUFFIX)) : '제목을 쓰면 여기에 보입니다'}</h3>
+          <p className={effDesc ? '' : 'empty'}>{effDesc ? clipWidth(effDesc, DESC_MAX) : '요약이나 검색 설명을 쓰면 여기에 보입니다.'}</p>
         </div>
 
         <h2>공유 카드</h2>

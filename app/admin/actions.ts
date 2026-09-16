@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { query, dbEnabled } from '../../lib/db';
-import { slugify, parseKeywords } from '../../lib/seo';
+import { slugify, parseKeywords, stripSiteName } from '../../lib/seo';
 import {
   verifyPassword, hashPassword, passwordProblem, createSession, destroySession, requireAdmin,
   assertSameOrigin, isLockedOut, recordAttempt, clientIp, revokeOtherSessions,
@@ -152,7 +152,7 @@ export async function saveColumnAction(_prev: SaveState, form: FormData): Promis
   const idRaw = String(form.get('id') ?? '');
   const id = /^\d+$/.test(idRaw) ? Number(idRaw) : null;
 
-  const title = String(form.get('title') ?? '').trim().slice(0, 200);
+  const title = stripSiteName(String(form.get('title') ?? '').trim().slice(0, 200));
   const cat = String(form.get('cat') ?? '').trim().slice(0, 40);
   const author = String(form.get('author') ?? '').trim().slice(0, 60);
   const role = String(form.get('role') ?? '').trim().slice(0, 80);
@@ -162,7 +162,7 @@ export async function saveColumnAction(_prev: SaveState, form: FormData): Promis
   const published = form.get('published') === 'on';
   const featured = form.get('featured') === 'on';
   // 검색 최적화 — 비우면 공개 페이지가 제목·요약을 대신 쓴다.
-  const seoTitle = String(form.get('seo_title') ?? '').trim().slice(0, 120);
+  const seoTitle = stripSiteName(String(form.get('seo_title') ?? '').trim().slice(0, 120));
   const seoDesc = String(form.get('seo_desc') ?? '').trim().slice(0, 320);
   const keywords = parseKeywords(String(form.get('keywords') ?? '').slice(0, 600)).join(', ');
 

@@ -225,3 +225,7 @@
   .admBtn,.admForm input,.admField input{min-height:44px}
   .admRowActions button,.admRowActions a{min-width:36px;min-height:36px;justify-content:center}
 }
+
+/* 편집기 경고 — 저장을 막지 않는, 알고 하라는 말 */
+.admWarn{margin:6px 0 0;font-size:12px;line-height:1.6;color:#ffab7a}
+.admWarn b{font-weight:600}

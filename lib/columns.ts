@@ -2,7 +2,7 @@ import 'server-only';
 import { tryQuery } from './db';
 import { getSessionUser } from './auth';
 import { columns as staticColumns, type ColumnPost } from '../app/columns/data';
-import { parseKeywords } from './seo';
+import { parseKeywords, stripSiteName } from './seo';
 
 export type { ColumnPost };
 
@@ -27,7 +27,7 @@ function toPost(r: Row): ColumnPost {
   return {
     id: r.slug,
     cat: r.cat,
-    title: r.title,
+    title: stripSiteName(r.title),
     excerpt: r.excerpt,
     quote: r.quote,
     author: r.author,
@@ -40,7 +40,7 @@ function toPost(r: Row): ColumnPost {
     intro: r.body?.intro ?? [],
     sections: r.body?.sections ?? [],
     outro: r.body?.outro ?? '',
-    seoTitle: r.seo_title || undefined,
+    seoTitle: stripSiteName(r.seo_title || '') || undefined,
     seoDesc: r.seo_desc || undefined,
     keywords: parseKeywords(r.keywords ?? ''),
     publishedAt: r.published_at ? new Date(r.published_at).toISOString() : undefined,

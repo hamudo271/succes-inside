@@ -11,6 +11,30 @@ export const TITLE_MAX = 60;
 export const DESC_MIN = 80;
 export const DESC_MAX = 160;
 
+/**
+ * 제목 끝에 사람이 적어 넣은 사이트명을 뗀다 — "… | 성공인사이드", "…｜성공인사이드", "… - 성공인사이드".
+ * 꼬리는 layout의 title.template이 붙이므로, 적어 두면 검색 결과에 두 번 나온다.
+ */
+export function stripSiteName(title: string): string {
+  let t = title.trim();
+  for (;;) {
+    const next = t.replace(/\s*[|｜\-–—·:]\s*성공\s*인사이드\s*$/i, '').trim();
+    if (next === t) return t;
+    t = next;
+  }
+}
+
+/** 검색 결과처럼 폭 기준으로 자르고 말줄임표를 붙인다. */
+export function clipWidth(s: string, max: number): string {
+  if (textWidth(s) <= max) return s;
+  let out = '';
+  for (const ch of s) {
+    if (textWidth(out + ch) > max - 2) break;
+    out += ch;
+  }
+  return out.trimEnd() + '…';
+}
+
 export function slugify(input: string, fallback = ''): string {
   const s = input.trim().toLowerCase()
     .replace(/[^a-z0-9가-힣\s-]/g, '')
