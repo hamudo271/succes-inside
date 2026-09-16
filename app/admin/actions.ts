@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { query, dbEnabled } from '../../lib/db';
 import { slugify, parseKeywords, stripSiteName } from '../../lib/seo';
+import { imagePara, plainText } from '../../lib/inline';
 import {
   verifyPassword, hashPassword, passwordProblem, createSession, destroySession, requireAdmin,
   assertSameOrigin, isLockedOut, recordAttempt, clientIp, revokeOtherSessions,
@@ -107,7 +108,7 @@ export async function logoutOtherDevicesAction(): Promise<void> {
 
 /* ─────────── 칼럼 ─────────── */
 
-/** 빈 줄로 문단을 나눈다. 본문은 HTML로 렌더하지 않으므로 XSS 위험이 없다. */
+/** 빈 줄로 문단을 나눈다. 본문은 HTML로 렌더하지 않는다 — 링크·이미지·강조는 lib/inline.ts가 토큰으로만 다룬다. */
 function paragraphs(text: string): string[] {
   return text.split(/\n\s*\n/).map(p => p.trim().replace(/\s*\n\s*/g, ' ')).filter(Boolean);
 }
@@ -136,10 +137,10 @@ function parseBody(raw: string) {
   const introPs = paragraphs(intro.join('\n'));
   const secs = sections.map(s => ({ h: s.h, ps: paragraphs(s.ps.join('\n')) })).filter(s => s.ps.length || s.h);
 
-  // 마지막 문단을 outro로 뽑아낸다.
+  // 마지막 문단을 outro로 뽑아낸다. 이미지로 끝나는 글은 마무리 문장이 없는 것으로 둔다.
   let outro = '';
   const last = secs.length ? secs[secs.length - 1]!.ps : introPs;
-  if (last.length > 1) outro = last.pop()!;
+  if (last.length > 1 && !imagePara(last[last.length - 1]!)) outro = last.pop()!;
   return { intro: introPs, sections: secs, outro };
 }
 
@@ -172,7 +173,7 @@ export async function saveColumnAction(_prev: SaveState, form: FormData): Promis
   if (!bodyRaw.trim()) return { error: '본문을 입력해 주세요.' };
 
   const body = parseBody(bodyRaw);
-  const words = bodyRaw.replace(/\s+/g, '').length;
+  const words = bodyRaw.split(/\n\s*\n/).map(plainText).join('').replace(/\s+/g, '').length;
   const readMin = Math.max(1, Math.round(words / 500));
 
   const slugInput = String(form.get('slug') ?? '');

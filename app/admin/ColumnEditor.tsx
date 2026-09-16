@@ -7,6 +7,7 @@ import { saveColumnAction, type SaveState } from './actions';
 import {
   slugify, parseKeywords, textWidth, stripSiteName, clipWidth, SITE, TITLE_SUFFIX, TITLE_MAX, DESC_MIN, DESC_MAX,
 } from '../../lib/seo';
+import { plainText, links, imagePara } from '../../lib/inline';
 
 const CATS = ['창업', '마케팅', '브랜딩', '커리어', 'AI·테크', '생산성', '재테크'];
 
@@ -40,9 +41,13 @@ function audit(a: { title: string; desc: string; slug: string; focus: string; bo
   const tw = textWidth(a.title + TITLE_SUFFIX);
   const dw = textWidth(a.desc);
   const heads = [...a.body.matchAll(/^\s*##\s+(.+?)\s*$/gm)].map(m => m[1]!);
-  const paras = a.body.split(/\n\s*\n/).map(p => p.trim()).filter(p => p && !/^##\s/.test(p));
-  const chars = a.body.replace(/\s+/g, '').length;
+  const rawParas = a.body.split(/\n\s*\n/).map(p => p.trim()).filter(p => p && !/^##\s/.test(p));
+  const paras = rawParas.map(plainText).filter(Boolean);
+  const chars = paras.join('').replace(/\s+/g, '').length;
   const longest = paras.reduce((m, p) => Math.max(m, p.replace(/\s+/g, '').length), 0);
+  const internal = rawParas.flatMap(links).filter(l => !l.external).length;
+  const images = rawParas.map(imagePara).filter(Boolean) as { alt: string; src: string }[];
+  const noAlt = images.filter(i => !i.alt).length;
   const ascii = /^[a-z0-9-]*$/.test(a.slug);
   const f = a.focus;
 
@@ -67,6 +72,10 @@ function audit(a: { title: string; desc: string; slug: string; focus: string; bo
       note: `공백 제외 ${chars.toLocaleString()}자` },
     { must: false, ok: longest > 0 && longest <= 300, label: '문단 길이',
       note: longest > 300 ? `가장 긴 문단 ${longest}자 — 300자 안쪽으로 나누세요` : '읽기 좋은 길이입니다' },
+    { must: false, ok: internal >= 1, label: '내부 링크 1개 이상',
+      note: internal ? `${internal}개 — 검색엔진이 사이트 안을 따라 다닙니다` : '관련 인터뷰나 칼럼으로 [글자](/columns/…) 하나는 거세요' },
+    { must: false, ok: noAlt === 0, label: '이미지 설명',
+      note: images.length ? (noAlt ? `설명 없는 이미지 ${noAlt}장 — ![설명](주소)의 설명은 검색엔진이 읽는 글자입니다` : `${images.length}장 모두 설명 있음`) : '이미지 없음' },
     { must: false, ok: ascii && a.slug.length > 0, label: '영문 주소',
       note: ascii ? (a.slug ? '공유해도 깨지지 않습니다' : '제목에서 자동 생성됩니다') : '한글 주소는 공유 시 %EC%84%B1… 으로 보입니다' },
   ];
@@ -84,7 +93,7 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
   const [seoDesc, setSeoDesc] = useState(initial.seoDesc ?? '');
   const [keywords, setKeywords] = useState(initial.keywords ?? '');
 
-  const chars = body.replace(/\s+/g, '').length;
+  const chars = body.split(/\n\s*\n/).map(plainText).join('').replace(/\s+/g, '').length;
   // 저장할 때 사이트명 꼬리를 떼므로, 미리보기도 뗀 것으로 본다.
   const effTitle = stripSiteName(seoTitle) || stripSiteName(title);
   const typedSiteName = /성공\s*인사이드\s*$/.test(seoTitle.trim()) || /성공\s*인사이드\s*$/.test(title.trim());
@@ -160,12 +169,15 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
         <div className="admField">
           <label htmlFor="f-body">
             본문
-            <span className="hint">빈 줄로 문단을 나누고, 소제목은 <code>## 제목</code> 으로 씁니다. 마지막 문단은 마무리로 들어갑니다.</span>
+            <span className="hint">
+              빈 줄로 문단을 나누고, 소제목은 <code>## 제목</code>. 링크는 <code>[글자](/interviews)</code>, 강조는 <code>**글자**</code>,
+              이미지는 한 문단에 <code>![설명](https://…/사진.jpg)</code> 만 씁니다. 마지막 문단은 마무리로 들어갑니다.
+            </span>
           </label>
           <textarea
             id="f-body" name="body" required rows={22} value={body}
             onChange={e => setBody(e.target.value)}
-            placeholder={'도입 문단을 씁니다.\n\n두 번째 도입 문단.\n\n## 첫 번째 소제목\n\n본문 문단.\n\n## 두 번째 소제목\n\n본문 문단.\n\n마지막 문단은 마무리가 됩니다.'}
+            placeholder={'도입 문단을 씁니다.\n\n두 번째 도입 문단.\n\n## 첫 번째 소제목\n\n본문 문단. 관련 글은 [이렇게](/columns/다른-글) 걸고, **강조**도 됩니다.\n\n![사진 설명](https://…/사진.jpg)\n\n## 두 번째 소제목\n\n본문 문단.\n\n마지막 문단은 마무리가 됩니다.'}
           />
           <p className="admCount">공백 제외 {chars.toLocaleString()}자 · 예상 읽기 {Math.max(1, Math.round(chars / 500))}분</p>
         </div>

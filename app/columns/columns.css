@@ -88,6 +88,12 @@
 
 .clArt{max-width:720px;margin:0 auto;padding-top:44px}
 .clArt p{font-size:15px;line-height:1.95;color:var(--wnInk2);margin:0 0 22px}
+.clArt p a{color:var(--wnOrangeText);text-decoration:underline;text-underline-offset:3px;text-decoration-color:#ff956044}
+.clArt p a:hover{text-decoration-color:currentColor}
+.clArt p strong{color:var(--wnInk);font-weight:700}
+.clFig{margin:6px 0 28px}
+.clFig img{display:block;width:100%;height:auto;border-radius:12px;background:var(--wnSurface2)}
+.clFig figcaption{font-size:12.5px;color:var(--wnMuted);margin-top:10px;line-height:1.6}
 .clArt h2{font-size:21px;letter-spacing:-1px;line-height:1.5;margin:44px 0 16px}
 .clPull{background:var(--wnSurface2);border:1px solid var(--wnLine);border-radius:12px;color:var(--wnInk);padding:26px 30px;margin:34px 0}
 .clPull i{display:none}

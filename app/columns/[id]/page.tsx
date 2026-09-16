@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowUpRight, Clock } from 'lucide-react';
 import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
+import Para from '../Para';
+import { plainText } from '../../../lib/inline';
 import { getColumns, getColumn, getColumnPreview } from '../../../lib/columns';
 import { SITE } from '../../../lib/seo';
 import { ORG_ID, SITE_ID } from '../../../lib/schema';
@@ -61,7 +63,7 @@ export default async function ColumnDetail({ params }: Params) {
   // 구조화 데이터 — 구글·네이버가 글의 정체(기사, 작성자, 날짜, 위치)를 읽는다.
   const url = `${SITE}/columns/${post.id}`;
   const wordCount = [...post.intro, ...post.sections.flatMap(s => s.ps), post.outro]
-    .join(' ').replace(/\s+/g, '').length;
+    .map(plainText).join(' ').replace(/\s+/g, '').length;
   // 레이아웃이 이미 Organization을 @id로 정의했으므로 여기서는 참조만 한다 — 그래프에 같은 주체가 두 번 생기지 않게.
   const author = post.author === '성공인사이드'
     ? { '@id': ORG_ID }
@@ -127,13 +129,13 @@ export default async function ColumnDetail({ params }: Params) {
         </div>
 
         <div className="wrap"><div className="clArt">
-          {post.intro.map(p => <p key={p}>{p}</p>)}
+          {post.intro.map(p => <Para key={p} text={p} />)}
           <div className="clPull"><i>“</i><p>{post.quote}</p></div>
           {post.sections.map(s => <section key={s.h}>
             <h2>{s.h}</h2>
-            {s.ps.map(p => <p key={p}>{p}</p>)}
+            {s.ps.map(p => <Para key={p} text={p} />)}
           </section>)}
-          <p className="clOutro">{post.outro}</p>
+          {post.outro && <Para className="clOutro" text={post.outro} />}
 
           <div className="clWriterCard">
             <div>
