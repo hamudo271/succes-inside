@@ -157,23 +157,30 @@
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .admSerp p.empty{color:#9aa0a6;font-style:italic}
 
-/* 공유 카드 — opengraph-image.tsx와 같은 구도 (1200×630을 축소) */
+/* 공유 카드 — opengraph-image.tsx와 같은 구도 (1200×630을 축소).
+   한쪽을 고치면 다른 쪽도 같이 고쳐야 미리보기가 거짓말을 하지 않는다. */
 .admOg{aspect-ratio:1200/630;background:#0f0f0e;border:1px solid var(--wnLine);border-radius:10px;
-  overflow:hidden;position:relative;container-type:inline-size}
-.admOg:before{content:'';position:absolute;left:0;top:0;bottom:0;width:1.8%;background:#ff6b2c}
-.admOgIn{position:absolute;inset:0;padding:6.5% 6.5% 6.5% 8.5%;display:flex;flex-direction:column;
-  justify-content:space-between;color:#f2f0ed}
-.admOgTop{display:flex;align-items:center;gap:2.2cqw;font-size:2.4cqw;font-weight:700}
-.admOgTop em{font-style:normal;color:#918d86}
-.admOgMark{width:2.4cqw;height:2.4cqw;border-radius:22%;background:#ff6b2c}
-.admOgMid{display:flex;flex-direction:column;gap:1.6cqw}
-.admOgCat{font-size:2.1cqw;font-weight:700;color:#ff9560;letter-spacing:.06em}
-.admOgIn strong{display:block;font-weight:800;letter-spacing:-.03em;line-height:1.28;
+  overflow:hidden;position:relative;container-type:inline-size;
+  background-image:radial-gradient(73cqw 43cqw at 84% 112%,#32200f 0%,#0f0f0e 62%)}
+/* 뒤에 크게 깔리는 깃발 — 제목 위 빈 자리를 채우는 무늬 */
+.admOgWm{position:absolute;right:1.7cqw;top:4.8cqw;width:35cqw;height:35cqw;opacity:.08;pointer-events:none}
+.admOgIn{position:absolute;inset:0;padding:4.5cqw 6cqw 4cqw;display:flex;flex-direction:column;color:#f2f0ed}
+.admOgTop{display:flex;align-items:center;justify-content:space-between;font-weight:700}
+.admOgTop b{display:flex;align-items:center;gap:1.2cqw;font-size:2.4cqw;letter-spacing:-.02em}
+.admOgTop img{width:3.8cqw;height:3.8cqw;display:block}
+.admOgTop em{font-style:normal;font-size:1.8cqw;font-weight:700;color:#6d6963;letter-spacing:.42cqw}
+.admOgMid{display:flex;flex-direction:column;align-items:flex-start;margin-top:auto}
+.admOgCat{font-size:2.1cqw;font-weight:700;color:#ffab7a;background:#3a2415;
+  border-radius:999px;padding:.9cqw 2cqw 1.1cqw;letter-spacing:.02em}
+.admOgIn strong{font-weight:800;letter-spacing:-.03em;line-height:1.26;margin-top:2.2cqw;max-width:80cqw;
   word-break:keep-all;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
-.admOgIn strong[data-len=short]{font-size:6.4cqw;-webkit-line-clamp:2}
-.admOgIn strong[data-len=mid]{font-size:5.3cqw;-webkit-line-clamp:3}
-.admOgIn strong[data-len=long]{font-size:4.4cqw;-webkit-line-clamp:3}
-.admOgFoot{display:flex;justify-content:space-between;font-size:2cqw;font-weight:600;color:#918d86}
+.admOgIn strong[data-len=short]{font-size:6.8cqw;-webkit-line-clamp:2}
+.admOgIn strong[data-len=mid]{font-size:5.7cqw;-webkit-line-clamp:3}
+.admOgIn strong[data-len=long]{font-size:4.7cqw;-webkit-line-clamp:3}
+.admOgRule{display:block;width:5.5cqw;height:.42cqw;background:#ff6b2c;border-radius:.3cqw;
+  margin:2.5cqw 0 2.9cqw}
+.admOgFoot{display:flex;justify-content:space-between;align-items:center;font-size:1.92cqw;
+  font-weight:600;color:#918d86;border-top:1px solid #272320;padding-top:2cqw}
 
 /* 점검 목록 — 통과는 주황 체크, 필수 미달은 붉은 대시, 권장 미달은 회색 대시 */
 .admAudit{list-style:none;margin:0;padding:0;border:1px solid var(--wnLine);border-radius:10px;

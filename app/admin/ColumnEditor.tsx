@@ -105,6 +105,7 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
   const effSlug = slugify(slug || title);
   const slugChanged = !!initial.id && !!initial.published && !!initial.slug && effSlug !== initial.slug;
   const focus = parseKeywords(keywords)[0] ?? '';
+  const readMin = Math.max(1, Math.round(chars / 500));
 
   const checks = useMemo(
     () => audit({ title: effTitle, desc: effDesc, slug: effSlug, focus, body }),
@@ -193,7 +194,7 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
             onPaste={e => { const fs = [...e.clipboardData.files]; if (fs.length) { e.preventDefault(); img.onFiles(fs); } }}
             placeholder={'도입 문단을 씁니다.\n\n두 번째 도입 문단.\n\n## 첫 번째 소제목\n\n본문 문단. 관련 글은 [이렇게](/columns/다른-글) 걸고, **강조**도 됩니다.\n\n## 두 번째 소제목\n\n본문 문단.\n\n마지막 문단은 마무리가 됩니다.'}
           />
-          <p className="admCount">공백 제외 {chars.toLocaleString()}자 · 예상 읽기 {Math.max(1, Math.round(chars / 500))}분</p>
+          <p className="admCount">공백 제외 {chars.toLocaleString()}자 · 예상 읽기 {readMin}분</p>
         </div>
 
         <fieldset className="admFieldset">
@@ -253,15 +254,25 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
 
         <h2>공유 카드</h2>
         <div className="admOg">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="admOgWm" src="/mark-orange.svg" alt="" />
           <div className="admOgIn">
-            <div className="admOgTop"><span className="admOgMark" /><span>성공인사이드 <em>· 칼럼</em></span></div>
+            <div className="admOgTop">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <b><img src="/mark-orange.svg" alt="" />성공인사이드</b>
+              <em>칼럼</em>
+            </div>
             <div className="admOgMid">
               <span className="admOgCat">{cat || '카테고리'}</span>
               <strong data-len={effTitle.length > 30 ? 'long' : effTitle.length > 18 ? 'mid' : 'short'}>
                 {effTitle || '제목'}
               </strong>
+              <i className="admOgRule" />
             </div>
-            <div className="admOgFoot"><span>{author || '글쓴이'}</span><span>successinside.kr</span></div>
+            <div className="admOgFoot">
+              <span>{[author === '성공인사이드' ? '' : author, `${readMin}분 분량`].filter(Boolean).join('  ·  ')}</span>
+              <span>successinside.kr</span>
+            </div>
           </div>
         </div>
 
