@@ -76,6 +76,17 @@ alter table columns add column if not exists seo_title text not null default '';
 alter table columns add column if not exists seo_desc  text not null default '';
 alter table columns add column if not exists keywords  text not null default '';
 
+-- 칼럼 사진. 서버 디스크는 배포마다 사라지므로 DB에 둔다 — 올릴 때 1600px·WebP로 줄여 한 장이 수백 KB.
+create table if not exists images (
+  id         serial primary key,
+  key        text not null unique,
+  bytes      bytea not null,
+  width      integer not null,
+  height     integer not null,
+  size       integer not null,
+  created_at timestamptz not null default now()
+);
+
 create table if not exists subscribers (
   id         serial primary key,
   email      text not null unique,

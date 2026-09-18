@@ -1,9 +1,10 @@
 'use client';
-import { useActionState, useMemo, useState } from 'react';
+import { useActionState, useMemo, useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { Save, ArrowLeft, Check, Minus } from 'lucide-react';
 import { saveColumnAction, type SaveState } from './actions';
+import { useImageInsert, ImageButton } from './ImageInsert';
 import {
   slugify, parseKeywords, textWidth, stripSiteName, clipWidth, SITE, TITLE_SUFFIX, TITLE_MAX, DESC_MIN, DESC_MAX,
 } from '../../lib/seo';
@@ -92,6 +93,9 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
   const [seoTitle, setSeoTitle] = useState(initial.seoTitle ?? '');
   const [seoDesc, setSeoDesc] = useState(initial.seoDesc ?? '');
   const [keywords, setKeywords] = useState(initial.keywords ?? '');
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
+  const [dropping, setDropping] = useState(false);
+  const img = useImageInsert(bodyRef, setBody);
 
   const chars = body.split(/\n\s*\n/).map(plainText).join('').replace(/\s+/g, '').length;
   // 저장할 때 사이트명 꼬리를 떼므로, 미리보기도 뗀 것으로 본다.
@@ -170,14 +174,24 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
           <label htmlFor="f-body">
             본문
             <span className="hint">
-              빈 줄로 문단을 나누고, 소제목은 <code>## 제목</code>. 링크는 <code>[글자](/interviews)</code>, 강조는 <code>**글자**</code>,
-              이미지는 <code>![설명](https://…/사진.jpg)</code> (붙여 넣은 <code>&lt;img&gt;</code> 태그도 됩니다). 마지막 문단은 마무리로 들어갑니다.
+              빈 줄로 문단을 나누고, 소제목은 <code>## 제목</code>. 링크는 <code>[글자](/interviews)</code>, 강조는 <code>**글자**</code>.
+              사진은 아래 단추로 넣거나, 칸에 끌어다 놓거나, 복사해서 붙여 넣으세요. 마지막 문단은 마무리로 들어갑니다.
             </span>
           </label>
+          <div className="admBodyBar">
+            <ImageButton busy={img.busy} onFiles={img.onFiles} />
+            <small>{img.error ? <span style={{ color: '#ff9d84' }}>{img.error}</span> : 'JPG·PNG·HEIC 그대로 올리면 됩니다 — 줄이고 WebP로 바꿔 저장합니다'}</small>
+          </div>
           <textarea
+            ref={bodyRef}
             id="f-body" name="body" required rows={22} value={body}
+            className={dropping ? 'dropping' : undefined}
             onChange={e => setBody(e.target.value)}
-            placeholder={'도입 문단을 씁니다.\n\n두 번째 도입 문단.\n\n## 첫 번째 소제목\n\n본문 문단. 관련 글은 [이렇게](/columns/다른-글) 걸고, **강조**도 됩니다.\n\n![사진 설명](https://…/사진.jpg)\n\n## 두 번째 소제목\n\n본문 문단.\n\n마지막 문단은 마무리가 됩니다.'}
+            onDragOver={e => { if (e.dataTransfer.types.includes('Files')) { e.preventDefault(); setDropping(true); } }}
+            onDragLeave={() => setDropping(false)}
+            onDrop={e => { if (e.dataTransfer.files.length) { e.preventDefault(); setDropping(false); img.onFiles(e.dataTransfer.files); } }}
+            onPaste={e => { const fs = [...e.clipboardData.files]; if (fs.length) { e.preventDefault(); img.onFiles(fs); } }}
+            placeholder={'도입 문단을 씁니다.\n\n두 번째 도입 문단.\n\n## 첫 번째 소제목\n\n본문 문단. 관련 글은 [이렇게](/columns/다른-글) 걸고, **강조**도 됩니다.\n\n## 두 번째 소제목\n\n본문 문단.\n\n마지막 문단은 마무리가 됩니다.'}
           />
           <p className="admCount">공백 제외 {chars.toLocaleString()}자 · 예상 읽기 {Math.max(1, Math.round(chars / 500))}분</p>
         </div>

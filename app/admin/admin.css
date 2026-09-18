@@ -229,3 +229,12 @@
 /* 편집기 경고 — 저장을 막지 않는, 알고 하라는 말 */
 .admWarn{margin:6px 0 0;font-size:12px;line-height:1.6;color:#ffab7a}
 .admWarn b{font-weight:600}
+
+/* 사진 넣기 — 본문 위 단추. 끌어다 놓거나 붙여 넣어도 된다 */
+.admBodyBar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px}
+.admBodyBar small{font-size:11.5px;color:var(--wnMuted)}
+.admUpload{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--wnLine);background:none;color:var(--wnInk);
+  border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:600;cursor:pointer;transition:border-color .15s,background .15s}
+.admUpload:hover{background:var(--wnSurface2);border-color:#4a453f}
+.admUpload:disabled{opacity:.55;cursor:default}
+.admField textarea.dropping{border-color:var(--wnOrange);background:#1c1512}
