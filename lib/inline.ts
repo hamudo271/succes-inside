@@ -7,7 +7,8 @@
 export type Inline =
   | { t: 'text'; v: string }
   | { t: 'bold'; v: string }
-  | { t: 'link'; v: string; href: string; external: boolean };
+  | { t: 'link'; v: string; href: string; external: boolean }
+  | { t: 'img'; alt: string; src: string };
 
 /** 허용하는 주소 — 사이트 안 경로, http(s). javascript: 같은 것은 통째로 글자 취급. */
 export function safeHref(raw: string): string | null {
@@ -21,18 +22,36 @@ export function isExternal(href: string): boolean {
   return /^https?:\/\//i.test(href) && !/^https?:\/\/(www\.)?successinside\.kr(\/|$)/i.test(href);
 }
 
-const TOKEN = /\*\*([^*]+?)\*\*|\[([^\]]+?)\]\(([^)\s]+?)\)/g;
+/**
+ * 사람이 붙여 넣은 <img> 태그도 알아듣는다 — 속성 순서는 상관없고, src·alt만 뽑아 ![alt](src)로 바꾼다.
+ * 태그 자체는 렌더하지 않는다. 다른 HTML 태그는 그대로 글자다.
+ */
+export function normalizeImgTags(s: string): string {
+  return s.replace(/<img\b([^>]*)\/?>/gi, (_, attrs: string) => {
+    const src = /\bsrc\s*=\s*["']([^"']+)["']/i.exec(attrs)?.[1] ?? '';
+    const alt = /\balt\s*=\s*["']([^"']*)["']/i.exec(attrs)?.[1] ?? '';
+    return src ? `![${alt}](${src})` : '';
+  });
+}
 
-export function parseInline(s: string): Inline[] {
+const TOKEN = /!\[([^\]]*)\]\(([^)\s]+?)\)|\*\*([^*]+?)\*\*|\[([^\]]+?)\]\(([^)\s]+?)\)/g;
+
+export function parseInline(raw: string): Inline[] {
+  const s = normalizeImgTags(raw);
   const out: Inline[] = [];
   let last = 0;
   for (const m of s.matchAll(TOKEN)) {
     if (m.index! > last) out.push({ t: 'text', v: s.slice(last, m.index) });
-    if (m[1] !== undefined) {
-      out.push({ t: 'bold', v: m[1] });
+    if (m[2] !== undefined) {
+      const src = safeHref(m[2]);
+      if (src) out.push({ t: 'img', alt: m[1]!.trim(), src });
+      else out.push({ t: 'text', v: m[0] });
+    } else if (m[3] !== undefined) {
+      out.push({ t: 'bold', v: m[3] });
     } else {
-      const href = safeHref(m[3]!);
-      if (href) out.push({ t: 'link', v: m[2]!, href, external: isExternal(href) });
+      const m2 = m[4]!, m3 = m[5]!;
+      const href = safeHref(m3);
+      if (href) out.push({ t: 'link', v: m2, href, external: isExternal(href) });
       else out.push({ t: 'text', v: m[0] });               // 못 믿을 주소는 쓴 그대로 글자로
     }
     last = m.index! + m[0].length;
@@ -41,20 +60,20 @@ export function parseInline(s: string): Inline[] {
   return out;
 }
 
-/** 문단 전체가 이미지 하나인가 — 그러면 <p>가 아니라 <figure>로 그린다. */
+/** 문단 전체가 이미지 하나인가. (문단 안에 글과 섞여 있어도 그림은 그려진다 — Para가 나눈다.) */
 export function imagePara(s: string): { alt: string; src: string } | null {
-  const m = /^!\[([^\]]*)\]\(([^)\s]+)\)$/.exec(s.trim());
-  if (!m) return null;
-  const src = safeHref(m[2]!);
-  return src ? { alt: m[1]!.trim(), src } : null;
+  const nodes = parseInline(s).filter(n => !(n.t === 'text' && !n.v.trim()));
+  return nodes.length === 1 && nodes[0]!.t === 'img' ? { alt: nodes[0]!.alt, src: nodes[0]!.src } : null;
+}
+
+/** 문단 안의 이미지 전부. */
+export function images(s: string): { alt: string; src: string }[] {
+  return parseInline(s).flatMap(n => (n.t === 'img' ? [{ alt: n.alt, src: n.src }] : []));
 }
 
 /** 표기를 걷어낸 글자만 — 글자 수, 검색 점검, 구조화 데이터에 쓴다. */
 export function plainText(s: string): string {
-  if (imagePara(s)) return '';
-  return s.replace(/!\[([^\]]*)\]\([^)\s]+\)/g, '')
-          .replace(/\[([^\]]+?)\]\([^)\s]+?\)/g, '$1')
-          .replace(/\*\*([^*]+?)\*\*/g, '$1');
+  return parseInline(s).map(n => (n.t === 'img' ? '' : n.v)).join('').trim();
 }
 
 /** 본문 안의 링크 목록 — 검색 점검의 '내부 링크' 계산용. */

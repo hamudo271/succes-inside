@@ -7,7 +7,7 @@ import { saveColumnAction, type SaveState } from './actions';
 import {
   slugify, parseKeywords, textWidth, stripSiteName, clipWidth, SITE, TITLE_SUFFIX, TITLE_MAX, DESC_MIN, DESC_MAX,
 } from '../../lib/seo';
-import { plainText, links, imagePara } from '../../lib/inline';
+import { plainText, links, images as imagesIn } from '../../lib/inline';
 
 const CATS = ['창업', '마케팅', '브랜딩', '커리어', 'AI·테크', '생산성', '재테크'];
 
@@ -46,7 +46,7 @@ function audit(a: { title: string; desc: string; slug: string; focus: string; bo
   const chars = paras.join('').replace(/\s+/g, '').length;
   const longest = paras.reduce((m, p) => Math.max(m, p.replace(/\s+/g, '').length), 0);
   const internal = rawParas.flatMap(links).filter(l => !l.external).length;
-  const images = rawParas.map(imagePara).filter(Boolean) as { alt: string; src: string }[];
+  const images = rawParas.flatMap(imagesIn);
   const noAlt = images.filter(i => !i.alt).length;
   const ascii = /^[a-z0-9-]*$/.test(a.slug);
   const f = a.focus;
@@ -171,7 +171,7 @@ export default function ColumnEditor({ initial = {} }: { initial?: EditorValues 
             본문
             <span className="hint">
               빈 줄로 문단을 나누고, 소제목은 <code>## 제목</code>. 링크는 <code>[글자](/interviews)</code>, 강조는 <code>**글자**</code>,
-              이미지는 한 문단에 <code>![설명](https://…/사진.jpg)</code> 만 씁니다. 마지막 문단은 마무리로 들어갑니다.
+              이미지는 <code>![설명](https://…/사진.jpg)</code> (붙여 넣은 <code>&lt;img&gt;</code> 태그도 됩니다). 마지막 문단은 마무리로 들어갑니다.
             </span>
           </label>
           <textarea
