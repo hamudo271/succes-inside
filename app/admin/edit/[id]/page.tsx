@@ -30,5 +30,6 @@ export default async function EditColumn({ params }: { params: Promise<{ id: str
     excerpt: row.excerpt, quote: row.quote, author: row.author, role: row.role,
     published: row.published, featured: row.featured, body: toText(row.body),
     seoTitle: row.seo_title, seoDesc: row.seo_desc, keywords: row.keywords,
+    publishedAt: row.published_at ? new Date(row.published_at).toISOString() : null,
   }} />;
 }

@@ -144,7 +144,11 @@ function parseBody(raw: string) {
   return { intro: introPs, sections: secs, outro };
 }
 
-export type SaveState = { error?: string; ok?: boolean };
+export type SaveState = {
+  error?: string; ok?: boolean;
+  /** 저장이 되면 — 새 글은 여기서 id를 처음 받고, 주소는 서버가 정한 것으로 맞춘다 */
+  id?: number; slug?: string; publishedAt?: string | null; savedAt?: string;
+};
 
 export async function saveColumnAction(_prev: SaveState, form: FormData): Promise<SaveState> {
   await assertSameOrigin();
@@ -179,28 +183,36 @@ export async function saveColumnAction(_prev: SaveState, form: FormData): Promis
   const slugInput = String(form.get('slug') ?? '');
   const slug = slugify(slugInput || title, `column-${Date.now()}`);
 
+  let savedId = id;
+  let publishedAt: string | null = null;
   try {
     if (id === null) {
-      await query(
+      const rows = await query<{ id: number; published_at: Date | null }>(
         `insert into columns (slug, cat, title, excerpt, quote, author, role, read_min, body, published, featured,
                               seo_title, seo_desc, keywords, published_at)
-         values ($1,$2,$3,$4,$5,$6,$7,$8,$9::jsonb,$10,$11,$12,$13,$14, case when $10 then now() else null end)`,
+         values ($1,$2,$3,$4,$5,$6,$7,$8,$9::jsonb,$10,$11,$12,$13,$14, case when $10 then now() else null end)
+         returning id, published_at`,
         [slug, cat, title, excerpt, quote, author, role, readMin, JSON.stringify(body), published, featured,
          seoTitle, seoDesc, keywords],
       );
+      savedId = rows[0]!.id;
+      publishedAt = rows[0]!.published_at?.toISOString() ?? null;
     } else {
       // 발행일은 한 번 정해지면 유지한다. 비공개로 돌렸다가 다시 여는 것만으로
       // 구조화 데이터의 datePublished가 오늘로 바뀌면, 검색엔진에는 새 글로 보인다.
-      await query(
+      const rows = await query<{ published_at: Date | null }>(
         `update columns set slug=$1, cat=$2, title=$3, excerpt=$4, quote=$5, author=$6, role=$7,
                             read_min=$8, body=$9::jsonb, published=$10, featured=$11,
                             seo_title=$12, seo_desc=$13, keywords=$14, updated_at=now(),
                             published_at = case when $10 and published_at is null then now()
                                                 else published_at end
-           where id=$15`,
+           where id=$15
+           returning published_at`,
         [slug, cat, title, excerpt, quote, author, role, readMin, JSON.stringify(body), published, featured,
          seoTitle, seoDesc, keywords, id],
       );
+      if (!rows.length) return { error: '글을 찾을 수 없습니다. 목록에서 다시 열어 주세요.' };
+      publishedAt = rows[0]!.published_at?.toISOString() ?? null;
     }
   } catch (err) {
     const msg = (err as Error).message;
@@ -217,7 +229,26 @@ export async function saveColumnAction(_prev: SaveState, form: FormData): Promis
   revalidatePath('/columns');
   revalidatePath(`/columns/${slug}`);
   revalidatePath('/admin');
-  redirect('/admin?saved=1');
+  // 제자리에서 계속 쓴다 — 목록으로 튕기지 않는다.
+  return { ok: true, id: savedId!, slug, publishedAt, savedAt: new Date().toISOString() };
+}
+
+/**
+ * 안 쓰는 사진 정리 — 어떤 글의 본문에도 주소가 없는 사진을 지운다.
+ * 초안까지 포함해 본다. 올려 두고 아직 본문에 안 넣은 사진도 지워지므로, 눌러서 확인받는다.
+ */
+export async function cleanupImagesAction(): Promise<void> {
+  await assertSameOrigin();
+  await requireAdmin();
+  const rows = await query<{ n: number }>(
+    `with gone as (
+       delete from images i
+        where not exists (select 1 from columns c where c.body::text like '%/img/' || i.key || '.webp%')
+        returning 1)
+     select count(*)::int as n from gone`,
+  );
+  revalidatePath('/admin');
+  redirect(`/admin?cleaned=${rows[0]?.n ?? 0}`);
 }
 
 export async function deleteColumnAction(form: FormData): Promise<void> {

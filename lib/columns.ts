@@ -97,11 +97,25 @@ export async function getAllColumnsForAdmin() {
 export async function getColumnForEdit(id: number) {
   const rows = await tryQuery<Row & { id: number; published: boolean }>(
     `select id, slug, cat, title, excerpt, quote, author, role, read_min,
-            published, featured, seo_title, seo_desc, keywords, body
+            published, featured, seo_title, seo_desc, keywords, body, published_at, updated_at
        from columns where id = $1 limit 1`,
     [id],
   );
   return rows?.[0] ?? null;
+}
+
+/** 올린 사진 현황 — 전체와, 어떤 글 본문에도 없는 것. */
+export async function getImageStats() {
+  const rows = await tryQuery<{ total: number; total_bytes: number; unused: number; unused_bytes: number }>(
+    `select count(*)::int as total, coalesce(sum(size), 0)::bigint as total_bytes,
+            count(*) filter (where not used)::int as unused,
+            coalesce(sum(size) filter (where not used), 0)::bigint as unused_bytes
+       from (select i.size,
+                    exists (select 1 from columns c where c.body::text like '%/img/' || i.key || '.webp%') as used
+               from images i) t`,
+  );
+  const r = rows?.[0];
+  return { total: r?.total ?? 0, totalBytes: Number(r?.total_bytes ?? 0), unused: r?.unused ?? 0, unusedBytes: Number(r?.unused_bytes ?? 0) };
 }
 
 /* ─────────── 관리자: 출연 신청·구독 현황 ─────────── */

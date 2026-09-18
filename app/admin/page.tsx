@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { PenLine, LogOut, Eye, EyeOff, Trash2, Star, ExternalLink, MailOpen, Mail, Users, UserCog, Download } from 'lucide-react';
+import { PenLine, LogOut, Eye, EyeOff, Trash2, Star, ExternalLink, MailOpen, Mail, Users, UserCog, Download, ImageMinus } from 'lucide-react';
 import { getSessionUser } from '../../lib/auth';
-import { getAllColumnsForAdmin, getApplications, getSubscriberStats } from '../../lib/columns';
+import { getAllColumnsForAdmin, getApplications, getSubscriberStats, getImageStats } from '../../lib/columns';
 import ConfirmSubmit from './ConfirmSubmit';
-import { logoutAction, deleteColumnAction, togglePublishAction, toggleApplicationReadAction, deleteApplicationAction } from './actions';
+import { logoutAction, deleteColumnAction, togglePublishAction, toggleApplicationReadAction, deleteApplicationAction, cleanupImagesAction } from './actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,12 +15,12 @@ const fmt = (s: string) => {
 
 export default async function AdminHome({
   searchParams,
-}: { searchParams: Promise<{ saved?: string; deleted?: string }> }) {
+}: { searchParams: Promise<{ deleted?: string; cleaned?: string }> }) {
   const user = await getSessionUser();
   if (!user) redirect('/admin/login');
 
   const sp = await searchParams;
-  const [rows, apps, subs] = await Promise.all([getAllColumnsForAdmin(), getApplications(), getSubscriberStats()]);
+  const [rows, apps, subs, imgs] = await Promise.all([getAllColumnsForAdmin(), getApplications(), getSubscriberStats(), getImageStats()]);
   const unread = apps.filter(a => !a.read).length;
 
   return (
@@ -39,8 +39,8 @@ export default async function AdminHome({
         </div>
       </header>
 
-      {sp.saved && <p className="admFlash">저장했습니다.</p>}
       {sp.deleted && <p className="admFlash">삭제했습니다.</p>}
+      {sp.cleaned !== undefined && <p className="admFlash">{Number(sp.cleaned) > 0 ? `안 쓰는 사진 ${sp.cleaned}장을 지웠습니다.` : '지울 사진이 없습니다 — 올린 사진이 전부 본문에 쓰이고 있습니다.'}</p>}
 
       {rows.length === 0 ? (
         <div className="admEmpty">
@@ -107,6 +107,18 @@ export default async function AdminHome({
               <a className="admLink" href="/admin/export/applications" download>
                 <Download size={13} /> 신청 CSV
               </a>
+            )}
+            {/* 올린 사진 — 본문에 안 쓰인 것만 지운다. 초안까지 포함해 보므로 안전하지만, 그래도 한 번 묻는다 */}
+            {imgs.total > 0 && (
+              <form action={cleanupImagesAction} className="admImgTool">
+                <span className="admDim">사진 {imgs.total}장 · {(imgs.totalBytes / 1048576).toFixed(1)}MB</span>
+                {imgs.unused > 0 && (
+                  <ConfirmSubmit className="admLink" title="어떤 글 본문에도 없는 사진을 지웁니다"
+                                 message={`본문에 쓰이지 않은 사진 ${imgs.unused}장(${(imgs.unusedBytes / 1048576).toFixed(1)}MB)을 지울까요? 아직 본문에 안 넣고 올려만 둔 사진도 지워집니다.`}>
+                    <ImageMinus size={13} /> 안 쓰는 사진 {imgs.unused}장 정리
+                  </ConfirmSubmit>
+                )}
+              </form>
             )}
           </div>
         </div>

@@ -7,9 +7,9 @@ import CountUp from '../components/CountUp';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import { CHANNEL } from '../interviews/data';
+import { catTabs } from './cats';
 import './columns.css';
 
-const cats = ['전체', '창업', '마케팅', '브랜딩', '커리어', 'AI·테크', '생산성'];
 
 import type { ColumnPost } from './data';
 
@@ -20,6 +20,8 @@ export default function ColumnsView({ featured, list }: { featured: ColumnPost; 
   // 히어로에 세울 문장 셋 — 이번 주 칼럼은 바로 아래에서 다시 나오므로 뺀다
   const voices = list.filter(c => c.quote).slice(0, 3);
   const all = [featured, ...list];
+  // 탭은 발행된 글의 카테고리로 — 편집기에서 새 이름을 쓰면 여기 탭도 생긴다.
+  const cats = useMemo(() => catTabs(all.map(c => c.cat)), [all]);
   const catCount = new Set(all.map(c => c.cat)).size;
   const avgRead = Math.round(all.reduce((n, c) => n + (parseInt(c.read, 10) || 0), 0) / all.length);
 
